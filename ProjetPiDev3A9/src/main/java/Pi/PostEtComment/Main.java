@@ -1,4 +1,4 @@
 package Pi.PostEtComment;
 
-public class Connection {
+public class Main {
 }
