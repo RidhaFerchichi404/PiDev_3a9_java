@@ -1,17 +1,15 @@
-package Pi.PostEtComment;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class Connection {
-    private static Connection connection;
-    private java.sql.Connection cnx;
+public class MyConnection {
+    private static MyConnection connection;
+    private Connection cnx;
 
-    public java.sql.Connection getCnx() {
+    public Connection getCnx() {
         return cnx;
     }
 
-    private Connection() {
+    private MyConnection() {
         String url = "jdbc:mysql://localhost:3306/database";
         String user = "root";
         String password = "";
@@ -24,9 +22,9 @@ public class Connection {
         }
 
     }
-    public static Connection getInstance(){
+    public static MyConnection getInstance(){
         if(connection == null){
-            connection= new Connection();
+            connection= new MyConnection();
         }
         return connection;
 
