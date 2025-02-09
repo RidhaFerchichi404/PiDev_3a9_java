@@ -3,10 +3,10 @@ import PC.gestion.services.IServicePost;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
-public class Post implements IServicePost<Post> {
+public class Post{
     private int idp;
     private String description;
     private Date dateU;
@@ -19,11 +19,11 @@ public class Post implements IServicePost<Post> {
         this.dateU = dateU;
         this.commentList = comments;
     }
-    public Post(int idp, String description, Date dateU, List<Comment> comments) {
-        this.idp = idp;
+    public Post(int id, String description, Date date, List<Comment> commentList) {
+        this.idp = id;
         this.description = description;
-        this.dateU = dateU;
-        this.commentList = comments;
+        this.dateU = date;
+        this.commentList = (commentList != null) ? commentList : new ArrayList<>();
     }
     public int getIdp() {
         return idp;
@@ -47,24 +47,5 @@ public class Post implements IServicePost<Post> {
         return "Post{" + "idp=" + idp + ", description=" + description + ", dateU=" + dateU + ", comments=" + commentList + '}';
     }
 
-    @Override
-    public void ajouter(Post post) throws SQLException {
-
-    }
-
-    @Override
-    public void update(Post post) throws SQLException {
-
-    }
-
-    @Override
-    public void delete(Post post) throws SQLException {
-
-    }
-
-    @Override
-    public ArrayList<Post> afficherAll() throws SQLException {
-        return null;
-    }
 }
 

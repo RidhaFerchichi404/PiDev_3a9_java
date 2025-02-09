@@ -11,8 +11,9 @@ public class MyConnection {
         return cnx;
     }
 
+
     private MyConnection() {
-        String url = "jdbc:mysql://localhost:3306/database";
+        String url = "jdbc:mysql://localhost:3306/pidev3a9";
         String user = "root";
         String password = "";
         try {

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Comment implements IServiceComment<Comment> {
+public class Comment {
     private int id;
     private String comment;
     private Date date;
@@ -61,26 +61,6 @@ public class Comment implements IServiceComment<Comment> {
     @Override
     public String toString() {
         System.out.println("Comment [id=" + id + ", comment=" + comment + ", date=" + date + ", likes=" + likes + ", idPost=" + idPost + "]");
-        return null;
-    }
-
-    @Override
-    public void ajouter(Comment comment) throws SQLException {
-
-    }
-
-    @Override
-    public void update(Comment comment) throws SQLException {
-
-    }
-
-    @Override
-    public void delete(Comment comment) throws SQLException {
-
-    }
-
-    @Override
-    public ArrayList<Comment> afficherAll() throws SQLException {
         return null;
     }
 }
