@@ -1,3 +1,5 @@
+package PC.gestion.services;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -7,3 +9,4 @@ public interface IServiceComment<T> {
     void delete(T t) throws SQLException;
     ArrayList<T> afficherAll() throws SQLException;
 }
+
