@@ -7,7 +7,7 @@ import java.sql.SQLException;
 //Singleton Design Pattern
 public class MyConnection {
 
-    private final String URL = "jdbc:mysql://localhost:3306/3A2";
+    private final String URL = "jdbc:mysql://localhost:3306/pi";
     private final String USER = "root";
     private final String PASS = "";
     private Connection connection;
