@@ -1,4 +1,4 @@
-package PC.gestion.main;
+/*package PC.gestion.main;
 
 import PC.gestion.entities.Comment;
 import PC.gestion.entities.Post;
@@ -9,6 +9,7 @@ import PC.gestion.utils.MyConnection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -48,7 +49,7 @@ public class Main {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    Post newPost = new Post(0, description, new java.sql.Date(date.getTime()), null);
+                    Post newPost = new Post(description,);
                     try {
                         servicePost.ajouter(newPost);
                         System.out.println("Post added successfully.");
@@ -148,11 +149,9 @@ public class Main {
                     System.out.print("Enter post ID to show comments: ");
                     int postIdToShowComments = scanner.nextInt();
                     try {
-                        List<Comment> comments = serviceComment.afficherAllComments();
+                        ArrayList<Comment> comments = ServicePost.getCommentsForPost(postIdToShowComments);
                         for (Comment comment : comments) {
-                            if (comment.getIdPost() == postIdToShowComments) {
-                                System.out.println(comment);
-                            }
+                            System.out.println(comment);
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -167,4 +166,4 @@ public class Main {
         }
         scanner.close();
     }
-}
+}*/

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="515.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.modifierPosts">
+   <children>
+      <HBox alignment="CENTER" layoutX="8.0" layoutY="8.0" prefHeight="499.0" prefWidth="741.0" spacing="40.0">
+         <children>
+            <ListView fx:id="LVmodifierPost" prefHeight="499.0" prefWidth="393.0" />
+            <VBox alignment="CENTER" prefHeight="382.0" prefWidth="165.0" spacing="25.0">
+               <children>
+                  <Label text="Modifier la descripton" />
+                  <TextField fx:id="TFdescriptionModifier" promptText="Description" />
+                  <Label text="Modifier le path de l'image" />
+                  <TextField fx:id="TFpathModifier" promptText="Path" />
+                  <Label text="Modifier le type" />
+                  <RadioButton fx:id="RBpromotionModifier" mnemonicParsing="false" text="Promotion">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="type" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="RBmarathonModifier" mnemonicParsing="false" text="Marathon" toggleGroup="$type" />
+                  <RadioButton fx:id="RBregimeModifier" mnemonicParsing="false" text="Regime" toggleGroup="$type" />
+               </children>
+            </VBox>
+            <Button fx:id="BTNmodifier" mnemonicParsing="false" onAction="#ModifierPoste" text="Modifier" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -9,26 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicePost implements IServicePost<Post> {
-    private Connection connection;
+    private static Connection connection;
     public ServicePost() {
         this.connection = MyConnection.getInstance().getCnx();
     }
 
     @Override
     public void ajouter(Post post) throws SQLException {
-        String sql = "INSERT INTO post (description, dateU) VALUES (?, ?)";
+        String sql = "INSERT INTO post (description, image, type) VALUES (?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, post.getDescription());
-        statement.setDate(2, (Date) post.getDateU());
+        statement.setString(2, post.getImage());
+        statement.setString(3, post.getType());
         statement.executeUpdate();
     }
 
     @Override
     public void update(Post post) throws SQLException {
-        String sql = "UPDATE post SET description = ? where idp = ?";
+        String sql = "UPDATE post SET description = ?, image = ?, type = ? WHERE idp = ?";
         PreparedStatement pst = connection.prepareStatement(sql);
         pst.setString(1, post.getDescription());
-        pst.setInt(2, post.getIdp());
+        pst.setString(2, post.getImage());
+        pst.setString(3, post.getType());
+        pst.setInt(4, post.getIdp());
         pst.executeUpdate();
     }
 
@@ -50,17 +53,17 @@ public class ServicePost implements IServicePost<Post> {
         while (rs.next()) {
             int id = rs.getInt("idp");
             String description = rs.getString("description");
-            Date dateU = rs.getDate("dateU");
-            ArrayList<Comment> comments = getCommentsForPost(id);
-            Post p = new Post(id, description, dateU, null);
+            String image = rs.getString("image");
+            String type = rs.getString("type");
+            Post p = new Post(id, description, rs.getString("image"), rs.getString("type"));
             posts.add(p);
         }
         return posts;
     }
 
-    private ArrayList<Comment> getCommentsForPost(int postId) throws SQLException {
+    public static ArrayList<Comment> getCommentsForPost(int postId) throws SQLException {
         ArrayList<Comment> comments = new ArrayList<>();
-        String query = "SELECT * FROM Comment WHERE Id = ?";
+        String query = "SELECT * FROM Comment WHERE idPost = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, postId);
         ResultSet resultSet = statement.executeQuery();
@@ -70,7 +73,8 @@ public class ServicePost implements IServicePost<Post> {
             String commentText = resultSet.getString("comment");
             Date date = resultSet.getDate("date");
             int likes = resultSet.getInt("likes");
-            Comment comment = new Comment(id, commentText, date, likes, postId);
+            int idPost = resultSet.getInt("idPost");
+            Comment comment = new Comment(id, commentText, date, likes, idPost);
             comments.add(comment);
         }
 

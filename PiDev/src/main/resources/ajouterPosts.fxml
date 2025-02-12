@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.ajouterPosts">
+   <children>
+      <GridPane alignment="CENTER" layoutX="27.0" layoutY="26.0" prefHeight="308.0" prefWidth="546.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" prefWidth="179.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="338.0" minWidth="10.0" prefWidth="338.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Inserez votre description :" />
+            <Label text="Inserez votre image path :" GridPane.rowIndex="1" />
+            <TextField fx:id="TFdescriptionPost" promptText="Description" GridPane.columnIndex="1" />
+            <TextField fx:id="TFimagePathPost" promptText="Image path" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <RadioButton fx:id="RBpromotionPost" mnemonicParsing="false" text="Promotion">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="type" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="RBmarathonPost" mnemonicParsing="false" text="Marathon" toggleGroup="$type" />
+                  <RadioButton fx:id="RBregimePost" mnemonicParsing="false" text="Regime" toggleGroup="$type" />
+               </children>
+            </HBox>
+            <Label text="Veuillez selectionner le type :" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Button fx:id="BTNajouterPost" layoutX="414.0" layoutY="355.0" mnemonicParsing="false" onAction="#ajouterPost" prefHeight="25.0" prefWidth="130.0" text="Ajouter" />
+   </children>
+</AnchorPane>

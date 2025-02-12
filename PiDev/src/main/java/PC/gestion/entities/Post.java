@@ -9,42 +9,59 @@ import java.util.List;
 public class Post{
     private int idp;
     private String description;
-    private Date dateU;
-    private List<Comment> commentList;
+    private String image;
+    private String type;
+
 
     public Post() {
     }
-    public Post(String description, Date dateU, List<Comment> comments) {
+    public Post(String description,String image,String type) {
         this.description = description;
-        this.dateU = dateU;
-        this.commentList = comments;
+        this.image = image;
+        this.type = type;
     }
-    public Post(int id, String description, Date date, List<Comment> commentList) {
+
+    public Post(int id, String description, String image, String type) {
         this.idp = id;
         this.description = description;
-        this.dateU = date;
-        this.commentList = (commentList != null) ? commentList : new ArrayList<>();
+        this.image = image;
+        this.type = type;
     }
+
     public int getIdp() {
         return idp;
     }
+
     public void setIdp(int idp) {
         this.idp = idp;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
-    public Date getDateU() {
-        return dateU;
+
+    public String getImage() {
+        return image;
     }
-    public void setDateU(Date dateU) {
-        this.dateU = dateU;
+
+    public void setImage(String image) {
+        this.image = image;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String toString() {
-        return "Post{" + "idp=" + idp + ", description=" + description + ", dateU=" + dateU + ", comments=" + commentList + '}';
+        return "Post{" + "idp=" + idp + ", description=" + description + ", image=" + image + ", type=" + type + '}';
     }
 
 }
