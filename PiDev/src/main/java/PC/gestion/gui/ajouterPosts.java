@@ -48,13 +48,13 @@ public class ajouterPosts {
             servicePost.ajouter(post);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
-            alert.setHeaderText(null);
+            alert.setHeaderText("INFORMATION");
             alert.setContentText("Post added successfully!");
             alert.showAndWait();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-            alert.setHeaderText(null);
+            alert.setHeaderText("ERROR");
             alert.setContentText("Failed to add post: " + e.getMessage());
             alert.showAndWait();
             e.printStackTrace();

@@ -16,6 +16,9 @@ public class modifierPosts implements Initializable {
     private Button BTNmodifier;
 
     @FXML
+    private Button BTNsupprimer;
+
+    @FXML
     private ListView<Post> LVmodifierPost;
 
     @FXML
@@ -76,19 +79,41 @@ public class modifierPosts implements Initializable {
                 servicePost.update(selectedPost);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
-                alert.setHeaderText(null);
+                alert.setHeaderText("INFORMATION");
                 alert.setContentText("Post modified successfully!");
                 alert.showAndWait();
                 LVmodifierPost.refresh();
             } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText(null);
+                alert.setHeaderText("Error");
                 alert.setContentText("Failed to modify post: " + e.getMessage());
                 alert.showAndWait();
                 e.printStackTrace();
             }
         }
     }
-
+@FXML
+private void SupprimerPoste() {
+    Post selectedPost = LVmodifierPost.getSelectionModel().getSelectedItem();
+    if (selectedPost != null) {
+        ServicePost servicePost = new ServicePost();
+        try {
+            servicePost.delete(selectedPost);
+            LVmodifierPost.getItems().remove(selectedPost);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("INFORMATION");
+            alert.setContentText("Post deleted successfully!");
+            alert.showAndWait();
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Failed to delete post: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+    }
+}
 }

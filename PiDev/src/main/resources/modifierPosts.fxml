@@ -31,7 +31,12 @@
                   <RadioButton fx:id="RBregimeModifier" mnemonicParsing="false" text="Regime" toggleGroup="$type" />
                </children>
             </VBox>
-            <Button fx:id="BTNmodifier" mnemonicParsing="false" onAction="#ModifierPoste" text="Modifier" />
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+               <children>
+                  <Button fx:id="BTNmodifier" mnemonicParsing="false" onAction="#ModifierPoste" text="Modifier" />
+                  <Button fx:id="BTNsupprimer" mnemonicParsing="false" onAction="#SupprimerPoste" text="Supprimer" />
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>
