@@ -29,6 +29,9 @@ public class Abonnement {
     public Abonnement() {
     }
 
+    public Abonnement(String nom, String description, int duree, int prix, String salle) {
+    }
+
     public int getSalleDeSportId() {
         return salleDeSportId;
     }

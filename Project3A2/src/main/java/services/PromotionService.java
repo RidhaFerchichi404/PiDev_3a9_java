@@ -64,7 +64,7 @@ public class PromotionService implements IPromotion<Promotion> {
             //stmt.setInt(7, promotion.getAbonnementId());
             //stmt.setInt(8, promotion.getSalleId());
             //stmt.setInt(9, promotion.getPromotionId());
-            //stmt.executeUpdate();
+            stmt.executeUpdate();
         }
     }
 

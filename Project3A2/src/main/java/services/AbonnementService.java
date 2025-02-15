@@ -13,17 +13,30 @@ public class AbonnementService implements IAbonnement<Abonnement>{
     public AbonnementService(){
         cnx = MyConnection.getInstance().getConnection();
     }
-    @Override
+
     public void create(Abonnement abonnement) throws SQLException {
-        String query = "INSERT INTO Abonnement (Nom, Description, duree, Prix, SalleID , SalleName) VALUES (?, ?, ?, ?, ?, ?)";
+        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null || abonnement.getSalleNom() == null) {
+            throw new IllegalArgumentException("Les champs Nom, Description et SalleName ne peuvent pas être nuls.");
+        }
+        if (abonnement.getDuree() <= 0 || abonnement.getPrix() <= 0) {
+            throw new IllegalArgumentException("La durée et le prix doivent être des valeurs positives.");
+        }
+
+        // Récupérer l'ID de la salle de sport à partir de son nom
+        int salleId = getIdByName(abonnement.getSalleNom());
+        if (salleId == -1) {
+            throw new SQLException("La salle de sport '" + abonnement.getSalleNom() + "' n'existe pas.");
+        }
+
+        String query = "INSERT INTO Abonnement (Nom, Description, duree, Prix, SalleID, SalleName) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            stmt.setString(1, abonnement.getNom());               // Nom de l'abonnement
-            stmt.setString(2, abonnement.getdescriptiona());        // Description
-            stmt.setInt(3, abonnement.getDuree());                 // Durée
-            stmt.setDouble(4, abonnement.getPrix());               // Prix
-            stmt.setInt(5, abonnement.getSalleDeSportId());        // ID de la salle de sport
-            stmt.setString(6, abonnement.getSalleNom());           // Nom de la salle de sport (correct type String)
-            stmt.executeUpdate();                                  // Exécution de l'insertion
+            stmt.setString(1, abonnement.getNom());
+            stmt.setString(2, abonnement.getdescriptiona());
+            stmt.setInt(3, abonnement.getDuree());
+            stmt.setDouble(4, abonnement.getPrix());
+            stmt.setInt(5, salleId);
+            stmt.setString(6, abonnement.getSalleNom());
+            stmt.executeUpdate();
         }
     }
 
@@ -69,8 +82,8 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             //stmt.setDouble(4, abonnement.getPrix());               // Prix
             //stmt.setInt(5, abonnement.getSalleDeSportId());        // ID de la salle de sport
             //stmt.setString(6, abonnement.getSalleNom());           // Nom de la salle de sport
-            //stmt.setInt(7, abonnement.getId());          // ID de l'abonnement
-            //stmt.executeUpdate();                                  // Exécution de la mise à jour
+            stmt.setInt(2, abonnement.getId());          // ID de l'abonnement
+            stmt.executeUpdate();                                  // Exécution de la mise à jour
         }
 
     }
