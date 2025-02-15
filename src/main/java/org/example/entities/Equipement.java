@@ -31,6 +31,10 @@ public class Equipement {
         this.idUser = idUser;
     }
 
+    public Equipement() {
+
+    }
+
     public int getId() {
         return id;
     }
@@ -63,16 +67,16 @@ public class Equipement {
         this.fonctionnement = fonctionnement;
     }
 
-    public Date getProchaineVerification() {
-        return prochaineVerification;
+    public java.sql.Date getProchaineVerification() {
+        return (java.sql.Date) prochaineVerification;
     }
 
     public void setProchaineVerification(Date prochaineVerification) {
         this.prochaineVerification = prochaineVerification;
     }
 
-    public Date getDerniereVerification() {
-        return derniereVerification;
+    public java.sql.Date getDerniereVerification() {
+        return (java.sql.Date) derniereVerification;
     }
 
     public void setDerniereVerification(Date derniereVerification) {

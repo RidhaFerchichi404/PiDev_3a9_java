@@ -6,12 +6,12 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.AjouterEquipementController"
+            fx:controller="gui.ModifierEquipementController"
             style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
 
     <VBox spacing="20" alignment="CENTER_LEFT">
         <!-- ✅ Titre bien centré et en orange -->
-        <Label text="Ajouter un Équipement"
+        <Label text="Modifier l'Équipement"
                style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
         <!-- ✅ Conteneur pour bien aligner les labels et les champs -->
@@ -34,7 +34,7 @@
             <Button text="Annuler" onAction="#fermerFenetre"
                     style="-fx-background-color: #ff4444; -fx-text-fill: white;
                            -fx-font-weight: bold; -fx-background-radius: 5;"/>
-            <Button text="Enregistrer" onAction="#enregistrerEquipement"
+            <Button text="Enregistrer" onAction="#enregistrerModification"
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white;
                            -fx-font-weight: bold; -fx-background-radius: 5;"/>
         </HBox>

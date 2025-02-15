@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class AfficherCardsController implements Initializable {
     @FXML
     private FlowPane cardsContainer;
-    
+
     private SalleDeSportService salleService;
 
     @Override
@@ -124,17 +124,17 @@ public class AfficherCardsController implements Initializable {
         HBox buttonsBox = new HBox(10);
         buttonsBox.setAlignment(Pos.CENTER);
 
-        Button editButton = new Button("✏️ Modifier");
+        Button editButton = new Button("Modifier");
         editButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; " +
                           "-fx-font-size: 12px; -fx-padding: 5 10; -fx-background-radius: 5;");
         editButton.setOnAction(e -> modifierSalle(salle));
 
-        Button deleteButton = new Button("🗑️ Supprimer");
+        Button deleteButton = new Button("Supprimer");
         deleteButton.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white; " +
                             "-fx-font-size: 12px; -fx-padding: 5 10; -fx-background-radius: 5;");
         deleteButton.setOnAction(e -> supprimerSalle(salle));
 
-        Button equipementsButton = new Button("🏋️ Équipements");
+        Button equipementsButton = new Button("Équipements");
         equipementsButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; " +
                                  "-fx-font-size: 12px; -fx-padding: 5 10; -fx-background-radius: 5;");
         equipementsButton.setOnAction(e -> voirEquipements(salle));
@@ -184,17 +184,17 @@ public class AfficherCardsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierSalle.fxml"));
             Parent root = loader.load();
-            
+
             ModifierSalleController controller = loader.getController();
             controller.setSalle(salle);
-            
+
             // Créer une nouvelle scène dans la fenêtre actuelle
             Stage currentStage = (Stage) cardsContainer.getScene().getWindow();
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
             currentStage.setTitle("Modifier la Salle");
             currentStage.show();
-            
+
             // Ajouter un gestionnaire d'événements pour rafraîchir l'affichage après la modification
             currentStage.setOnHidden(event -> {
                 loadSalles();  // Rafraîchir la liste des salles
@@ -222,10 +222,10 @@ public class AfficherCardsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherEquipements.fxml"));
             Parent root = loader.load();
-            
+
             AfficherEquipementsController controller = loader.getController();
             controller.setIdSalle(salle.getId());
-            
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Équipements - " + salle.getNom());
@@ -243,5 +243,5 @@ public class AfficherCardsController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-} 
+}
 

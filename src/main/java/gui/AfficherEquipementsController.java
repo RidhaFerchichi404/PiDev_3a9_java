@@ -5,35 +5,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.entities.Equipement;
 import org.example.service.EquipementService;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class AfficherEquipementsController {
 
-    @FXML private TableView<Equipement> tableEquipements;
-    @FXML private TableColumn<Equipement, String> colNom;
-    @FXML private TableColumn<Equipement, Boolean> colFonctionnement;
-    @FXML private TableColumn<Equipement, Date> colDerniereVerif;
-    @FXML private TableColumn<Equipement, Date> colProchaineVerif;
-    @FXML private TableColumn<Equipement, Void> colActions;
+    @FXML private FlowPane cardsContainer;
     @FXML private Label noEquipementsLabel;
 
     private EquipementService equipementService = new EquipementService();
     private int idSalle;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @FXML
     public void initialize() {
-        setupColumns();
         loadEquipements();
     }
 
@@ -42,101 +32,114 @@ public class AfficherEquipementsController {
         loadEquipements();
     }
 
-    private void setupColumns() {
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-
-        colFonctionnement.setCellValueFactory(new PropertyValueFactory<>("fonctionnement"));
-        colFonctionnement.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item ? "✔ Fonctionnel" : "❌ En panne");
-                    setStyle(item ? "-fx-text-fill: #4CAF50; -fx-font-weight: bold;"
-                            : "-fx-text-fill: #ff0000; -fx-font-weight: bold;");
-                }
-            }
-        });
-
-        colDerniereVerif.setCellValueFactory(new PropertyValueFactory<>("derniereVerification"));
-        colDerniereVerif.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? null : dateFormat.format(item));
-                setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
-            }
-        });
-
-        colProchaineVerif.setCellValueFactory(new PropertyValueFactory<>("prochaineVerification"));
-        colProchaineVerif.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Date item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? null : dateFormat.format(item));
-                setStyle("-fx-text-fill: black; -fx-font-weight: bold;");
-            }
-        });
-
-        colActions.setCellFactory(column -> new TableCell<>() {
-            private final Button editButton = new Button("Modifier");
-            private final Button deleteButton = new Button("Supprimer");
-            private final HBox buttonsBox = new HBox(10, editButton, deleteButton);
-
-            {
-                editButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-cursor: hand;");
-                deleteButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand;");
-
-                editButton.setOnAction(event -> {
-                    Equipement equipement = getTableView().getItems().get(getIndex());
-                    modifierEquipement(equipement);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Equipement equipement = getTableView().getItems().get(getIndex());
-                    supprimerEquipement(equipement);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : buttonsBox);
-            }
-        });
-    }
-
     private void loadEquipements() {
         try {
+            cardsContainer.getChildren().clear();
             List<Equipement> equipements = equipementService.readBySalleId(idSalle);
-            tableEquipements.getItems().setAll(equipements);
 
-            // ✅ Afficher ou cacher le tableau et le message
             if (equipements.isEmpty()) {
-                tableEquipements.setVisible(false);
                 noEquipementsLabel.setVisible(true);
+                cardsContainer.setVisible(false);
             } else {
-                tableEquipements.setVisible(true);
                 noEquipementsLabel.setVisible(false);
+                cardsContainer.setVisible(true);
+                for (Equipement equipement : equipements) {
+                    cardsContainer.getChildren().add(createEquipementCard(equipement));
+                }
             }
         } catch (SQLException e) {
             showAlert("Erreur", "Erreur lors du chargement des équipements", Alert.AlertType.ERROR);
         }
     }
 
+    // ✅ Création d'une carte d'équipement bien alignée
+    private VBox createEquipementCard(Equipement equipement) {
+        VBox card = new VBox();
+        card.setStyle("-fx-background-color: #1a1a1a; -fx-border-color: #ff8c00; "
+                + "-fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 15; "
+                + "-fx-spacing: 10; -fx-effect: dropshadow(three-pass-box, rgba(255, 140, 0, 0.5), 10, 0, 0, 3);");
+        card.setPrefWidth(280);
+
+        Label nomLabel = new Label("Nom: " + equipement.getNom());
+        nomLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label etatLabel = new Label("État: " + (equipement.isFonctionnement() ? "✔ Fonctionnel" : "❌ En panne"));
+        etatLabel.setStyle(equipement.isFonctionnement() ? "-fx-text-fill: #4CAF50;" : "-fx-text-fill: #ff4444;");
+
+        Label derniereVerifLabel = new Label("Dernière vérification: " + equipement.getDerniereVerification());
+        derniereVerifLabel.setStyle("-fx-text-fill: white;");
+
+        Label prochaineVerifLabel = new Label("Prochaine vérification: " + equipement.getProchaineVerification());
+        prochaineVerifLabel.setStyle("-fx-text-fill: white;");
+
+        HBox buttonsBox = new HBox(10);
+        buttonsBox.setStyle("-fx-padding: 10 0 0 0;");
+
+        Button editButton = new Button("Modifier");
+        editButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-cursor: hand;");
+        editButton.setOnAction(event -> modifierEquipement(equipement));
+
+        Button deleteButton = new Button("Supprimer");
+        deleteButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand;");
+        deleteButton.setOnAction(event -> supprimerEquipement(equipement));
+
+        buttonsBox.getChildren().addAll(editButton, deleteButton);
+
+        card.getChildren().addAll(nomLabel, etatLabel, derniereVerifLabel, prochaineVerifLabel, buttonsBox);
+        return card;
+    }
+
     @FXML
     private void ajouterEquipement() {
-        showAlert("Action", "Ajout d'un équipement (à implémenter)", Alert.AlertType.INFORMATION);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouterEquipement.fxml"));
+            Parent root = loader.load();
+
+            AjouterEquipementController controller = loader.getController();
+            controller.setIdSalle(idSalle);
+            controller.setAfterSaveAction(this::loadEquipements);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter un équipement");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire", Alert.AlertType.ERROR);
+        }
     }
 
     private void modifierEquipement(Equipement equipement) {
-        showAlert("Action", "Modification de l'équipement : " + equipement.getNom(), Alert.AlertType.INFORMATION);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifierEquipement.fxml"));
+            Parent root = loader.load();
+
+            ModifierEquipementController controller = loader.getController();
+            controller.setEquipement(equipement);
+            controller.setAfterSaveAction(this::loadEquipements);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Modifier l'équipement");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de la modification", Alert.AlertType.ERROR);
+        }
     }
 
     private void supprimerEquipement(Equipement equipement) {
-        showAlert("Action", "Suppression de l'équipement : " + equipement.getNom(), Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Voulez-vous vraiment supprimer cet équipement ?");
+
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            try {
+                equipementService.delete(equipement);
+                loadEquipements();
+            } catch (SQLException e) {
+                showAlert("Erreur", "Erreur lors de la suppression", Alert.AlertType.ERROR);
+            }
+        }
     }
 
     private void showAlert(String title, String content, Alert.AlertType type) {
