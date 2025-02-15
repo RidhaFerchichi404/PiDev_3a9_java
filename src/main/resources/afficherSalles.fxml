@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AfficherSallesController"
+            style="-fx-background-color: #1a1a1a;">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        
+        <Label text="Liste des Salles de Sport" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+        
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-border-color: #ff8c00;">
+            <content>
+                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" style="-fx-background-color: transparent;">
+                </FlowPane>
+            </content>
+        </ScrollPane>
+        
+        <Button text="Ajouter une salle" onAction="#ajouterSalle"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; 
+                       -fx-font-weight: bold; -fx-background-radius: 5;"/>
+    </VBox>
+</AnchorPane>

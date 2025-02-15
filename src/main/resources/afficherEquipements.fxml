@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AfficherEquipementsController"
+            style="-fx-background-color: #1a1a1a;">
+
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- Titre et Bouton d'ajout -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="Équipements de la Salle"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="Ajouter Équipement" onAction="#ajouterEquipement"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
+        </HBox>
+
+        <!-- Message s'affiche si aucun équipement n'est présent -->
+        <Label fx:id="noEquipementsLabel" text="Aucun équipement disponible"
+               style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center;"
+               visible="false"/>
+
+        <!-- Tableau des équipements -->
+        <TableView fx:id="tableEquipements" VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: #262626; -fx-border-color: #ff8c00;">
+            <columns>
+                <TableColumn fx:id="colNom" text="Nom" prefWidth="150"/>
+                <TableColumn fx:id="colFonctionnement" text="État" prefWidth="100"/>
+                <TableColumn fx:id="colDerniereVerif" text="Dernière Vérification" prefWidth="150"/>
+                <TableColumn fx:id="colProchaineVerif" text="Prochaine Vérification" prefWidth="150"/>
+                <TableColumn fx:id="colActions" text="Actions" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.ModifierSalleController"
+            style="-fx-background-color: #1a1a1a;">
+    
+    <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20" 
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+        
+        <Label text="Modifier la Salle de Sport" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+        
+        <VBox style="-fx-background-color: #262626; -fx-padding: 20; -fx-background-radius: 10;" spacing="15">
+            <GridPane vgap="15" hgap="15">
+                <Label text="Nom:" 
+                       style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;"
+                       GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="nomField" 
+                          style="-fx-background-color: #333333; -fx-text-fill: white; -fx-prompt-text-fill: #808080; -fx-background-radius: 5;"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                
+                <Label text="Zone:" 
+                       style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;"
+                       GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="zoneField" 
+                          style="-fx-background-color: #333333; -fx-text-fill: white; -fx-prompt-text-fill: #808080; -fx-background-radius: 5;"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                
+                <Label text="Image:" 
+                       style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;"
+                       GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <TextField fx:id="imageUrlField" HBox.hgrow="ALWAYS"
+                              style="-fx-background-color: #333333; -fx-text-fill: white; -fx-prompt-text-fill: #808080; -fx-background-radius: 5;"/>
+                    <Button text="Parcourir" onAction="#choisirImage"
+                            style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-weight: bold; 
+                                   -fx-background-radius: 5; -fx-cursor: hand;"/>
+                </HBox>
+            </GridPane>
+            
+            <VBox alignment="CENTER" style="-fx-background-color: #333333; -fx-padding: 10; -fx-background-radius: 5;">
+                <ImageView fx:id="imagePreview" fitWidth="300" fitHeight="200" preserveRatio="true"/>
+            </VBox>
+        </VBox>
+        
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Enregistrer" onAction="#handleModifier"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-min-width: 120; -fx-min-height: 40; -fx-background-radius: 20;
+                           -fx-cursor: hand;"/>
+            
+            <Button text="Annuler" onAction="#annuler"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold;
+                           -fx-min-width: 120; -fx-min-height: 40; -fx-background-radius: 20;
+                           -fx-cursor: hand;"/>
+        </HBox>
+    </VBox>
+</AnchorPane> 
