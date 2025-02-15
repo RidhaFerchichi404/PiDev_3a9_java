@@ -8,5 +8,6 @@ public interface IServiceComment<T> {
     void update(T t) throws SQLException;
     void delete(T t) throws SQLException;
     ArrayList<T> afficherAllComments() throws SQLException;
+    ArrayList<T> getCommentsByPostId(int postId) throws SQLException;
 }
 

@@ -8,5 +8,5 @@ public interface IServicePost<T> {
     void update(T t) throws SQLException;
     void delete(T t) throws SQLException;
     ArrayList<T> afficherAllPosts() throws SQLException;
-
+    void getPostById(int postId) throws SQLException;
 }

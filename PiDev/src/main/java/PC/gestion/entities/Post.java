@@ -11,21 +11,35 @@ public class Post{
     private String description;
     private String image;
     private String type;
+    private int idUser;
 
 
     public Post() {
+    }
+    public Post(String description,String image,String type,int idUser) {
+        this.description = description;
+        this.image = image;
+        this.type = type;
+        this.idUser = idUser;
     }
     public Post(String description,String image,String type) {
         this.description = description;
         this.image = image;
         this.type = type;
     }
-
     public Post(int id, String description, String image, String type) {
         this.idp = id;
         this.description = description;
         this.image = image;
         this.type = type;
+    }
+
+    public Post(int id, String description, String image, String type,int idUser) {
+        this.idp = id;
+        this.description = description;
+        this.image = image;
+        this.type = type;
+        this.idUser = idUser;
     }
 
     public int getIdp() {
@@ -60,8 +74,16 @@ public class Post{
         this.type = type;
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser){
+        this.idUser = idUser;
+    }
+
     public String toString() {
-        return "Post{" + "idp=" + idp + ", description=" + description + ", image=" + image + ", type=" + type + '}';
+        return "Post{" + "idp=" + idp + ", description=" + description + ", image=" + image + ", type=" + type + ", idUser=" + idUser + '}';
     }
 
 }

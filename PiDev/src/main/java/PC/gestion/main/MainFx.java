@@ -24,8 +24,10 @@ public class MainFx extends Application {
             FXMLLoader ajouterLoader = new FXMLLoader(getClass().getResource("/ajouterPosts.fxml"));
             Parent ajouterRoot = ajouterLoader.load();
 
-            VBox vbox = new VBox(modifierRoot, ajouterRoot);
-            vbox.setStyle("-fx-border-color: black; -fx-border-width: 1;");
+            FXMLLoader listerLoader = new FXMLLoader(getClass().getResource("/listerPosts.fxml"));
+            Parent listerRoot = listerLoader.load();
+
+            VBox vbox = new VBox(listerRoot);
             Scene scene = new Scene(vbox);
 
             primaryStage.setTitle("Modifier and Ajouter Posts");

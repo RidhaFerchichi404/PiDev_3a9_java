@@ -4,7 +4,7 @@ import PC.gestion.services.IServiceComment;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public class Comment {
     private int id;
@@ -12,21 +12,24 @@ public class Comment {
     private Date date;
     private int likes;
     private int idPost;
+    private int idUser;
 
     public Comment() {
     }
-    public Comment(String comment, Date date, int likes, int idPost) {
+    public Comment(String comment, Date date, int likes, int idPost, int idUser) {
         this.comment = comment;
         this.date = date;
         this.likes = likes;
         this.idPost = idPost;
+        this.idUser = idUser;
     }
-    public Comment(int id, String comment, Date date, int likes, int idPost) {
+    public Comment(int id, String comment, Date date, int likes, int idPost, int idUser) {
         this.id = id;
         this.comment = comment;
         this.date = date;
         this.likes = likes;
         this.idPost = idPost;
+        this.idUser = idUser;
     }
     public int getId() {
         return id;
@@ -58,9 +61,15 @@ public class Comment {
     public void setIdPost(int idPost) {
         this.idPost = idPost;
     }
+    public int getIdUser() {
+        return idUser;
+    }
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
     @Override
     public String toString() {
-        System.out.println("Comment [id=" + id + ", comment=" + comment + ", date=" + date + ", likes=" + likes + ", idPost=" + idPost + "]");
-        return null;
+       return "Comment [id=" + id + ", comment=" + comment + ", date=" + date + ", likes=" + likes + ", idPost=" + idPost + ", idUser=" + idUser + "]";
     }
 }

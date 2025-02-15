@@ -53,7 +53,28 @@ public class ServiceComment implements IServiceComment<Comment> {
             Date date = rs.getDate("date");
             int likes = rs.getInt("likes");
             int idPost = rs.getInt("idPost");
-            Comment c = new Comment(id, comment, date, likes, idPost);
+            int idUser = rs.getInt("idUser");
+            Comment c = new Comment(id, comment, date, likes, idPost, idUser);
+            comments.add(c);
+        }
+        return comments;
+    }
+
+    @Override
+    public ArrayList<Comment> getCommentsByPostId(int postId) throws SQLException {
+        ArrayList<Comment> comments = new ArrayList<>();
+        String sql = "SELECT * FROM comment WHERE idPost = ?";
+        PreparedStatement pst = connection.prepareStatement(sql);
+        pst.setInt(1, postId);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String comment = rs.getString("comment");
+            Date date = rs.getDate("date");
+            int likes = rs.getInt("likes");
+            int idPost = rs.getInt("idPost");
+            int idUser = rs.getInt("idUser");
+            Comment c = new Comment(id, comment, date, likes, idPost, idUser);
             comments.add(c);
         }
         return comments;

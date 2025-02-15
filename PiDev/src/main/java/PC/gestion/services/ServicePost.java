@@ -61,6 +61,21 @@ public class ServicePost implements IServicePost<Post> {
         return posts;
     }
 
+    @Override
+    public void getPostById(int postId) throws SQLException {
+        String sql = "SELECT * FROM post WHERE idp = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, postId);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("idp");
+            String description = resultSet.getString("description");
+            String image = resultSet.getString("image");
+            String type = resultSet.getString("type");
+            Post post = new Post(id, description, image, type);
+        }
+    }
+
     public static ArrayList<Comment> getCommentsForPost(int postId) throws SQLException {
         ArrayList<Comment> comments = new ArrayList<>();
         String query = "SELECT * FROM Comment WHERE idPost = ?";
@@ -74,7 +89,8 @@ public class ServicePost implements IServicePost<Post> {
             Date date = resultSet.getDate("date");
             int likes = resultSet.getInt("likes");
             int idPost = resultSet.getInt("idPost");
-            Comment comment = new Comment(id, commentText, date, likes, idPost);
+            int idUser = resultSet.getInt("idUser");
+            Comment comment = new Comment(id, commentText, date, likes, idPost ,idUser);
             comments.add(comment);
         }
 
