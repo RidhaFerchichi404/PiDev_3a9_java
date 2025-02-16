@@ -19,6 +19,7 @@
 
             <Button text="Ajouter Équipement" onAction="#ajouterEquipement"
                     style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                           -fx-font-size: 14px; -fx-padding: 10 20;
                            -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;"/>
         </HBox>
 

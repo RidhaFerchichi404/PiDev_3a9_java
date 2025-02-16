@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AfficherExercicesController"
+            style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
+
+    <VBox spacing="15" alignment="CENTER">
+        <Label text="Exercices de l'Équipement"
+               style="-fx-font-size: 22px; -fx-text-fill: #ff8c00;"/>
+
+        <Button text="Ajouter un Exercice" fx:id="ajouterExerciceButton" onAction="#ajouterExercice"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                       -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 5;"/>
+
+        <Label fx:id="noExercicesLabel" text="Aucun exercice disponible"
+               style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center;"
+               visible="false"/>
+
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
+            <content>
+                <FlowPane fx:id="exercicesContainer" hgap="20" vgap="20"
+                          style="-fx-background-color: black; -fx-padding: 10;"
+                          prefWrapLength="800"/>
+            </content>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

@@ -75,6 +75,10 @@ public class AfficherEquipementsController {
         HBox buttonsBox = new HBox(10);
         buttonsBox.setStyle("-fx-padding: 10 0 0 0;");
 
+        Button voirExercicesButton = new Button("Voir Exercices");
+        voirExercicesButton.setStyle("-fx-background-color: #008CBA; -fx-text-fill: white; -fx-cursor: hand;");
+        voirExercicesButton.setOnAction(event -> voirExercices(equipement));
+
         Button editButton = new Button("Modifier");
         editButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-cursor: hand;");
         editButton.setOnAction(event -> modifierEquipement(equipement));
@@ -83,11 +87,13 @@ public class AfficherEquipementsController {
         deleteButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-cursor: hand;");
         deleteButton.setOnAction(event -> supprimerEquipement(equipement));
 
-        buttonsBox.getChildren().addAll(editButton, deleteButton);
+        // ✅ Ajouter le bouton "Voir Exercices"
+        buttonsBox.getChildren().addAll(voirExercicesButton, editButton, deleteButton);
 
         card.getChildren().addAll(nomLabel, etatLabel, derniereVerifLabel, prochaineVerifLabel, buttonsBox);
         return card;
     }
+
 
     @FXML
     private void ajouterEquipement() {
@@ -141,7 +147,22 @@ public class AfficherEquipementsController {
             }
         }
     }
+    private void voirExercices(Equipement equipement) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherExercices.fxml"));
+            Parent root = loader.load();
 
+            AfficherExercicesController controller = loader.getController();
+            controller.setIdEquipement(equipement.getId());
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Exercices - " + equipement.getNom());
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture de la liste des exercices", Alert.AlertType.ERROR);
+        }
+    }
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

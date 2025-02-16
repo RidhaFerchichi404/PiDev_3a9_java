@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AjouterExerciceController"
+            style="-fx-background-color: #1a1a1a;">
+
+    <VBox spacing="15" alignment="CENTER"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- Titre -->
+        <Label text="Ajouter un Exercice"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+
+        <!-- Champs de formulaire -->
+        <VBox spacing="10">
+            <Label text="Nom de l'exercice :" style="-fx-text-fill: white;"/>
+            <TextField fx:id="nomField" promptText="Entrez le nom de l'exercice"
+                       style="-fx-background-radius: 5; -fx-padding: 5;"/>
+
+            <Label text="Description :" style="-fx-text-fill: white;"/>
+            <TextArea fx:id="descriptionField" promptText="Décrivez l'exercice"
+                      wrapText="true"
+                      style="-fx-background-radius: 5; -fx-padding: 5;"/>
+
+            <Label text="Image :" style="-fx-text-fill: white;"/>
+            <ImageView fx:id="imagePreview" fitWidth="200" fitHeight="150"
+                       style="-fx-border-color: white; -fx-border-radius: 5;"/>
+
+            <Button text="Choisir une image" fx:id="choisirImageButton"
+                    onAction="#choisirImage"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </VBox>
+
+        <!-- Boutons d'action -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Enregistrer" fx:id="enregistrerButton"
+                    onAction="#enregistrerExercice"
+                    style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+
+            <Button text="Annuler" fx:id="annulerButton"
+                    onAction="#fermerFenetre"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </HBox>
+
+    </VBox>
+</AnchorPane>

@@ -26,6 +26,10 @@ public class Exercice {
         this.nomExercice = nomExercice;
     }
 
+    public Exercice() {
+
+    }
+
     public int getId() {
         return id;
     }
