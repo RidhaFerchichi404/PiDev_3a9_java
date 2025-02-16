@@ -1,42 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
+<AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="gui.AjouterEquipementController"
             style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
 
-    <VBox spacing="20" alignment="CENTER_LEFT">
-        <!-- ✅ Titre bien centré et en orange -->
+    <VBox spacing="15" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+        <!-- ✅ Titre -->
         <Label text="Ajouter un Équipement"
                style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
-        <!-- ✅ Conteneur pour bien aligner les labels et les champs -->
-        <GridPane hgap="15" vgap="15">
-            <Label text="Nom :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="nomField" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <VBox spacing="10" style="-fx-background-color: #262626; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10;">
 
-            <Label text="Fonctionnement :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <CheckBox fx:id="fonctionnementCheck" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- 🔹 Nom de l'équipement -->
+            <HBox spacing="10">
+                <Label text="Nom :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                <TextField fx:id="nomField" promptText="Nom de l'équipement" style="-fx-background-radius: 5; -fx-padding: 5;"/>
+            </HBox>
 
-            <Label text="Dernière Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="derniereVerifDate" prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <!-- 🔹 Fonctionnement -->
+            <HBox spacing="10">
+                <Label text="Fonctionnel :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                <CheckBox fx:id="fonctionnementCheck"/>
+            </HBox>
 
-            <Label text="Prochaine Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="prochaineVerifDate" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-        </GridPane>
+            <!-- 🔹 Dates de vérification -->
+            <HBox spacing="20">
+                <VBox>
+                    <Label text="Dernière Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <DatePicker fx:id="derniereVerifDate"/>
+                </VBox>
 
-        <!-- ✅ Boutons bien espacés et alignés en bas -->
-        <HBox spacing="15" alignment="CENTER">
-            <Button text="Annuler" onAction="#fermerFenetre"
-                    style="-fx-background-color: #ff4444; -fx-text-fill: white;
-                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
-            <Button text="Enregistrer" onAction="#enregistrerEquipement"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;
-                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <VBox>
+                    <Label text="Prochaine Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <DatePicker fx:id="prochaineVerifDate"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- ✅ Boutons d'action -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Enregistrer" fx:id="enregistrerButton"
+                    onAction="#enregistrerEquipement"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 15;"/>
+
+            <Button text="Annuler" fx:id="fermerButton"
+                    onAction="#fermerFenetre"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 15;"/>
         </HBox>
     </VBox>
 </AnchorPane>

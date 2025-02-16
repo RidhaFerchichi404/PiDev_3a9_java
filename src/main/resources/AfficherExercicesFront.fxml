@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AfficherExercicesFrontController"
+            style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
+
+    <VBox spacing="15" alignment="CENTER" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"
+          AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+
+        <!-- Titre centré -->
+        <Label text="🏋️ Exercices de l'Équipement 🏋️"
+               style="-fx-font-size: 24px; -fx-text-fill: #ff8c00; -fx-font-weight: bold;"/>
+
+        <!-- Conteneur des cartes -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background:  BLACK; -fx-border-color: #ff8c00;">
+            <FlowPane fx:id="exercicesContainer" hgap="20" vgap="20"
+                      style="-fx-background-color:  BLACK; -fx-padding: 10; -fx-alignment: center;"
+                      prefWrapLength="900"/>
+        </ScrollPane>
+
+        <!-- Bouton Retour -->
+        <Button text="Retour" fx:id="btnRetour" onAction="#retourner"
+                style="-fx-background-color: #ff0000; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-background-radius: 5;"/>
+    </VBox>
+</AnchorPane>

@@ -10,22 +10,27 @@
             style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
 
     <VBox spacing="15" alignment="CENTER">
+        <!-- ✅ Titre Principal -->
         <Label text="Exercices de l'Équipement"
-               style="-fx-font-size: 22px; -fx-text-fill: #ff8c00;"/>
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
-        <Button text="Ajouter un Exercice" fx:id="ajouterExerciceButton" onAction="#ajouterExercice"
+        <!-- ✅ Bouton Ajouter -->
+        <Button text="➕ Ajouter un Exercice" fx:id="ajouterExerciceButton" onAction="#ajouterExercice"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white;
-                       -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 5;"/>
+                       -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8;"/>
 
+        <!-- ✅ Message Aucun Exercice -->
         <Label fx:id="noExercicesLabel" text="Aucun exercice disponible"
-               style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center;"
+               style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center; -fx-font-weight: bold;"
                visible="false"/>
 
-        <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
+        <!-- ✅ Conteneur avec défilement horizontal -->
+        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="ALWAYS" vbarPolicy="NEVER"
+                    style="-fx-background: transparent; -fx-border-color: #ff8c00; -fx-border-width: 1px; -fx-padding: 10;">
             <content>
                 <FlowPane fx:id="exercicesContainer" hgap="20" vgap="20"
                           style="-fx-background-color: black; -fx-padding: 10;"
-                          prefWrapLength="800"/>
+                          prefWrapLength="1200"/> <!-- ✅ Largeur ajustée -->
             </content>
         </ScrollPane>
     </VBox>

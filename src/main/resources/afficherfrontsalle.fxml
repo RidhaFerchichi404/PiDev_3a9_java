@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.AfficherSallesFrontController"
+            minWidth="600" minHeight="400"
+            style="-fx-background-color: #000000; -fx-padding: 20;">
+
+    <VBox spacing="20"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20"
+          style="-fx-alignment: center;">
+
+        <!-- ✅ Titre avec effet -->
+        <Label text="🏋️ Welcome to Sportify 🏋️"
+               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+
+        <!-- ✅ Conteneur avec défilement fluide -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    style="-fx-background: BLACK; -fx-border-color: #ff8c00;">
+            <FlowPane fx:id="cardsContainer" hgap="30" vgap="30"
+                      style="-fx-background-color: BLACK; -fx-alignment: center; -fx-padding: 15;"/>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>
