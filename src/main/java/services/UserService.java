@@ -127,4 +127,46 @@ public class UserService implements IService<User> {
 
         return null;
     }
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        String query = "SELECT * FROM user";
+        try (Statement st = cnx.createStatement(); ResultSet rs = st.executeQuery(query)) {
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getLong("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setRole(rs.getString("role"));
+                user.setSubscriptionEndDate(rs.getDate("subscription_end_date") != null ? rs.getDate("subscription_end_date").toLocalDate() : null);
+                user.setActive(rs.getBoolean("is_active"));
+                user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+                user.setViolationCount(rs.getInt("violation_count"));
+                user.setLocation(rs.getString("location"));
+                user.setCin(rs.getString("cin"));
+                user.setAge(rs.getInt("age"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
+    public void deleteUser(User user) {
+        String query = "DELETE FROM user WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setLong(1, user.getId());
+            ps.executeUpdate();
+            System.out.println("User with ID " + user.getId() + " deleted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -4,39 +4,58 @@
     -fx-padding: 10;
 }
 
-/* Header styling */
-.header-label {
-    -fx-text-fill: #ff6600;
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(255,102,0,0.33), 10, 0.3, 0, 0);
-    -fx-alignment: center;
-}
-
-/* Form container styling */
-.form-container {
-    -fx-background-color: #2a2a2a;
-    -fx-background-radius: 10;
-}
-
-/* Label styling */
-.form-label {
-    -fx-text-fill: white;
+/* Barre de recherche */
+.text-field {
     -fx-font-size: 14px;
-    -fx-alignment: center-left;
+    -fx-padding: 5;
 }
 
-/* TextField styling */
-.form-textfield {
-    -fx-background-color: white;
+/* Conteneur des cartes (FlowPane) */
+.flow-pane {
+    -fx-background-color: #2a2a2a;
+    -fx-padding: 10;
+}
+
+/* Style de la carte de profil */
+.profile-card {
+    -fx-background-color: #333333;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #ff6600;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+}
+
+/* Style pour le nom du profil */
+.profile-name {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Style pour l'email */
+.profile-email {
+    -fx-text-fill: lightgray;
+    -fx-font-size: 14px;
+}
+
+/* Bouton Modifier */
+.modify-button {
+    -fx-background-color: #ff6600;
+    -fx-text-fill: white;
     -fx-background-radius: 5;
-    -fx-pref-height: 35px;
-    -fx-prompt-text-fill: #666;
-    -fx-border-color: transparent;
-    -fx-focus-color: #ff6600;
+    -fx-cursor: hand;
 }
 
-/* Submit button styling */
+/* Bouton Supprimer */
+.delete-button {
+    -fx-background-color: #ff0000;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+/* Exemple de style pour un bouton de soumission (si besoin) */
 .submit-button {
     -fx-background-color: #ff6600;
     -fx-text-fill: white;

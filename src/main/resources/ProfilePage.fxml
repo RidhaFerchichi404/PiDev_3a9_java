@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/20"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.ProfilePageController"
+      spacing="10" padding="10" styleClass="main-container">
+
+    <!-- Barre de recherche -->
+    <TextField fx:id="searchField" promptText="Rechercher un utilisateur..." />
+
+    <!-- Zone d'affichage des cartes -->
+    <ScrollPane fitToWidth="true">
+        <content>
+            <FlowPane fx:id="cardsPane" hgap="10" vgap="10" padding="10"/>
+        </content>
+    </ScrollPane>
+</VBox>
