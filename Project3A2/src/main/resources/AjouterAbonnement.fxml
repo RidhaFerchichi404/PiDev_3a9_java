@@ -30,5 +30,7 @@
 
       <!-- Bouton Ajouter -->
       <Button fx:id="BTAjouter" layoutX="250.0" layoutY="330.0" onAction="#AjouterAbonnement" style="-fx-background-color: #28B463; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;" text="Ajouter" />
+      <Button fx:id="BTModifier" layoutX="400.0" layoutY="330.0" onAction="#naviguerVersModification" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;" text="Modifier" />
+      <Button layoutX="400.0" layoutY="380.0" onAction="#naviguerVersAffichage" text="Afficher" />
    </children>
 </AnchorPane>

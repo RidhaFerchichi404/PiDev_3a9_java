@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherAbonnement">
+    <children>
+        <Label layoutX="200.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des Abonnements" />
+
+        <TableView fx:id="tableAbonnements" layoutX="50.0" layoutY="60.0" prefHeight="300.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="colNom" prefWidth="100.0" text="Nom" />
+                <TableColumn fx:id="colDescription" prefWidth="150.0" text="Description" />
+                <TableColumn fx:id="colDuree" prefWidth="75.0" text="Durée" />
+                <TableColumn fx:id="colPrix" prefWidth="75.0" text="Prix" />
+                <TableColumn fx:id="colSalleNom" prefWidth="100.0" text="Salle" />
+                <TableColumn fx:id="colActions" prefWidth="100.0" text="Actions" />
+            </columns>
+        </TableView>
+
+        <Button layoutX="250.0" layoutY="380.0" onAction="#naviguerVersAjout" text="Ajouter un abonnement" />
+    </children>
+</AnchorPane>

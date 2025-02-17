@@ -70,22 +70,52 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         return 0; // Retourner 0 si aucune salle n'est trouvée
     }*/
 
-
-
-    @Override
-    public void update(Abonnement abonnement) throws SQLException {
-        String query = "UPDATE Abonnement SET  Description = ? WHERE AbonnementID = ?";
+    public Abonnement getAbonnementByNom(String nom) throws SQLException {
+        String query = "SELECT * FROM Abonnement WHERE Nom = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-           stmt.setString(1, abonnement.getNom());               // Nom de l'abonnement
-            stmt.setString(2, abonnement.getdescriptiona());        // Description
-            stmt.setInt(3, abonnement.getDuree());                 // Durée
-            stmt.setDouble(4, abonnement.getPrix());               // Prix
-            stmt.setInt(5, abonnement.getSalleDeSportId());        // ID de la salle de sport
-            stmt.setString(6, abonnement.getSalleNom());           // Nom de la salle de sport
-            stmt.setInt(2, abonnement.getId());          // ID de l'abonnement
-            stmt.executeUpdate();                                  // Exécution de la mise à jour
+            stmt.setString(1, nom);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Abonnement abonnement = new Abonnement();
+                    abonnement.setNom(rs.getString("Nom"));
+                    abonnement.setDescriptiona(rs.getString("Description"));
+                    abonnement.setDuree(rs.getInt("Duree"));
+                    abonnement.setPrix(rs.getDouble("Prix"));
+                    abonnement.setSalleDeSportId(rs.getInt("SalleID"));
+                    abonnement.setSalleNom(rs.getString("SalleName"));
+                    return abonnement;
+                }
+            }
+        }
+        return null; // Aucun abonnement trouvé
+    }
+
+    /*public void update(Abonnement abonnement) throws SQLException {
+        String query = "UPDATE Abonnement SET Description = ?, duree = ?, Prix = ?, SalleName = ? , SalleID = ? WHERE Nom = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setString(1, abonnement.getdescriptiona());
+            stmt.setInt(2, abonnement.getDuree());
+            stmt.setDouble(3, abonnement.getPrix());
+            stmt.setString(4, abonnement.getSalleNom());
+            stmt.setString(5, abonnement.getNom());
+            stmt.setInt(6, abonnement.getSalleDeSportId());
+            stmt.executeUpdate();
+        }
+    }*/
+    public void update(Abonnement abonnement) throws SQLException {
+        if (abonnement == null) {
+            throw new IllegalArgumentException("L'objet Abonnement ne peut pas être null.");
         }
 
+        String query = "UPDATE Abonnement SET Description = ?, duree = ?, Prix = ?, SalleName = ? WHERE Nom = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setString(1, abonnement.getdescriptiona());
+            stmt.setInt(2, abonnement.getDuree());
+            stmt.setDouble(3, abonnement.getPrix());
+            stmt.setString(4, abonnement.getSalleNom());
+            stmt.setString(5, abonnement.getNom());
+            stmt.executeUpdate();
+        }
     }
 
     @Override
@@ -95,16 +125,14 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             stmt.setInt(1, abonnement.getId());          // ID de l'abonnement à supprimer
             stmt.executeUpdate();                                  // Exécution de la suppression
         }
-
     }
 
-    /*public List<Abonnement> readAll() throws SQLException {
+    public List<Abonnement> readAll() throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();
         String query = "SELECT * FROM Abonnement";
         try (Statement stmt = cnx.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Abonnement abonnement = new Abonnement();
-                abonnement.setId(rs.getInt("AbonnementID"));
                 abonnement.setNom(rs.getString("Nom"));
                 abonnement.setdescriptiona(rs.getString("Description"));
                 abonnement.setDuree(rs.getInt("Duree"));
@@ -115,5 +143,5 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             }
         }
         return abonnements;
-    }*/
+    }
 }

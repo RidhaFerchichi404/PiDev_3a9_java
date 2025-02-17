@@ -3,12 +3,17 @@ package gui;
 import entities.Abonnement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import services.AbonnementService;
+
+import java.io.IOException;
 
 public class AjouterAbonnement {
     @FXML
@@ -25,6 +30,9 @@ public class AjouterAbonnement {
     private Button BTAjouter;
     private VBox mainContainer;
     private Parent modifierRoot;
+    @FXML
+    private Parent afficherRoot;
+
 
     public void setMainContainer(VBox mainContainer) {
         this.mainContainer = mainContainer;
@@ -34,7 +42,12 @@ public class AjouterAbonnement {
         this.modifierRoot = modifierRoot;
     }
 
-
+    @FXML
+    void naviguerVersAffichage(ActionEvent event) {
+        if (mainContainer != null && afficherRoot != null) {
+            mainContainer.getChildren().setAll(afficherRoot); // Afficher la vue d'affichage
+        }
+    }
     @FXML
     void AjouterAbonnement(ActionEvent event) {
         try {
@@ -90,5 +103,11 @@ public class AjouterAbonnement {
             e.printStackTrace();
 
         }}
+    @FXML
+    void naviguerVersModification(ActionEvent event) {
+        if (mainContainer != null && modifierRoot != null) {
+            mainContainer.getChildren().setAll(modifierRoot); // Afficher la vue de modification
+        }
+    }
 
         }
