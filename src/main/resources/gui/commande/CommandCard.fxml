@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.commande.CommandCardController"
+      style="-fx-background-color: #2d2d2d; -fx-padding: 15; -fx-background-radius: 8;">
+    
+    <VBox spacing="5">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="orderIdLabel" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="dateLabel" style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;"/>
+        </HBox>
+        
+        <Separator style="-fx-background-color: #444444;"/>
+        
+        <Label fx:id="clientLabel" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        <Label fx:id="productLabel" style="-fx-font-size: 14; -fx-text-fill: #FF8C00;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="quantityLabel" style="-fx-text-fill: #bbbbbb;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel" style="-fx-padding: 3 8; -fx-background-radius: 12; -fx-font-size: 11;"/>
+        </HBox>
+        
+        <VBox spacing="5" style="-fx-padding: 10 0;">
+            <Label fx:id="phoneLabel" style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;"/>
+            <Label fx:id="addressLabel" style="-fx-text-fill: #bbbbbb; -fx-font-size: 12;" wrapText="true"/>
+        </VBox>
+        
+        <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+            <Button text="Modifier" onAction="#handleEdit" 
+                    style="-fx-background-color: #FF8C00; -fx-text-fill: white;"/>
+            <Button text="Supprimer" onAction="#handleDelete" 
+                    style="-fx-background-color: #FF0000; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</VBox> 

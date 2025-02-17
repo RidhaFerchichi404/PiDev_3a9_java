@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+
+<BorderPane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" 
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="gui.main.MainWindowController"
+            style="-fx-background-color: linear-gradient(to bottom right, #1a1a1a, #2d2d2d);">
+    
+    <top>
+        <!-- Modern Navigation Bar with Gradient -->
+        <HBox spacing="15" alignment="CENTER_LEFT" 
+              style="-fx-background-color: linear-gradient(to right, #2d2d2d, #1a1a1a);
+                     -fx-padding: 15 25;
+                     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);">
+            
+            <!-- Logo Area -->
+            <StackPane>
+                <Label text="SPORTIFY" 
+                       style="-fx-font-size: 24; 
+                              -fx-font-weight: bold;
+                              -fx-text-fill: linear-gradient(to right, #FF8C00, #FFA500);
+                              -fx-effect: dropshadow(gaussian, rgba(255,140,0,0.3), 10, 0, 0, 0);"/>
+            </StackPane>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Navigation Buttons with Hover Effects -->
+            <Button text="Produits" onAction="#showProduitsList"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-padding: 10 20;
+                           -fx-border-radius: 5;
+                           -fx-background-radius: 5;
+                           -fx-border-color: #FF8C00;
+                           -fx-cursor: hand;">
+                <graphic>
+                    <Label text="🏋️" style="-fx-text-fill: white;"/>
+                </graphic>
+            </Button>
+
+            <Button text="Commandes" onAction="#showCommandesList"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-padding: 10 20;
+                           -fx-border-radius: 5;
+                           -fx-background-radius: 5;
+                           -fx-border-color: #FF8C00;
+                           -fx-cursor: hand;">
+                <graphic>
+                    <Label text="📦" style="-fx-text-fill: white;"/>
+                </graphic>
+            </Button>
+        </HBox>
+    </top>
+    
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 40;">
+            <!-- Welcome Text with Gradient -->
+            <Label text="Bienvenue dans votre application" 
+                   style="-fx-font-size: 32;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: linear-gradient(to right, #FF8C00, #FFA500);
+                          -fx-effect: dropshadow(gaussian, rgba(255,140,0,0.3), 15, 0, 0, 0);"/>
+            
+            <Label text="Gestion des Produits et Commandes" 
+                   style="-fx-font-size: 18;
+                          -fx-text-fill: #bbbbbb;
+                          -fx-font-style: italic;"/>
+            
+            <!-- Quick Action Buttons with Modern Styling -->
+            <HBox spacing="30" alignment="CENTER" style="-fx-padding: 40 0;">
+                <Button text="Nouveau Produit" onAction="#showProduitsList"
+                        style="-fx-background-color: linear-gradient(to right, #FF8C00, #FFA500);
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-padding: 15 30;
+                               -fx-font-size: 16;
+                               -fx-background-radius: 25;
+                               -fx-effect: dropshadow(gaussian, rgba(255,140,0,0.4), 10, 0, 0, 0);
+                               -fx-cursor: hand;">
+                    <graphic>
+                        <Label text="🏋️" style="-fx-text-fill: white; -fx-font-size: 24;"/>
+                    </graphic>
+                </Button>
+
+                <Button text="Nouvelle Commande" onAction="#showCommandesList"
+                        style="-fx-background-color: linear-gradient(to right, #32CD32, #3ED63E);
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;
+                               -fx-padding: 15 30;
+                               -fx-font-size: 16;
+                               -fx-background-radius: 25;
+                               -fx-effect: dropshadow(gaussian, rgba(50,205,50,0.4), 10, 0, 0, 0);
+                               -fx-cursor: hand;">
+                    <graphic>
+                        <Label text="📦" style="-fx-text-fill: white; -fx-font-size: 24;"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" 
+              style="-fx-background-color: linear-gradient(to right, #2d2d2d, #1a1a1a);
+                     -fx-padding: 15;">
+            <Label text="© 2024 Sportify - Gestion des Produits et Commandes" 
+                   style="-fx-text-fill: #bbbbbb;
+                          -fx-font-style: italic;"/>
+        </HBox>
+    </bottom>
+</BorderPane> 

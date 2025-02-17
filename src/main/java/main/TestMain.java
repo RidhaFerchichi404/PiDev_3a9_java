@@ -1,19 +1,16 @@
 package main;
 
-import entities.Coach;
-import entities.Course;
-import services.CoachService;
-import services.CourseService;
+import entities.*;
+import services.services.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class TestMain {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final CoachService coachService = new CoachService();
-    private static final CourseService courseService = new CourseService();
+    private static final ProduitService produitService = new ProduitService();
+    private static final CommandeService commandeService = new CommandeService();
 
     public static void main(String[] args) {
         while (true) {
@@ -23,8 +20,8 @@ public class TestMain {
                 scanner.nextLine(); // Clear buffer
 
                 switch (choice) {
-                    case 1 -> handleCoachOperations();
-                    case 2 -> handleCourseOperations();
+                    case 1 -> handleProduitOperations();
+                    case 2 -> handleCommandeOperations();
                     case 0 -> {
                         System.out.println("Au revoir!");
                         return;
@@ -40,24 +37,24 @@ public class TestMain {
 
     private static void showMainMenu() {
         System.out.println("\n=== Menu Principal ===");
-        System.out.println("1. Gérer les Coachs");
-        System.out.println("2. Gérer les Cours");
+        System.out.println("1. Gérer les Produits");
+        System.out.println("2. Gérer les Commandes");
         System.out.println("0. Quitter");
         System.out.print("Votre choix: ");
     }
 
-    private static void handleCoachOperations() {
+    private static void handleProduitOperations() {
         while (true) {
             try {
-                showCoachMenu();
+                showProduitMenu();
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Clear buffer
 
                 switch (choice) {
-                    case 1 -> createCoach();
-                    case 2 -> displayAllCoaches();
-                    case 3 -> updateCoach();
-                    case 4 -> deleteCoach();
+                    case 1 -> createProduit();
+                    case 2 -> displayAllProduits();
+                    case 3 -> updateProduit();
+                    case 4 -> deleteProduit();
                     case 0 -> {
                         return;
                     }
@@ -70,18 +67,18 @@ public class TestMain {
         }
     }
 
-    private static void handleCourseOperations() {
+    private static void handleCommandeOperations() {
         while (true) {
             try {
-                showCourseMenu();
+                showCommandeMenu();
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Clear buffer
 
                 switch (choice) {
-                    case 1 -> createCourse();
-                    case 2 -> displayAllCourses();
-                    case 3 -> updateCourse();
-                    case 4 -> deleteCourse();
+                    case 1 -> createCommande();
+                    case 2 -> displayAllCommandes();
+                    case 3 -> updateCommande();
+                    case 4 -> deleteCommande();
                     case 0 -> {
                         return;
                     }
@@ -94,143 +91,146 @@ public class TestMain {
         }
     }
 
-    private static void showCoachMenu() {
-        System.out.println("\n=== Gestion des Coachs ===");
-        System.out.println("1. Ajouter un coach");
-        System.out.println("2. Afficher tous les coachs");
-        System.out.println("3. Modifier un coach");
-        System.out.println("4. Supprimer un coach");
+    private static void showProduitMenu() {
+        System.out.println("\n=== Gestion des Produits ===");
+        System.out.println("1. Ajouter un produit");
+        System.out.println("2. Afficher tous les produits");
+        System.out.println("3. Modifier un produit");
+        System.out.println("4. Supprimer un produit");
         System.out.println("0. Retour au menu principal");
         System.out.print("Votre choix: ");
     }
 
-    private static void showCourseMenu() {
-        System.out.println("\n=== Gestion des Cours ===");
-        System.out.println("1. Ajouter un cours");
-        System.out.println("2. Afficher tous les cours");
-        System.out.println("3. Modifier un cours");
-        System.out.println("4. Supprimer un cours");
+    private static void showCommandeMenu() {
+        System.out.println("\n=== Gestion des Commandes ===");
+        System.out.println("1. Ajouter une commande");
+        System.out.println("2. Afficher toutes les commandes");
+        System.out.println("3. Modifier une commande");
+        System.out.println("4. Supprimer une commande");
         System.out.println("0. Retour au menu principal");
         System.out.print("Votre choix: ");
     }
 
-    private static void createCoach() throws Exception {
-        System.out.println("\n=== Création d'un Coach ===");
+    private static void createProduit() throws Exception {
+        System.out.println("\n=== Création d'un Produit ===");
         System.out.print("Nom: ");
         String nom = scanner.nextLine();
-        System.out.print("Prénom: ");
-        String prenom = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Téléphone: ");
-        String telephone = scanner.nextLine();
-        System.out.print("Spécialité: ");
-        String specialite = scanner.nextLine();
-        System.out.print("Salaire: ");
-        BigDecimal salaire = scanner.nextBigDecimal();
-
-        Coach coach = new Coach(nom, prenom, email, telephone, specialite, salaire, LocalDate.now());
-        coachService.create(coach);
-        System.out.println("Coach créé avec succès!");
-    }
-
-    private static void displayAllCoaches() throws Exception {
-        System.out.println("\n=== Liste des Coachs ===");
-        coachService.readAll().forEach(System.out::println);
-    }
-
-    private static void updateCoach() throws Exception {
-        System.out.println("\n=== Modification d'un Coach ===");
-        displayAllCoaches();
-        System.out.print("Entrez l'ID du coach à modifier: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Clear buffer
-
-        Coach coach = coachService.readById(id);
-        if (coach == null) {
-            System.out.println("Coach non trouvé!");
-            return;
-        }
-
-        System.out.print("Nouveau téléphone (Enter pour garder l'ancien): ");
-        String telephone = scanner.nextLine();
-        if (!telephone.isEmpty()) coach.setTelephone(telephone);
-
-        System.out.print("Nouveau salaire (0 pour garder l'ancien): ");
-        BigDecimal salaire = scanner.nextBigDecimal();
-        if (salaire.compareTo(BigDecimal.ZERO) != 0) coach.setSalaire(salaire);
-
-        coachService.update(coach);
-        System.out.println("Coach modifié avec succès!");
-    }
-
-    private static void deleteCoach() throws Exception {
-        System.out.println("\n=== Suppression d'un Coach ===");
-        displayAllCoaches();
-        System.out.print("Entrez l'ID du coach à supprimer: ");
-        int id = scanner.nextInt();
-        coachService.delete(id);
-        System.out.println("Coach supprimé avec succès!");
-    }
-
-    private static void createCourse() throws Exception {
-        System.out.println("\n=== Création d'un Cours ===");
-        System.out.print("Nom du cours: ");
-        String nomCours = scanner.nextLine();
         System.out.print("Description: ");
         String description = scanner.nextLine();
-        System.out.print("Heure (HH:mm): ");
-        String heureStr = scanner.nextLine();
-        LocalTime horaire = LocalTime.parse(heureStr);
-        System.out.print("Jour: ");
-        String jour = scanner.nextLine();
-        System.out.print("Durée (minutes): ");
-        int duree = scanner.nextInt();
+        System.out.print("Catégorie: ");
+        String categorie = scanner.nextLine();
+        System.out.print("Prix: ");
+        BigDecimal prix = scanner.nextBigDecimal();
+        System.out.print("Quantité en stock: ");
+        int quantiteStock = scanner.nextInt();
+        System.out.print("Disponible (true/false): ");
+        boolean disponible = scanner.nextBoolean();
 
-        displayAllCoaches();
-        System.out.print("ID du coach: ");
-        int idCoach = scanner.nextInt();
-
-        Course course = new Course(nomCours, description, horaire, jour, duree, idCoach);
-        courseService.create(course);
-        System.out.println("Cours créé avec succès!");
+        Produit produit = new Produit(nom, description, categorie, prix, quantiteStock, disponible);
+        produitService.create(produit);
+        System.out.println("Produit créé avec succès!");
     }
 
-    private static void displayAllCourses() throws Exception {
-        System.out.println("\n=== Liste des Cours ===");
-        courseService.readAll().forEach(System.out::println);
+    private static void displayAllProduits() throws Exception {
+        System.out.println("\n=== Liste des Produits ===");
+        produitService.readAll().forEach(System.out::println);
     }
 
-    private static void updateCourse() throws Exception {
-        System.out.println("\n=== Modification d'un Cours ===");
-        displayAllCourses();
-        System.out.print("Entrez l'ID du cours à modifier: ");
+    private static void updateProduit() throws Exception {
+        System.out.println("\n=== Modification d'un Produit ===");
+        displayAllProduits();
+        System.out.print("Entrez l'ID du produit à modifier: ");
         int id = scanner.nextInt();
         scanner.nextLine(); // Clear buffer
 
-        Course course = courseService.readById(id);
-        if (course == null) {
-            System.out.println("Cours non trouvé!");
+        Produit produit = produitService.readById(id);
+        if (produit == null) {
+            System.out.println("Produit non trouvé!");
             return;
         }
 
-        System.out.print("Nouveau jour (Enter pour garder l'ancien): ");
-        String jour = scanner.nextLine();
-        if (!jour.isEmpty()) course.setJour(jour);
+        System.out.print("Nouveau prix (0 pour garder l'ancien): ");
+        BigDecimal prix = scanner.nextBigDecimal();
+        if (prix.compareTo(BigDecimal.ZERO) != 0) produit.setPrix(prix);
 
-        System.out.print("Nouvelle durée (0 pour garder l'ancienne): ");
-        int duree = scanner.nextInt();
-        if (duree != 0) course.setDuree(duree);
+        System.out.print("Nouvelle quantité en stock (-1 pour garder l'ancienne): ");
+        int quantite = scanner.nextInt();
+        if (quantite != -1) produit.setQuantiteStock(quantite);
 
-        courseService.update(course);
-        System.out.println("Cours modifié avec succès!");
+        produitService.update(produit);
+        System.out.println("Produit modifié avec succès!");
     }
 
-    private static void deleteCourse() throws Exception {
-        System.out.println("\n=== Suppression d'un Cours ===");
-        displayAllCourses();
-        System.out.print("Entrez l'ID du cours à supprimer: ");
+    private static void deleteProduit() throws Exception {
+        System.out.println("\n=== Suppression d'un Produit ===");
+        displayAllProduits();
+        System.out.print("Entrez l'ID du produit à supprimer: ");
         int id = scanner.nextInt();
-        courseService.delete(id);
-        System.out.println("Cours supprimé avec succès!");
-    } }
+        produitService.delete(id);
+        System.out.println("Produit supprimé avec succès!");
+    }
+
+    private static void createCommande() throws Exception {
+        System.out.println("\n=== Création d'une Commande ===");
+        displayAllProduits();
+        System.out.print("ID du produit: ");
+        int idProduit = scanner.nextInt();
+        scanner.nextLine(); // Clear buffer
+        
+        System.out.print("Nom du client: ");
+        String nomClient = scanner.nextLine();
+        System.out.print("Adresse de livraison: ");
+        String adresseLivraison = scanner.nextLine();
+        System.out.print("Téléphone: ");
+        String telephone = scanner.nextLine();
+        System.out.print("Quantité: ");
+        int quantite = scanner.nextInt();
+        scanner.nextLine(); // Clear buffer
+
+        Commande commande = new Commande(
+            idProduit, nomClient, adresseLivraison, telephone, quantite,
+            LocalDateTime.now(), "En attente"
+        );
+        commandeService.create(commande);
+        System.out.println("Commande créée avec succès!");
+    }
+
+    private static void displayAllCommandes() throws Exception {
+        System.out.println("\n=== Liste des Commandes ===");
+        commandeService.readAll().forEach(System.out::println);
+    }
+
+    private static void updateCommande() throws Exception {
+        System.out.println("\n=== Modification d'une Commande ===");
+        displayAllCommandes();
+        System.out.print("Entrez l'ID de la commande à modifier: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Clear buffer
+
+        Commande commande = commandeService.readById(id);
+        if (commande == null) {
+            System.out.println("Commande non trouvée!");
+            return;
+        }
+
+        System.out.print("Nouveau statut (Enter pour garder l'ancien): ");
+        String statut = scanner.nextLine();
+        if (!statut.isEmpty()) commande.setStatutCommande(statut);
+
+        System.out.print("Nouvelle quantité (0 pour garder l'ancienne): ");
+        int quantite = scanner.nextInt();
+        if (quantite != 0) commande.setQuantite(quantite);
+
+        commandeService.update(commande);
+        System.out.println("Commande modifiée avec succès!");
+    }
+
+    private static void deleteCommande() throws Exception {
+        System.out.println("\n=== Suppression d'une Commande ===");
+        displayAllCommandes();
+        System.out.print("Entrez l'ID de la commande à supprimer: ");
+        int id = scanner.nextInt();
+        commandeService.delete(id);
+        System.out.println("Commande supprimée avec succès!");
+    }
+}

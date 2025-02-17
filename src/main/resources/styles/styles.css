@@ -1,0 +1,213 @@
+/* General Styles */
+.root {
+    -fx-background-color: #1a1a1a;
+}
+
+/* Text Colors for Dark Theme */
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.text-field, .text-area {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #888888;
+}
+
+/* Buttons */
+.primary-button {
+    -fx-background-color: #FF8C00; /* Orange */
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+}
+
+.primary-button:hover {
+    -fx-background-color: #FFA500;
+}
+
+.secondary-button {
+    -fx-background-color: #32CD32; /* Green */
+    -fx-text-fill: white;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #3ED63E;
+}
+
+/* Search and Filter Controls */
+.text-field, .combo-box {
+    -fx-padding: 8 12;
+    -fx-background-radius: 5;
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #333333;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #333333;
+}
+
+/* Cards */
+.product-card, .command-card {
+    -fx-background-color: #2d2d2d;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);
+    -fx-padding: 15;
+}
+
+.product-card:hover, .command-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255,140,0,0.3), 15, 0, 0, 4);
+    -fx-background-color: #363636;
+}
+
+/* Product Card Specific */
+.product-name {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.product-category {
+    -fx-text-fill: #bbbbbb;
+}
+
+.product-price {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FF8C00; /* Orange */
+}
+
+.product-stock {
+    -fx-text-fill: #bbbbbb;
+}
+
+/* Status Styles */
+.status-available {
+    -fx-background-color: #1b5e20;
+    -fx-text-fill: #ffffff;
+}
+
+.status-unavailable {
+    -fx-background-color: #b71c1c;
+    -fx-text-fill: #ffffff;
+}
+
+/* Command Card Specific */
+.command-id {
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.command-date {
+    -fx-text-fill: #bbbbbb;
+}
+
+.command-client {
+    -fx-text-fill: white;
+}
+
+.command-product {
+    -fx-text-fill: #FF8C00; /* Orange */
+}
+
+/* Action Buttons */
+.edit-button {
+    -fx-background-color: #FF8C00; /* Orange */
+    -fx-text-fill: white;
+}
+
+.edit-button:hover {
+    -fx-background-color: #FFA500;
+}
+
+.delete-button {
+    -fx-background-color: #FF0000; /* Red */
+    -fx-text-fill: white;
+}
+
+.delete-button:hover {
+    -fx-background-color: #FF3333;
+}
+
+/* Status Colors for Commands */
+.status-pending {
+    -fx-background-color: #FF8C00;
+    -fx-text-fill: white;
+}
+
+.status-processing {
+    -fx-background-color: #0288D1;
+    -fx-text-fill: white;
+}
+
+.status-delivered {
+    -fx-background-color: #2E7D32;
+    -fx-text-fill: white;
+}
+
+.status-cancelled {
+    -fx-background-color: #D32F2F;
+    -fx-text-fill: white;
+}
+
+/* Table Styles */
+.table-view {
+    -fx-background-color: #2d2d2d;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1a1a1a;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+}
+
+.table-row-cell {
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #333333;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #FF8C00;
+}
+
+/* Scroll Pane */
+.scroll-pane {
+    -fx-background-color: #1a1a1a;
+}
+
+.scroll-bar {
+    -fx-background-color: #2d2d2d;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #FF8C00;
+}
+
+/* Separator */
+.separator {
+    -fx-background-color: #444444;
+}
+
+.product-status {
+    -fx-padding: 3 8;
+    -fx-background-radius: 12;
+    -fx-font-size: 11;
+}
+
+.product-actions {
+    -fx-padding: 10 0 0 0;
+} 

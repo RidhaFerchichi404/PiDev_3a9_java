@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.produit.AjouterProduitController"
+      prefWidth="500" prefHeight="600"
+      style="-fx-background-color: #1a1a1a;">
+    
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <Label text="Ajouter un Nouveau Produit" 
+           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+    
+    <GridPane vgap="15" hgap="15">
+        <columnConstraints>
+            <ColumnConstraints minWidth="120"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Nom du Produit:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="nomField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  promptText="Ex: Protéine Whey"/>
+        <Text GridPane.rowIndex="1" GridPane.columnIndex="1" 
+              text="Entrez le nom complet du produit" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Description:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextArea fx:id="descriptionField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  prefRowCount="3" wrapText="true"
+                  promptText="Décrivez les caractéristiques du produit..."/>
+        <Text GridPane.rowIndex="3" GridPane.columnIndex="1" 
+              text="Une description détaillée du produit" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Catégorie:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="categorieField" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  promptText="Ex: Suppléments"/>
+        <Text GridPane.rowIndex="5" GridPane.columnIndex="1" 
+              text="Catégorie principale du produit" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Prix (DT):" GridPane.rowIndex="6" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="prixField" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  promptText="Ex: 99.99"/>
+        <Text GridPane.rowIndex="7" GridPane.columnIndex="1" 
+              text="Prix en Dinars Tunisiens" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Stock:" GridPane.rowIndex="8" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="stockField" GridPane.rowIndex="8" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  promptText="Ex: 100"/>
+        <Text GridPane.rowIndex="9" GridPane.columnIndex="1" 
+              text="Quantité disponible en stock" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Disponible:" GridPane.rowIndex="10" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <CheckBox fx:id="disponibleCheck" GridPane.rowIndex="10" GridPane.columnIndex="1"
+                  style="-fx-text-fill: white;" selected="true"/>
+        <Text GridPane.rowIndex="11" GridPane.columnIndex="1" 
+              text="Cochez si le produit est disponible à la vente" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+        <Button text="Sauvegarder" onAction="#handleSave"
+                style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-padding: 10 20;"/>
+        <Button text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-padding: 10 20;"/>
+    </HBox>
+</VBox> 

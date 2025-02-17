@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.commande.ModifierCommandeController"
+      prefWidth="500" prefHeight="600"
+      style="-fx-background-color: #1a1a1a;">
+    
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <Label text="Modifier la Commande" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+    
+    <GridPane vgap="15" hgap="15">
+        <columnConstraints>
+            <ColumnConstraints minWidth="120"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Produit:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <ComboBox fx:id="produitCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" 
+                  maxWidth="Infinity" style="-fx-background-color: #333333;"/>
+        <Text GridPane.rowIndex="1" GridPane.columnIndex="1" 
+              text="Modifiez le produit commandé" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Nom Client:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="nomClientField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+        <Text GridPane.rowIndex="3" GridPane.columnIndex="1" 
+              text="Modifiez le nom du client" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Téléphone:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="telephoneField" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+        <Text GridPane.rowIndex="5" GridPane.columnIndex="1" 
+              text="Modifiez le numéro de téléphone" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Adresse:" GridPane.rowIndex="6" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextArea fx:id="adresseLivraisonField" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"
+                  prefRowCount="3" wrapText="true"/>
+        <Text GridPane.rowIndex="7" GridPane.columnIndex="1" 
+              text="Modifiez l'adresse de livraison" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Quantité:" GridPane.rowIndex="8" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <TextField fx:id="quantiteField" GridPane.rowIndex="8" GridPane.columnIndex="1"
+                  style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+        <Text GridPane.rowIndex="9" GridPane.columnIndex="1" 
+              text="Modifiez la quantité commandée" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+
+        <Label text="Statut:" GridPane.rowIndex="10" GridPane.columnIndex="0"
+               style="-fx-font-weight: bold; -fx-text-fill: white;"/>
+        <ComboBox fx:id="statutCombo" GridPane.rowIndex="10" GridPane.columnIndex="1"
+                  maxWidth="Infinity" style="-fx-background-color: #333333;"/>
+        <Text GridPane.rowIndex="11" GridPane.columnIndex="1" 
+              text="Modifiez l'état de la commande" 
+              style="-fx-fill: #666666; -fx-font-size: 11;"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+        <Button text="Mettre à jour" onAction="#handleSave"
+                style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-padding: 10 20;"/>
+        <Button text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-padding: 10 20;"/>
+    </HBox>
+</VBox> 

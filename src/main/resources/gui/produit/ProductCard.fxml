@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox styleClass="product-card" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.produit.ProductCardController"
+      style="-fx-background-color: #2d2d2d;">
+    
+    <ImageView fx:id="productImage" fitWidth="200" fitHeight="150" 
+               preserveRatio="true"/>
+    
+    <VBox spacing="5" styleClass="product-info">
+        <Label fx:id="nameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="categoryLabel" style="-fx-text-fill: #bbbbbb;"/>
+        <Label fx:id="priceLabel" style="-fx-text-fill: #FF8C00; -fx-font-weight: bold;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="stockLabel" style="-fx-text-fill: #bbbbbb;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel" styleClass="product-status"/>
+        </HBox>
+        
+        <HBox spacing="10" styleClass="product-actions">
+            <Button text="Modifier" onAction="#handleEdit" 
+                    style="-fx-background-color: #FF8C00; -fx-text-fill: white;"/>
+            <Button text="Supprimer" onAction="#handleDelete" 
+                    style="-fx-background-color: #FF0000; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</VBox> 
