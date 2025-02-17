@@ -39,7 +39,7 @@
                     <TextField fx:id="imageUrlField" HBox.hgrow="ALWAYS"
                               style="-fx-background-color: #333333; -fx-text-fill: white; -fx-prompt-text-fill: #808080; -fx-background-radius: 5;"/>
                     <Button text="Parcourir" onAction="#choisirImage"
-                            style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-weight: bold; 
+                            style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-weight: bold;
                                    -fx-background-radius: 5; -fx-cursor: hand;"/>
                 </HBox>
             </GridPane>

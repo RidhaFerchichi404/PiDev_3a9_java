@@ -36,12 +36,12 @@ public class ModifierSalleController {
         try {
             // Récupérer la salle depuis la base de données pour avoir les données à jour
             this.salleActuelle = salleService.readById(salle.getId());
-            
+
             // Remplir les champs avec les données récupérées
             nomField.setText(this.salleActuelle.getNom());
             zoneField.setText(this.salleActuelle.getZone());
             imageUrlField.setText(this.salleActuelle.getImage());
-            
+
             // Charger l'image de manière sécurisée
             try {
                 String imagePath = this.salleActuelle.getImage();
@@ -76,29 +76,8 @@ public class ModifierSalleController {
         }
     }
 
-    @FXML
-    private void handleModifier() {
-        if (validateInputs()) {
-            try {
-                // Préserver l'ID de l'utilisateur existant
-                int currentUserId = salleActuelle.getUser_id(); // Assurez-vous que cette propriété existe
-                
-                // Mettre à jour les autres champs
-                salleActuelle.setNom(nomField.getText().trim());
-                salleActuelle.setZone(zoneField.getText().trim());
-                salleActuelle.setImage(imageUrlField.getText().trim());
-                salleActuelle.setUser_id(currentUserId); // Conserver l'ID de l'utilisateur
-                
-                salleService.update(salleActuelle);
-                showAlert("Succès", "La salle a été modifiée avec succès!", Alert.AlertType.INFORMATION);
-                
-                // Fermer la fenêtre après la modification
-                nomField.getScene().getWindow().hide();
-            } catch (SQLException e) {
-                showAlert("Erreur", "Erreur lors de la modification de la salle: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
-        }
-    }
+    
+
 
     @FXML
     private void choisirImage() {
@@ -121,7 +100,7 @@ public class ModifierSalleController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherCards.fxml"));
             Parent root = loader.load();
-            
+
             Stage currentStage = (Stage) nomField.getScene().getWindow();
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
@@ -133,10 +112,40 @@ public class ModifierSalleController {
     }
 
     @FXML
+    private void handleModifier() {
+        if (validateInputs()) {
+            try {
+                int currentUserId = salleActuelle.getUser_id();
+                salleActuelle.setNom(nomField.getText().trim());
+                salleActuelle.setZone(zoneField.getText().trim());
+                salleActuelle.setImage(imageUrlField.getText().trim());
+                salleActuelle.setUser_id(currentUserId);
+                salleService.update(salleActuelle);
+                showAlert("Succès", "La salle a été modifiée avec succès!", Alert.AlertType.INFORMATION);
+                redirigerAffichage();
+            } catch (SQLException e) {
+                showAlert("Erreur", "Erreur lors de la modification de la salle: " + e.getMessage(), Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    @FXML
     private void annuler() {
-        // Fermer la fenêtre de modification
-        Stage stage = (Stage) nomField.getScene().getWindow();
-        stage.close();
+        redirigerAffichage();
+    }
+
+    private void redirigerAffichage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherCards.fxml"));
+            Parent root = loader.load();
+            Stage currentStage = (Stage) nomField.getScene().getWindow();
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+            currentStage.setTitle("Liste des Salles de Sport");
+            currentStage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'affichage des salles", Alert.AlertType.ERROR);
+        }
     }
 
     private boolean validateInputs() {

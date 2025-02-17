@@ -6,7 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.entities.Exercice;
 
@@ -18,10 +18,13 @@ import java.util.ResourceBundle;
 
 public class AfficherImagesExerciceController implements Initializable {
 
-    @FXML private TilePane imagesContainer;
+    @FXML private AnchorPane rootPane;
+    @FXML private ImageView imageView;
     @FXML private Button closeButton;
 
     private Exercice exercice;
+    private List<String> imagePaths;
+    private int indexImage = 0;
 
     public void setExercice(Exercice exercice) {
         this.exercice = exercice;
@@ -34,32 +37,27 @@ public class AfficherImagesExerciceController implements Initializable {
     }
 
     private void loadImages() {
-        imagesContainer.getChildren().clear();
-
         if (exercice != null && exercice.getImage() != null && !exercice.getImage().isEmpty()) {
-            List<String> imagePaths = Arrays.asList(exercice.getImage().split(";"));
+            imagePaths = Arrays.asList(exercice.getImage().split(";"));
+            afficherImage(indexImage);
+        }
+    }
 
-            for (String imagePath : imagePaths) {
-                File file = new File(imagePath);
-                ImageView imageView = new ImageView();
-                imageView.setFitWidth(220);
-                imageView.setFitHeight(180);
-                imageView.setPreserveRatio(true);
-                imageView.setStyle("-fx-border-color: white; -fx-border-radius: 5; -fx-padding: 5;");
+    private void afficherImage(int index) {
+        if (imagePaths == null || imagePaths.isEmpty()) return;
 
-                try {
-                    if (file.exists()) {
-                        imageView.setImage(new Image(file.toURI().toString()));
-                    } else {
-                        imageView.setImage(new Image(imagePath, true));
-                    }
-                } catch (Exception e) {
-                    System.out.println("Erreur de chargement d'image: " + e.getMessage());
-                    imageView.setImage(new Image(getClass().getResourceAsStream("/images/default.png")));
-                }
+        String imagePath = imagePaths.get(index);
+        File file = new File(imagePath);
 
-                imagesContainer.getChildren().add(imageView);
+        try {
+            if (file.exists()) {
+                imageView.setImage(new Image(file.toURI().toString()));
+            } else {
+                imageView.setImage(new Image(imagePath, true));
             }
+        } catch (Exception e) {
+            System.out.println("Erreur de chargement d'image: " + e.getMessage());
+            imageView.setImage(new Image(getClass().getResourceAsStream("/images/default.png")));
         }
     }
 

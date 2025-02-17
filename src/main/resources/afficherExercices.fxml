@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.AfficherExercicesController"
-            style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
+<AnchorPane prefHeight="750.0" prefWidth="1300.0" style="-fx-background-color: #1a1a1a; -fx-padding: 20;"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AfficherExercicesController">
 
-    <VBox spacing="15" alignment="CENTER">
+    <VBox alignment="CENTER" layoutX="14.0" layoutY="33.0" prefHeight="650.0" prefWidth="1250.0" spacing="20">
+
         <!-- ✅ Titre Principal -->
-        <Label text="Exercices de l'Équipement"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"
+               text="🏋️ Exercices de l'Équipement 🏋️" />
 
         <!-- ✅ Bouton Ajouter -->
-        <Button text="➕ Ajouter un Exercice" fx:id="ajouterExerciceButton" onAction="#ajouterExercice"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;
-                       -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 8;"/>
+        <Button fx:id="ajouterExerciceButton" onAction="#ajouterExercice"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 12 24; -fx-background-radius: 10;"
+                text="➕ Ajouter un Exercice" />
 
         <!-- ✅ Message Aucun Exercice -->
-        <Label fx:id="noExercicesLabel" text="Aucun exercice disponible"
-               style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center; -fx-font-weight: bold;"
-               visible="false"/>
+        <Label fx:id="noExercicesLabel" style="-fx-font-size: 18px; -fx-text-fill: #ff4444; -fx-alignment: center; -fx-font-weight: bold;"
+               text="Aucun exercice disponible" visible="false" />
 
         <!-- ✅ Conteneur avec défilement horizontal -->
-        <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="ALWAYS" vbarPolicy="NEVER"
-                    style="-fx-background: transparent; -fx-border-color: #ff8c00; -fx-border-width: 1px; -fx-padding: 10;">
-            <content>
-                <FlowPane fx:id="exercicesContainer" hgap="20" vgap="20"
-                          style="-fx-background-color: black; -fx-padding: 10;"
-                          prefWrapLength="1200"/> <!-- ✅ Largeur ajustée -->
-            </content>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    prefHeight="550.0" prefWidth="1220.0"
+                    style="-fx-background: transparent; -fx-border-color: #ff8c00; -fx-border-width: 2px; -fx-padding: 15;">
+
+            <!-- ✅ FlowPane pour un affichage dynamique plus esthétique -->
+            <FlowPane fx:id="exercicesContainer" hgap="25" vgap="25"
+                      prefHeight="500.0" prefWidth="1200.0"
+                      prefWrapLength="1200.0"
+                      style="-fx-background-color: black; -fx-padding: 15; -fx-alignment: center;" />
         </ScrollPane>
+
     </VBox>
 </AnchorPane>

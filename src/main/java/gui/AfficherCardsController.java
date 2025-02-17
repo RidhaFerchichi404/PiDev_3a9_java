@@ -134,7 +134,7 @@ public class AfficherCardsController implements Initializable {
                             "-fx-font-size: 12px; -fx-padding: 5 10; -fx-background-radius: 5;");
         deleteButton.setOnAction(e -> supprimerSalle(salle));
 
-        Button equipementsButton = new Button("Équipements");
+        Button equipementsButton = new Button(" Équipements");
         equipementsButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; " +
                                  "-fx-font-size: 12px; -fx-padding: 5 10; -fx-background-radius: 5;");
         equipementsButton.setOnAction(e -> voirEquipements(salle));
