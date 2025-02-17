@@ -14,12 +14,13 @@ public class ServiceComment implements IServiceComment<Comment> {
     }
     @Override
     public void ajouter(Comment comment) throws SQLException {
-        String sql = "INSERT INTO comment (comment, date, likes, idPost) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO comment (comment, date, likes, idPost, idUser) VALUES (?,?,?,?,?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, comment.getComment());
         statement.setDate(2, (Date) comment.getDate());
         statement.setInt(3, comment.getLikes());
         statement.setInt(4, comment.getIdPost());
+        statement.setInt(5, 1);
         statement.executeUpdate();
     }
 

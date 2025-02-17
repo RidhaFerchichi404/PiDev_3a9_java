@@ -45,6 +45,7 @@ public class afficherPosts {
 
     private Scene previousScene;
     private Post selectedPost;
+    
 
     public void setPreviousScene(Scene scene) {
         this.previousScene = scene;
