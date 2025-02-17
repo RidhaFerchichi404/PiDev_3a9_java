@@ -6,5 +6,5 @@ public interface IAbonnement<T> {
     int getIdByName(String name) throws SQLException;
     void update(T t) throws SQLException;
     void delete(T t) throws SQLException;
-    List<T> readAll() throws SQLException;
+    //List<T> readAll() throws SQLException;
 }

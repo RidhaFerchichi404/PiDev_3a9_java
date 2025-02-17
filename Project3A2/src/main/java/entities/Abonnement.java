@@ -10,26 +10,19 @@ public class Abonnement {
     private double prix;
     private String salleNom;
     private int salleDeSportId;
-    public Abonnement(String nom, String descriptiona, int duree, double prix) {
+    public Abonnement(String nom, String descriptiona, int duree, double prix, String salleNom) {
         this.nom = nom;
         this.descriptiona = descriptiona;
         this.duree = duree;
         this.prix = prix;
+        this.salleNom = salleNom;
+
+
     }
 
-    public Abonnement(int id, String descriptiona) {
-        this.id = id;
-        this.descriptiona = descriptiona;
-    }
 
-    public Abonnement(int id) {
-        this.id = id;
-    }
-
-    public Abonnement() {
-    }
-
-    public Abonnement(String nom, String description, int duree, int prix, String salle) {
+    public String getDescriptiona() {
+        return descriptiona;
     }
 
     public int getSalleDeSportId() {
@@ -42,6 +35,10 @@ public class Abonnement {
 
     public String getSalleNom() {
         return salleNom;
+    }
+
+    public void setDescriptiona(String descriptiona) {
+        this.descriptiona = descriptiona;
     }
 
     public void setSalleNom(String salleNom) {
@@ -67,10 +64,6 @@ public class Abonnement {
     public void setPrix(double prix) {
         this.prix = prix;
     }
-
-    /*public void setSalleDeSportId(int salleDeSportId) {
-        this.salleDeSportId = salleDeSportId;
-    }*/
 
     public int getId() {
         return id;
@@ -117,8 +110,4 @@ public class Abonnement {
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nom, descriptiona, duree, prix, salleNom);
-    }
 }

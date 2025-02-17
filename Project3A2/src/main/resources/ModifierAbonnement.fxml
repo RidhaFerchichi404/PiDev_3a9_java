@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="gui.ModifierAbonnement">
+    <!-- Champs de texte pour les informations de l'abonnement -->
+    <TextField fx:id="TFNom" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <TextField fx:id="TFDescription" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <TextField fx:id="TFSalleNom" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <TextField fx:id="TFPrix" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <TextField fx:id="TFDuree" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    <!-- Bouton pour enregistrer les modifications -->
+    <Button text="Enregistrer" onAction="#modifierAbonnement" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+</GridPane>
+

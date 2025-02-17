@@ -15,7 +15,7 @@ public class AbonnementService implements IAbonnement<Abonnement>{
     }
 
     public void create(Abonnement abonnement) throws SQLException {
-        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null || abonnement.getSalleNom() == null) {
+        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null /*|| abonnement.getSalleNom() == null*/) {
             throw new IllegalArgumentException("Les champs Nom, Description et SalleName ne peuvent pas être nuls.");
         }
         if (abonnement.getDuree() <= 0 || abonnement.getPrix() <= 0) {
@@ -76,12 +76,12 @@ public class AbonnementService implements IAbonnement<Abonnement>{
     public void update(Abonnement abonnement) throws SQLException {
         String query = "UPDATE Abonnement SET  Description = ? WHERE AbonnementID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-           // stmt.setString(1, abonnement.getNom());               // Nom de l'abonnement
-            stmt.setString(1, abonnement.getdescriptiona());        // Description
-            //stmt.setInt(3, abonnement.getDuree());                 // Durée
-            //stmt.setDouble(4, abonnement.getPrix());               // Prix
-            //stmt.setInt(5, abonnement.getSalleDeSportId());        // ID de la salle de sport
-            //stmt.setString(6, abonnement.getSalleNom());           // Nom de la salle de sport
+           stmt.setString(1, abonnement.getNom());               // Nom de l'abonnement
+            stmt.setString(2, abonnement.getdescriptiona());        // Description
+            stmt.setInt(3, abonnement.getDuree());                 // Durée
+            stmt.setDouble(4, abonnement.getPrix());               // Prix
+            stmt.setInt(5, abonnement.getSalleDeSportId());        // ID de la salle de sport
+            stmt.setString(6, abonnement.getSalleNom());           // Nom de la salle de sport
             stmt.setInt(2, abonnement.getId());          // ID de l'abonnement
             stmt.executeUpdate();                                  // Exécution de la mise à jour
         }
@@ -98,8 +98,7 @@ public class AbonnementService implements IAbonnement<Abonnement>{
 
     }
 
-    @Override
-    public List<Abonnement> readAll() throws SQLException {
+    /*public List<Abonnement> readAll() throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();
         String query = "SELECT * FROM Abonnement";
         try (Statement stmt = cnx.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
@@ -116,5 +115,5 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             }
         }
         return abonnements;
-    }
+    }*/
 }
