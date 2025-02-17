@@ -11,5 +11,5 @@ public interface IPromotion<A>{
 
     void update(Promotion promotion) throws SQLException;
     void delete(int promotionId) throws SQLException;
-    List<A> readAll() throws SQLException;
+    //List<A> readAll() throws SQLException;
 }

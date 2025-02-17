@@ -14,25 +14,31 @@ public class Promotion {
     private int abonnementId;
     private int salleId;
 
-    public Promotion(String code, String description, String typeRemise, BigDecimal valeurRemise) {
+   /* public Promotion(int promotionId, String codePromo, String description, String typeReduction,
+                     BigDecimal valeurReduction, Date dateDebut, Date dateFin, int abonnementId, int salleId) {
+        this.promotionId = promotionId;
         this.codePromo = codePromo;
         this.description = description;
-        this.typeReduction = typeRemise;
-        this.valeurReduction = valeurRemise;
-    }
-
-    public Promotion(int id, String description) {
-        this.promotionId = id;
+        this.typeReduction = typeReduction;
+        this.valeurReduction = valeurReduction;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.abonnementId = abonnementId;
+        this.salleId = salleId;
+    }*/
+    public Promotion(String codePromo, String description, String typeReduction,
+                     BigDecimal valeurReduction, Date dateDebut, Date dateFin,
+                     int abonnementId) {
+        this.codePromo = codePromo;
         this.description = description;
+        this.typeReduction = typeReduction;
+        this.valeurReduction = valeurReduction;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.abonnementId = abonnementId;
+        //this.salleId = salleId;
     }
 
-    public Promotion(int id) {
-        this.promotionId = id;
-    }
-
-    public Promotion() {
-
-    }
 
 
     @Override

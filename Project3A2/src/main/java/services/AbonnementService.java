@@ -118,14 +118,25 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         }
     }
 
-    @Override
+    /*@Override
     public void delete(Abonnement abonnement) throws SQLException {
         String query = "DELETE FROM Abonnement WHERE AbonnementID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
             stmt.setInt(1, abonnement.getId());          // ID de l'abonnement à supprimer
             stmt.executeUpdate();                                  // Exécution de la suppression
         }
+    }*/
+    @Override
+    public void delete(Abonnement abonnement) throws SQLException {
+        System.out.println("Tentative de suppression de l'abonnement avec ID: " + abonnement.getId());
+        String query = "DELETE FROM Abonnement WHERE AbonnementID = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, abonnement.getId());
+            int rowsDeleted = stmt.executeUpdate();
+            System.out.println("Nombre de lignes supprimées : " + rowsDeleted); // Vérifier combien de lignes sont affectées
+        }
     }
+
 
     public List<Abonnement> readAll() throws SQLException {
         List<Abonnement> abonnements = new ArrayList<>();

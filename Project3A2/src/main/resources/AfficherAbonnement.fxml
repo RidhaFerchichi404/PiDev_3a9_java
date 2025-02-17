@@ -19,5 +19,7 @@
         </TableView>
 
         <Button layoutX="250.0" layoutY="380.0" onAction="#naviguerVersAjout" text="Ajouter un abonnement" />
+        <!-- Bouton pour ajouter une promotion -->
+        <Button text="Ajouter Promotion" onAction="#openAddPromotionForm" />
     </children>
 </AnchorPane>

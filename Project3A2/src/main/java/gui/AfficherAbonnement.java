@@ -4,12 +4,16 @@ import entities.Abonnement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 import services.AbonnementService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -49,6 +53,20 @@ public class AfficherAbonnement {
         }
     }
 
+    // Méthode pour ouvrir le formulaire d'ajout de promotion
+    private Runnable addPromotionAction;
+
+    public void setAddPromotionAction(Runnable addPromotionAction) {
+        this.addPromotionAction = addPromotionAction;
+    }
+
+    @FXML
+    public void openAddPromotionForm() {
+        if (addPromotionAction != null) {
+            addPromotionAction.run();
+        }}
+
+
     @FXML
     public void initialize() {
         System.out.println("Initialisation AfficherAbonnement...");
@@ -73,9 +91,26 @@ public class AfficherAbonnement {
             tableAbonnements.refresh();
         } catch (SQLException e) {
             System.out.println("Erreur lors du chargement des abonnements : " + e.getMessage());
+            e.printStackTrace(); // Ajoutez cette ligne pour voir la stack trace complète
         }
     }
+    /*@FXML
+    public void openAddPromotionForm() {
+        try {
+            // Charger le fichier FXML pour le formulaire d'ajout de promotion
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ajout_promotion.fxml"));
+            Parent root = loader.load();
 
+            // Créer une nouvelle scène pour afficher le formulaire d'ajout de promotion
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter Promotion");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
     private void ajouterBoutonSuppression() {
         colActions.setCellFactory(param -> new TableCell<>() {
             private final Button btnSupprimer = new Button("Supprimer");
@@ -111,10 +146,14 @@ public class AfficherAbonnement {
                 try {
                     abonnementService.delete(abonnement);
                     chargerAbonnements(); // Rafraîchissement après suppression
+                    System.out.println("Abonnement supprimé avec succès");
                 } catch (SQLException e) {
                     System.out.println("Erreur lors de la suppression : " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
     }
+
+
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+
+<GridPane fx:controller="gui.AjouterPromotion"
+          xmlns:fx="http://javafx.com/fxml/1"
+          xmlns="http://javafx.com/javafx/23.0.1"
+          prefHeight="250.0" prefWidth="400.0"
+          hgap="10" vgap="10">
+
+    <!-- Label et TextField pour l'ID de la salle -->
+    <Label text="ID de la salle" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="salleIdField" promptText="Entrez l'ID de la salle" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <!-- Label et TextField pour le code promo -->
+    <Label text="Code de la promotion" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="codePromoField" promptText="Code de la promotion" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <!-- Label et TextField pour la description -->
+    <Label text="Description" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="descriptionField" promptText="Description" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <!-- Label et TextField pour le type de réduction -->
+    <Label text="Type de réduction" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="typeReductionField" promptText="Type de réduction" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <!-- Label et TextField pour la valeur de réduction -->
+    <Label text="Valeur de réduction" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextField fx:id="valeurReductionField" promptText="Valeur de réduction" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <!-- Label et DatePicker pour la date de début -->
+    <Label text="Date de début" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <DatePicker fx:id="dateDebutPicker" promptText="Date de début" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <!-- Label et DatePicker pour la date de fin -->
+    <Label text="Date de fin" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <DatePicker fx:id="dateFinPicker" promptText="Date de fin" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+    <!-- Bouton pour ajouter la promotion -->
+    <Button text="Ajouter Promotion" onAction="#addPromotion" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+</GridPane>

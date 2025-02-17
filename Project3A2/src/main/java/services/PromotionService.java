@@ -29,7 +29,7 @@ public class PromotionService implements IPromotion<Promotion> {
     }
 
     // Read all promotions
-    public List<Promotion> readAll() throws SQLException {
+    /*public List<Promotion> readAll() throws SQLException {
         ArrayList<Promotion> promotions = new ArrayList<>();
         String query = "SELECT * FROM promotion";
         try (Statement stmt = cnx.createStatement();
@@ -49,21 +49,21 @@ public class PromotionService implements IPromotion<Promotion> {
             }
         }
         return promotions;
-    }
+    }*/
     // Update an existing promotion
     public void update(Promotion promotion) throws SQLException {
         String query = "UPDATE promotion SET  Description = ?  WHERE PromotionID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            //stmt.setString(1, promotion.getCodePromo());
+            stmt.setString(1, promotion.getCodePromo());
             stmt.setString(1, promotion.getDescription());
             stmt.setInt(2, promotion.getPromotionId());
-            //stmt.setString(3, promotion.getTypeReduction());
-            //stmt.setBigDecimal(4, promotion.getValeurReduction());
-            //stmt.setDate(5, promotion.getDateDebut());
-            //stmt.setDate(6, promotion.getDateFin());
-            //stmt.setInt(7, promotion.getAbonnementId());
-            //stmt.setInt(8, promotion.getSalleId());
-            //stmt.setInt(9, promotion.getPromotionId());
+            stmt.setString(3, promotion.getTypeReduction());
+            stmt.setBigDecimal(4, promotion.getValeurReduction());
+            stmt.setDate(5, promotion.getDateDebut());
+            stmt.setDate(6, promotion.getDateFin());
+            stmt.setInt(7, promotion.getAbonnementId());
+            stmt.setInt(8, promotion.getSalleId());
+            stmt.setInt(9, promotion.getPromotionId());
             stmt.executeUpdate();
         }
     }
