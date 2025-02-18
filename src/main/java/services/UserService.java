@@ -68,7 +68,7 @@ public class UserService implements IService<User> {
         ps.executeUpdate();
     }
 
-    @Override
+    /*@Override
     public List<User> readAll() throws SQLException {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM user";
@@ -96,7 +96,7 @@ public class UserService implements IService<User> {
         }
 
         return users;
-    }
+    }*/
 
     // Optional: Find a user by ID
     public User findById(long id) throws SQLException {
@@ -127,6 +127,38 @@ public class UserService implements IService<User> {
 
         return null;
     }
+    public List<User> readAll() {
+        List<User> users = new ArrayList<>();
+
+        // Adjust the query to match your database table (users is likely the correct table name)
+        String query = "SELECT * FROM user"; // If the table name is "user", use it
+
+        try (PreparedStatement ps = cnx.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getLong("id")); // Correct method to get the "id"
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setRole(rs.getString("role"));
+                user.setAge(rs.getInt("age"));
+                user.setCin(rs.getString("cin"));
+
+                // Add the user to the list
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+            throw new RuntimeException("Unable to load users from the database.");
+        }
+
+        return users;
+    }
+
+
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -161,12 +193,19 @@ public class UserService implements IService<User> {
     public void deleteUser(User user) {
         String query = "DELETE FROM user WHERE id = ?";
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
-            ps.setLong(1, user.getId());
-            ps.executeUpdate();
-            System.out.println("User with ID " + user.getId() + " deleted successfully.");
+            ps.setLong(1, user.getId()); // Use user.getId() to set the parameter
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("User with ID " + user.getId() + " deleted successfully.");
+            } else {
+                System.out.println("No user found with ID " + user.getId());
+            }
         } catch (SQLException e) {
+            System.err.println("Error deleting user: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
 
 }

@@ -70,3 +70,110 @@
 .submit-button:hover {
     -fx-background-color: #ff5500;
 }
+.profile-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-min-width: 200px;
+    -fx-min-height: 100px;
+}
+
+.profile-container {
+    -fx-padding: 20px;
+    -fx-background-color: #f0f0f0;
+}
+
+.profile-card {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 15px;
+    -fx-min-width: 250px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
+
+.name-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.email-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.btn-edit {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.btn-delete {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+/* Ajouter ces nouvelles classes */
+.warning-text {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}
+
+.subscription-status {
+    -fx-font-size: 12px;
+    -fx-padding: 2 5;
+    -fx-border-radius: 3;
+}
+
+.expired {
+    -fx-background-color: #f8d7da;
+    -fx-text-fill: #721c24;
+}
+
+.active {
+    -fx-background-color: #d4edda;
+    -fx-text-fill: #155724;
+}
+
+.user-card {
+    -fx-background-color: #f9f9f9;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1;
+    -fx-border-color: #ddd;
+}
+
+.status-label {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+}
+
+.warning-label {
+    -fx-text-fill: red;
+}
+/* Background for the whole user list panel */
+.user-list-background {
+    -fx-background-color: #f5f6fa;
+}
+
+/* Title label */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d3436;
+}
+
+/* Empty message label */
+.empty-message {
+    -fx-text-fill: #d63031;
+    -fx-font-size: 16px;
+}
+
+/* ScrollPane background styling */
+.scroll-pane {
+    -fx-background: transparent;
+}

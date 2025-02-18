@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="main.MainMenuController"
-      spacing="20" alignment="CENTER" style="-fx-padding: 20;">
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #2d3436;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.MainMenuController">
 
-    <Button text="Ajouter un utilisateur" onAction="#handleAddUser"/>
-    <Button text="Voir les cartes" onAction="#handleViewCards"/>
-</VBox>
+    <VBox alignment="CENTER" spacing="30" prefWidth="300" AnchorPane.topAnchor="50"
+          AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="250" AnchorPane.rightAnchor="250">
+
+        <!-- Titre -->
+        <Label text="Gestion des Utilisateurs"
+               style="-fx-text-fill: #ffffff; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <!-- Bouton Ajouter -->
+        <Button fx:id="btnAddUser" text="➕ Ajouter Utilisateur"
+                onAction="#handleAddUser"
+                styleClass="main-menu-btn"/>
+
+        <!-- Bouton Voir Cartes -->
+        <Button fx:id="btnViewCards" text="🃏 Voir les Cartes"
+                onAction="#handleViewCards"
+                styleClass="main-menu-btn"/>
+
+    </VBox>
+</AnchorPane>
