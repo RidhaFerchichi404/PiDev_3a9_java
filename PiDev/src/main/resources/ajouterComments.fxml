@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="PC.gestion.gui.ajouterComments"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.ajouterComments">
+   <children>
+      <VBox layoutX="20.0" layoutY="15.0" prefHeight="369.0" prefWidth="559.0">
+         <children>
+            <ListView fx:id="LVpostsAddComments" prefHeight="222.0" prefWidth="559.0" />
+            <HBox alignment="CENTER" prefHeight="114.0" prefWidth="559.0">
+               <children>
+                  <Button fx:id="BTNselectPostForComments" alignment="CENTER" mnemonicParsing="false" onAction="#handleSelectPostForComments" text="Selectionner" />
+               </children>
+            </HBox>
+         </children></VBox>
+   </children>
 </AnchorPane>
