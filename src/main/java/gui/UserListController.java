@@ -28,6 +28,8 @@ public class UserListController {
     private FlowPane cardsContainer; // This holds the user cards
 
     private UserService userService;
+    private User selectedUser; // To store the currently selected user
+
 
     public UserListController() {
         this.userService = new UserService(); // Instantiate the UserService
@@ -37,6 +39,7 @@ public class UserListController {
     public void initialize() {
         loadUserList();
     }
+
 
     private void loadUserList() {
         try {
@@ -105,8 +108,15 @@ public class UserListController {
         // Add components to the user card
         userCard.getChildren().addAll(userImage, labelsContainer, buttonsContainer);
 
+        // Add a click event to select the user for modification
+        userCard.setOnMouseClicked(event -> {
+            selectedUser = user; // Set the selected user
+            System.out.println("User selected: " + user.getFirstName()); // Optional log
+        });
+
         return userCard;
     }
+
 
     private void handleEdit(User user) {
         // Handle the edit button click (e.g., open user details for editing)
@@ -175,6 +185,37 @@ public class UserListController {
         }
 
     }
+    @FXML
+    private void handleModifyButtonClick() {
+        if (selectedUser == null) {
+            System.out.println("No user selected for modification.");
+            return; // If no user is selected, we don't proceed
+        }
+
+        try {
+            // Load the FXML for ModifyUser
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyUser.fxml"));
+            Parent modifyUserRoot = loader.load();  // Load the FXML
+
+            // Get the controller of the ModifyUser view
+            ModifyUserController modifyUserController = loader.getController();
+
+            // Pass the selected user to the ModifyUserController
+            modifyUserController.setUser(selectedUser);
+
+            // Create a new Stage for the ModifyUser view
+            Stage stage = new Stage();
+            stage.setTitle("Modifier l'utilisateur");
+            stage.setScene(new Scene(modifyUserRoot));  // Set the scene for the new stage
+            stage.initModality(Modality.APPLICATION_MODAL); // Optional: to make it modal (blocks the main window)
+            stage.show();  // Show the new stage
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load the ModifyUser view.");
+        }
+    }
+
+
 
 
 }
