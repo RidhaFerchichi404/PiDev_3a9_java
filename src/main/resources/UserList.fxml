@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.UserListController"
+      spacing="10"
+      style="-fx-padding:20;">
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Pos?>
+    <!-- The "Modify" button at the top -->
+    <Button text="Modifier Utilisateur Sélectionné"
+            onAction="#handleModifyButtonClick"/>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600" prefWidth="800" styleClass="user-list-background"
-            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.UserListController">
-
-    <VBox spacing="20" prefWidth="780">
-        <!-- Title -->
-        <Label text="Gestion des Utilisateurs" styleClass="title-label"/>
-
-        <!-- Container for user cards -->
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: transparent;">
-            <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" prefWrapLength="760"/>
-        </ScrollPane>
-
-        <!-- Empty message -->
-        <Label fx:id="lblEmpty" text="Aucun utilisateur trouvé" visible="false"
-               styleClass="empty-message"/>
-    </VBox>
-</AnchorPane>
+    <!-- The FlowPane for cards -->
+    <FlowPane fx:id="cardsContainer"
+              hgap="10" vgap="10"/>
+</VBox>

@@ -41,23 +41,39 @@ public class UserService implements IService<User> {
 
     @Override
     public void update(User user) throws SQLException {
-        String query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, password_hash = ?, phone_number = ?, role = ?, subscription_end_date = ?, is_active = ?, updated_at = ?, violation_count = ?, location = ?, cin = ?, age = ? WHERE id = ?";
-        PreparedStatement ps = cnx.prepareStatement(query);
-        ps.setString(1, user.getFirstName());
-        ps.setString(2, user.getLastName());
-        ps.setString(3, user.getEmail());
-        ps.setString(4, user.getPasswordHash());
-        ps.setString(5, user.getPhoneNumber());
-        ps.setString(6, user.getRole());
-        ps.setDate(7, user.getSubscriptionEndDate() != null ? Date.valueOf(user.getSubscriptionEndDate()) : null);
-        ps.setBoolean(8, user.isActive());
-        ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now())); // updated_at
-        ps.setInt(10, user.getViolationCount());
-        ps.setString(11, user.getLocation());
-        ps.setString(12, user.getCin());
-        ps.setInt(13, user.getAge());
-        ps.setLong(14, user.getId());
-        ps.executeUpdate();
+        // Start building the query dynamically
+        StringBuilder query = new StringBuilder("UPDATE user SET ");
+        List<Object> params = new ArrayList<>();
+
+        // Check and add fields to update
+        if (user.getFirstName() != null) {
+            query.append("first_name = ?, ");
+            params.add(user.getFirstName());
+        }
+        if (user.getEmail() != null) {
+            query.append("email = ?, ");
+            params.add(user.getEmail());
+        }
+
+        // Add the updated_at field
+        query.append("updated_at = ? ");
+        params.add(Timestamp.valueOf(LocalDateTime.now()));
+
+        // Add the WHERE clause
+        query.append("WHERE id = ?");
+        params.add(user.getId());
+
+        // Prepare and execute the statement
+        PreparedStatement ps = cnx.prepareStatement(query.toString());
+
+        // Set the parameters dynamically
+        for (int i = 0; i < params.size(); i++) {
+            ps.setObject(i + 1, params.get(i));
+        }
+
+        // Execute the update
+        int rowsAffected = ps.executeUpdate();
+        System.out.println("Rows affected: " + rowsAffected);
     }
 
     @Override

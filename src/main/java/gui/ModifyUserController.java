@@ -2,6 +2,7 @@ package gui;
 
 import entities.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
@@ -11,38 +12,43 @@ import java.sql.SQLException;
 public class ModifyUserController {
 
     @FXML
-    private TextField txtName; // Example field for user name
+    private TextField txtName;
+
     @FXML
-    private TextField txtEmail; // Example field for user email
+    private TextField txtEmail;
 
-    private User currentUser; // The user being modified
-    private UserService userService;
-    // Method to set the selected user's data
+    @FXML
+    private Button btnSave;
+
+    private User currentUser;
+    private UserService userService = new UserService();  // Initialize the service
+
     public void setUser(User user) {
-
         this.currentUser = user;
-        txtName.setText(user.getFirstName()); // Populate name
-        txtEmail.setText(user.getEmail()); // Populate email
-        // Populate other fields as needed
+        txtName.setText(user.getFirstName());  // Populate fields with user data
+        txtEmail.setText(user.getEmail());
     }
 
-    // Method to save changes
+    @FXML
     public void saveChanges() {
-        // Update the user object with modified values
+        if (currentUser == null) {
+            System.err.println("No user is set for modification.");
+            return;
+        }
+
+        // Update the user object with the new data
         currentUser.setFirstName(txtName.getText());
         currentUser.setEmail(txtEmail.getText());
 
-        // Try saving the updated user
         try {
-            userService.update(currentUser); // Ensure this method is implemented in your service
+            userService.update(currentUser);  // Save changes to the database
             System.out.println("User updated successfully!");
         } catch (SQLException e) {
             System.err.println("Failed to update user: " + e.getMessage());
-            e.printStackTrace(); // Optional: for debugging
         }
 
-        // Close the window after saving
-        Stage stage = (Stage) txtName.getScene().getWindow();
+        // Close the modification window after saving
+        Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }
 

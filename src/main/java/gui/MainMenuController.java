@@ -18,21 +18,22 @@ public class MainMenuController {
 
     @FXML
     private void handleAddUser() throws IOException {
+        // Load the "Add User" view
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AjouterUser.fxml")));
         Stage stage = (Stage) btnAddUser.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.setTitle("Ajout des Utilisateurs");
-
     }
 
     @FXML
     private void handleViewCards() {
         try {
+            // Load the "User List" view
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/UserList.fxml")));
             Stage stage = (Stage) btnViewCards.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Liste des Utilisateurs");
-        } catch (Exception e) {
+        } catch (IOException e) {
             showAlert("Erreur", "Impossible de charger la vue : " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
