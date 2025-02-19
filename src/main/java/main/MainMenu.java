@@ -12,7 +12,7 @@ public class MainMenu extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Charger la scène du menu principal
-        Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
         primaryStage.setTitle("User Management Menu");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

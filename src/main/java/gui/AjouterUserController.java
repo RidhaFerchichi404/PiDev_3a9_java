@@ -1,12 +1,19 @@
 package gui;
 
+
 import entities.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import services.UserService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class AjouterUserController {
@@ -36,6 +43,8 @@ public class AjouterUserController {
     private TextField locationField;
     @FXML
     private ComboBox<String> roleComboBox;
+    @FXML
+    private Button AddButton;
     @FXML
     private void initialize() {
         roleComboBox.getItems().addAll("Coach", "Client");
@@ -73,11 +82,12 @@ public class AjouterUserController {
     }
 
 
+
     @FXML
     private void handleAddUser() {
-        // Vérifier la validité des entrées
+        // Check input validity
         if (!validateInputs()) {
-            return; // Sortir si la validation échoue
+            return; // Exit if validation fails
         }
 
         String firstName = firstNameField.getText();
@@ -88,23 +98,28 @@ public class AjouterUserController {
         String cin = cinField.getText();
         String phoneNumber = phoneNumberField.getText();
         String location = locationField.getText();
-        String role = roleComboBox.getValue(); // Récupération du rôle sélectionné dans le ComboBox
+        String role = roleComboBox.getValue(); // Get selected role
 
-        // Créer un objet utilisateur
+        // Create a user object
         User user = new User(firstName, lastName, email, passwordHash, age);
         user.setCin(cin.isEmpty() ? null : cin);
         user.setPhoneNumber(phoneNumber);
-        user.setRole(role); // Utilisation du rôle choisi ("Coach" ou "Client")
+        user.setRole(role); // Use the selected role ("Coach" or "Client")
         user.setLocation(location);
 
-        // Insertion dans la base de données
+        // Insert into the database
         try {
             userService.create(user);
+
+            // Show success alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Succès");
             alert.setHeaderText(null);
             alert.setContentText("Utilisateur ajouté avec succès !");
             alert.showAndWait();
+
+            // Navigate to login screen after user is added
+            goToLoginScreen();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -114,5 +129,20 @@ public class AjouterUserController {
         }
     }
 
+    // Method to navigate to the login screen
+    private void goToLoginScreen() {
+        try {
+            // Load the login FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent loginRoot = loader.load();
+
+            // Get the current scene and switch to the login screen
+
+            Stage currentStage = (Stage) AddButton.getScene().getWindow();
+            currentStage.setScene(new Scene(loginRoot));
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle any errors in loading the FXML
+        }
+    }
 
 }

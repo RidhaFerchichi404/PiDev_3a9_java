@@ -5,7 +5,11 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="gui.ModifyUserController"
       spacing="10" style="-fx-padding:20;">
-    <TextField fx:id="txtName" promptText="Name"/>
+    <TextField fx:id="txtFirstName" promptText="First Name"/>
+    <TextField fx:id="txtLastName" promptText="Last Name"/>
     <TextField fx:id="txtEmail" promptText="Email"/>
+    <TextField fx:id="txtPhoneNumber" promptText="Phone Number"/>
+    <TextField fx:id="txtCin" promptText="CIN"/>
     <Button fx:id="btnSave" text="Save" onAction="#saveChanges"/>
 </VBox>
+

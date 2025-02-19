@@ -1,6 +1,8 @@
 package services;
 
 import entities.User;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import utils.MyConnection;
 
 import java.sql.*;
@@ -8,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService implements IService<User> {
 
@@ -50,12 +53,24 @@ public class UserService implements IService<User> {
             query.append("first_name = ?, ");
             params.add(user.getFirstName());
         }
+        if (user.getLastName() != null) {
+            query.append("last_name = ?, ");
+            params.add(user.getLastName());
+        }
         if (user.getEmail() != null) {
             query.append("email = ?, ");
             params.add(user.getEmail());
         }
+        if (user.getPhoneNumber() != null) {
+            query.append("phone_number = ?, ");
+            params.add(user.getPhoneNumber());
+        }
+        if (user.getCin() != null) {
+            query.append("cin = ?, ");
+            params.add(user.getCin());
+        }
 
-        // Add the updated_at field
+        // Add the updated_at field to keep track of the modification date
         query.append("updated_at = ? ");
         params.add(Timestamp.valueOf(LocalDateTime.now()));
 
@@ -64,17 +79,18 @@ public class UserService implements IService<User> {
         params.add(user.getId());
 
         // Prepare and execute the statement
-        PreparedStatement ps = cnx.prepareStatement(query.toString());
+        try (PreparedStatement ps = cnx.prepareStatement(query.toString())) {
+            // Set the parameters dynamically
+            for (int i = 0; i < params.size(); i++) {
+                ps.setObject(i + 1, params.get(i));
+            }
 
-        // Set the parameters dynamically
-        for (int i = 0; i < params.size(); i++) {
-            ps.setObject(i + 1, params.get(i));
+            // Execute the update
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
         }
-
-        // Execute the update
-        int rowsAffected = ps.executeUpdate();
-        System.out.println("Rows affected: " + rowsAffected);
     }
+
 
     @Override
     public void delete(User user) throws SQLException {
@@ -207,20 +223,55 @@ public class UserService implements IService<User> {
 
 
     public void deleteUser(User user) {
-        String query = "DELETE FROM user WHERE id = ?";
-        try (PreparedStatement ps = cnx.prepareStatement(query)) {
-            ps.setLong(1, user.getId()); // Use user.getId() to set the parameter
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("User with ID " + user.getId() + " deleted successfully.");
-            } else {
-                System.out.println("No user found with ID " + user.getId());
+        // Show confirmation dialog
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Deletion");
+        confirmationAlert.setHeaderText("Are you sure you want to delete the user?");
+        confirmationAlert.setContentText("This action cannot be undone.");
+
+        // Wait for the user's response
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            String query = "DELETE FROM user WHERE id = ?";
+            try (PreparedStatement ps = cnx.prepareStatement(query)) {
+                ps.setLong(1, user.getId()); // Use user.getId() to set the parameter
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("User with ID " + user.getId() + " deleted successfully.");
+                } else {
+                    System.out.println("No user found with ID " + user.getId());
+                }
+            } catch (SQLException e) {
+                System.err.println("Error deleting user: " + e.getMessage());
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            System.err.println("Error deleting user: " + e.getMessage());
-            e.printStackTrace();
+        } else {
+            System.out.println("User deletion canceled.");
         }
     }
+    public User authenticateUser(String email, String password) {
+        String query = "SELECT * FROM user WHERE email = ? AND password_hash = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getLong("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
+                // ...set other fields if needed
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
 
 

@@ -72,10 +72,11 @@
         <ComboBox fx:id="roleComboBox" promptText="Select role"
                   styleClass="form-textfield" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
-        <!-- Le bouton Add User passe à la ligne 9 -->
-        <Button text="Add User" onAction="#handleAddUser"
+        <Button fx:id="AddButton" text="Add User" onAction="#handleAddUser"
                 styleClass="submit-button" GridPane.columnIndex="1" GridPane.rowIndex="9"
                 GridPane.halignment="RIGHT"/>
 
+
     </GridPane>
+
 </VBox>

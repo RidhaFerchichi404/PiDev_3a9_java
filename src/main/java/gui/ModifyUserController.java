@@ -12,10 +12,19 @@ import java.sql.SQLException;
 public class ModifyUserController {
 
     @FXML
-    private TextField txtName;
+    private TextField txtFirstName;
+
+    @FXML
+    private TextField txtLastName;
 
     @FXML
     private TextField txtEmail;
+
+    @FXML
+    private TextField txtPhoneNumber;
+
+    @FXML
+    private TextField txtCin;
 
     @FXML
     private Button btnSave;
@@ -25,8 +34,13 @@ public class ModifyUserController {
 
     public void setUser(User user) {
         this.currentUser = user;
-        txtName.setText(user.getFirstName());  // Populate fields with user data
+
+        // Populate fields with the user's existing data
+        txtFirstName.setText(user.getFirstName());
+        txtLastName.setText(user.getLastName());
         txtEmail.setText(user.getEmail());
+        txtPhoneNumber.setText(user.getPhoneNumber());
+        txtCin.setText(user.getCin());  // Set CIN only if the user is 18 or older
     }
 
     @FXML
@@ -37,9 +51,19 @@ public class ModifyUserController {
         }
 
         // Update the user object with the new data
-        currentUser.setFirstName(txtName.getText());
+        currentUser.setFirstName(txtFirstName.getText());
+        currentUser.setLastName(txtLastName.getText());
         currentUser.setEmail(txtEmail.getText());
+        currentUser.setPhoneNumber(txtPhoneNumber.getText());
 
+        // CIN validation: Only allow CIN if age is 18 or older
+        if (currentUser.getAge() >= 18) {
+            currentUser.setCin(txtCin.getText());
+        } else {
+            currentUser.setCin(null);  // Ensure CIN is cleared for users under 18
+        }
+
+        // Save the changes using the UserService
         try {
             userService.update(currentUser);  // Save changes to the database
             System.out.println("User updated successfully!");
@@ -51,5 +75,4 @@ public class ModifyUserController {
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }
-
 }
