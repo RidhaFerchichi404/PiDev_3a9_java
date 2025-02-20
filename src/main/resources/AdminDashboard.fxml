@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="gui.AdminDashboardController"
-      spacing="10" alignment="CENTER" prefHeight="400" prefWidth="600">
-    <Label text="Admin Dashboard" />
-    <Button text="Test Button" onAction="#handleTestButton"/>
-</VBox>
+<HBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.AdminDashboardController" spacing="3" styleClass="main-container2" stylesheets="@styles.css">
+
+    <!-- Sidebar Menu -->
+    <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="250">
+        <Label text="Dashboard Menu" styleClass="menu-title"/>
+        <Button text="Produits" styleClass="menu-button" onAction="#handleProduits"/>
+        <Button text="Posts" styleClass="menu-button" onAction="#handlePosts"/>
+        <Button text="Salles" styleClass="menu-button" onAction="#handleSalles"/>
+        <Button text="Utilisateurs" styleClass="menu-button" onAction="#handleProfile"/>
+        <Button text="Logout"
+                onAction="#logoutUser"
+                style="-fx-font-size: 14px; -fx-background-color: #ff3333; -fx-text-fill: white; -fx-pref-width: 200px;"/>
+
+    </VBox>
+
+    <!-- Main Content Area -->
+    <StackPane fx:id="mainContent" styleClass="main-content">
+        <Label text="Welcome to the Dashboard" styleClass="main-title"/>
+    </StackPane>
+</HBox>

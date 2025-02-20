@@ -1,85 +1,88 @@
 package gui;
 
-import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import utils.Session;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController {
 
     @FXML
-    private Button btnAddUser;
-    @FXML
-    private Button btnViewCards;
-    @FXML
-    private Button btnLogout; // Optional logout button
+    private Button btnProduits;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Check if there's a logged-in user
-        User currentUser = Session.getCurrentUser();
-        if (currentUser == null) {
-            // If no user is logged in, redirect to the login screen
-            redirectToLogin();
-        } else {
-            System.out.println("Welcome, " + currentUser.getFirstName() + "!");
-        }
+    @FXML
+    private Button btnPosts;
+
+    @FXML
+    private Button btnSalles;
+
+    @FXML
+    private Button btnProfile;
+
+    @FXML
+    private Button btnLogout;
+
+    @FXML
+    private StackPane mainContent;
+
+    @FXML
+    public void handleProduits() {
+        displayContent("Produits Section");
     }
 
     @FXML
-    private void handleAddUser() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/AjouterUser.fxml")));
-        Stage stage = (Stage) btnAddUser.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Ajout des Utilisateurs");
+    public void handlePosts() {
+        displayContent("Posts Section");
     }
 
     @FXML
-    private void handleViewCards() {
+    public void handleSalles() {
+        displayContent("Salles Section");
+    }
+
+    @FXML
+    private void handleProfile() {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/UserList.fxml")));
-            Stage stage = (Stage) btnViewCards.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Liste des Utilisateurs");
-        } catch (IOException e) {
-            showAlert("Erreur", "Impossible de charger la vue : " + e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
+            // Load the FXML for modification
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ClientModify.fxml"));
+            Parent modifyView = loader.load();
 
-    @FXML
-    private void handleLogout() {
-        // Clear the session
-        Session.logout();
-        redirectToLogin();
-    }
-
-    private void redirectToLogin() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
-            Stage stage = (Stage) btnAddUser.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
+            // Create a new stage for the modification form
+            Stage stage = new Stage();
+            stage.setTitle("Modify Profile");
+            stage.setScene(new Scene(modifyView));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Failed to load ClientModify.fxml");
         }
     }
 
-    private void showAlert(String title, String content, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+
+
+    private void displayContent(String contentText) {
+        // Clear previous content
+        mainContent.getChildren().clear();
+
+        // Create a new label with the content text
+        Label contentLabel = new Label(contentText);
+        contentLabel.getStyleClass().add("main-title");
+
+        // Add the label to the main content area
+        mainContent.getChildren().add(contentLabel);
     }
+    @FXML
+    private void handleLogout() {
+        System.out.println("Logging out...");
+
+        // Close the entire application
+        javafx.application.Platform.exit();
+    }
+
 }

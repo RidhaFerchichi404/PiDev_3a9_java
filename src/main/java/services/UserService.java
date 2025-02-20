@@ -220,6 +220,21 @@ public class UserService implements IService<User> {
         }
         return users;
     }
+    public boolean isEmailTaken(String email) {
+        // Implement the database query to check if the email exists
+        String query = "SELECT COUNT(*) FROM user WHERE email = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;  // If the count is greater than 0, the email is taken
+            }
+        } catch (SQLException e) {
+            System.err.println("Database error: " + e.getMessage());
+        }
+        return false;
+    }
+
 
 
     public void deleteUser(User user) {

@@ -2,14 +2,17 @@ package gui;
 
 import entities.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UserService;
+import utils.Session;
 
 import java.sql.SQLException;
 
-public class ModifyUserController {
+public class ClientModifyController {
 
     @FXML
     private TextField txtFirstName;
@@ -29,18 +32,25 @@ public class ModifyUserController {
     @FXML
     private Button btnSave;
 
-    private User currentUser;
     private UserService userService = new UserService();  // Initialize the service
+    private User currentUser;
 
-    public void setUser(User user) {
-        this.currentUser = user;
+    @FXML
+    public void initialize() {
+        // Fetch the logged-in user from the session
+        currentUser = Session.getCurrentUser();
 
-        // Populate fields with the user's existing data
-        txtFirstName.setText(user.getFirstName());
-        txtLastName.setText(user.getLastName());
-        txtEmail.setText(user.getEmail());
-        txtPhoneNumber.setText(user.getPhoneNumber());
-        txtCin.setText(user.getCin());  // Set CIN only if the user is 18 or older
+        if (currentUser == null) {
+            System.err.println("No current user found in session.");
+            return;
+        }
+
+        // Populate fields with the current user's data
+        txtFirstName.setText(currentUser.getFirstName());
+        txtLastName.setText(currentUser.getLastName());
+        txtEmail.setText(currentUser.getEmail());
+        txtPhoneNumber.setText(currentUser.getPhoneNumber());
+        txtCin.setText(currentUser.getCin());
     }
 
     @FXML
@@ -55,13 +65,8 @@ public class ModifyUserController {
         currentUser.setLastName(txtLastName.getText());
         currentUser.setEmail(txtEmail.getText());
         currentUser.setPhoneNumber(txtPhoneNumber.getText());
+        currentUser.setCin(txtCin.getText());
 
-        // CIN validation: Only allow CIN if age is 18 or older
-        if (currentUser.getAge() >= 18) {
-            currentUser.setCin(txtCin.getText());
-        } else {
-            currentUser.setCin(null);  // Ensure CIN is cleared for users under 18
-        }
 
         // Save the changes using the UserService
         try {
@@ -76,3 +81,4 @@ public class ModifyUserController {
         stage.close();
     }
 }
+
