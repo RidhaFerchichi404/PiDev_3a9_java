@@ -262,7 +262,8 @@ public class UserService implements IService<User> {
                 user.setLastName(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
                 user.setPasswordHash(rs.getString("password_hash"));
-                // ...set other fields if needed
+                user.setRole(rs.getString("role"));
+
                 return user;
             }
         } catch (SQLException e) {

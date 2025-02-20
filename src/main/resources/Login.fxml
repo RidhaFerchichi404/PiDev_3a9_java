@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Label?>
 
 <!-- Login Page -->
-<?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="gui.LoginController" spacing="20" prefWidth="500" prefHeight="400">
     <Label text="Login" styleClass="title-label"/>
@@ -17,9 +17,10 @@
     <Label text="Password:" styleClass="form-label"/>
     <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="form-textfield"/>
 
-    <Button text="Login" styleClass="submit-button" onAction="#handleLogin"/>
+    <!-- Text node for error messages -->
+    <Text fx:id="errorMessage" fill="red" />
 
+    <Button text="Login" styleClass="submit-button" onAction="#handleLogin"/>
     <!-- New Register Button -->
     <Button fx:id="submitButton" text="Register" styleClass="submit-button" onAction="#goToRegister"/>
 </VBox>
-

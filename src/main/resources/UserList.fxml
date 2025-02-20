@@ -13,6 +13,10 @@
     <Button text="Modifier Utilisateur Sélectionné"
             onAction="#handleModifyButtonClick"/>
 
+    <!-- Return to Menu button -->
+    <Button text="Return to Menu"
+            onAction="#returnToMenu"/>
+
     <!-- ScrollPane for scrollable cards -->
     <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER">
         <!-- The FlowPane for cards -->

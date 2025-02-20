@@ -133,4 +133,20 @@ public class UserListController {
             System.err.println("Failed to load the ModifyUser.fxml");
         }
     }
+    @FXML
+    private void returnToMenu() {
+        try {
+            // Load the main menu FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainMenu.fxml"));
+            Parent mainMenuRoot = loader.load();
+
+            // Get the current stage and switch the scene to the main menu
+            Stage stage = (Stage) cardsContainer.getScene().getWindow();
+            stage.setScene(new Scene(mainMenuRoot));
+            stage.setTitle("Main Menu");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load MainMenu.fxml");
+        }
+    }
 }

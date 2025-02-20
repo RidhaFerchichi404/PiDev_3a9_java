@@ -49,24 +49,37 @@ public class LoginController {
         User user = userService.authenticateUser(username, password);
 
         if (user != null) {
-            // Set the current session
+            // Make sure the role is set (see step 1)
             Session.setCurrentUser(user);
 
-            // Load the Main Menu
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+                Parent root;
+                // Check the role and load the appropriate FXML
+                if ("Admin".equalsIgnoreCase(user.getRole())) {
+                    // Load the dashboard for Admin
+                    root = FXMLLoader.load(getClass().getResource("/AdminDashboard.fxml"));
+                } else if ("Client".equalsIgnoreCase(user.getRole()) || "Coach".equalsIgnoreCase(user.getRole())) {
+                    // Load the main menu (or another view) for Client/Coach
+                    root = FXMLLoader.load(getClass().getResource("/MainMenu.fxml"));
+                } else {
+                    // Optionally, handle any other unexpected roles
+                    showAlert("Error", "User role not recognized.");
+                    return;
+                }
+
                 Stage stage = (Stage) emailField.getScene().getWindow();
                 stage.setScene(new Scene(root));
-                stage.setTitle("Main Menu");
+                stage.setTitle("Application");
             } catch (IOException e) {
                 e.printStackTrace();
-                showAlert("Error", "Unable to load Main Menu.");
+                showAlert("Error", "Unable to load the requested view.");
             }
         } else {
             // Show error message if authentication fails
             errorMessage.setText("Invalid username or password.");
         }
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
