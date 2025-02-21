@@ -20,6 +20,7 @@ public class testFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Scene scene;
         try {
             // Chargement des vues FXML
             FXMLLoader ajouterLoader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
@@ -32,8 +33,9 @@ public class testFX extends Application {
             Parent afficherRoot = afficherLoader.load();
 
             // Création de la VBox pour la vue d'affichage des abonnements
-            VBox vbox = new VBox(afficherRoot); // Démarre avec l'affichage des abonnements
-            Scene scene = new Scene(vbox);
+            VBox vbox = new VBox(10); // Ajuste l'espacement entre les cartes
+            vbox.getChildren().add(afficherRoot); // Ajoute l'affichage des abonnements
+            scene = new Scene(vbox);
 
             // Récupération des contrôleurs
             AjouterAbonnement ajouterController = ajouterLoader.getController();
@@ -43,26 +45,10 @@ public class testFX extends Application {
             // Configuration des actions et de la navigation entre les vues
             ajouterController.setModifierRoot(modifierRoot);
             ajouterController.setMainContainer(vbox);
-            modifierController.setAjouterRoot(ajouterRoot);
-            modifierController.setMainContainer(vbox);
+            //modifierController.setAjouterRoot(ajouterRoot);
+            //modifierController.setMainContainer(vbox);
             afficherController.setMainContainer(vbox);
             afficherController.setAjouterRoot(ajouterRoot);
-
-            // Ajouter le bouton "Ajouter Promotion" dans le contrôleur d'affichage
-            afficherController.setAddPromotionAction(() -> {
-                try {
-                    // Ouvrir la fenêtre pour ajouter une promotion
-                    FXMLLoader promotionLoader = new FXMLLoader(getClass().getResource("/AjouterPromotion.fxml"));
-                    Parent promotionRoot = promotionLoader.load();
-                    Scene promotionScene = new Scene(promotionRoot);
-                    Stage promotionStage = new Stage();
-                    promotionStage.setScene(promotionScene);
-                    promotionStage.setTitle("Ajouter Promotion");
-                    promotionStage.show();
-                } catch (IOException e) {
-                    System.out.println("Erreur lors du chargement du formulaire de promotion : " + e.getMessage());
-                }
-            });
 
             // Configuration de la fenêtre principale
             primaryStage.setTitle("Gestion des Abonnements");
@@ -71,6 +57,7 @@ public class testFX extends Application {
 
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement des vues : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

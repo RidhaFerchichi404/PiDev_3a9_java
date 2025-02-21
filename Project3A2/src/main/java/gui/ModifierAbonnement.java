@@ -1,246 +1,101 @@
 package gui;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import entities.Abonnement;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 
+import entities.Abonnement;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.AbonnementService;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 public class ModifierAbonnement {
 
-
-        private VBox mainContainer;
-        private Parent ajouterRoot;
-
-        public void setMainContainer(VBox mainContainer) {
-            this.mainContainer = mainContainer;
-        }
-
-        public void setAjouterRoot(Parent ajouterRoot) {
-            this.ajouterRoot = ajouterRoot;
-        }
-
-        // Méthode appelée lors de l'action d'ajout
-        public void handleAjouterAction() {
-            mainContainer.getChildren().setAll(ajouterRoot);
-        }
-    @FXML
-    private TextField TFRechercheNom;
     @FXML
     private TextField TFNom;
     @FXML
     private TextField TFDescription;
     @FXML
-    private TextField TFSalleNom;
+    private TextField TFDuree;
     @FXML
     private TextField TFPrix;
     @FXML
-    private TextField TFDuree;
+    private TextField TFSalleNom;
 
-    private Abonnement abonnementActuel;
-    private AbonnementService abonnementService = new AbonnementService();
-    private Abonnement abonnementSelectionne;
+    private Abonnement abonnementActuel; // L'abonnement à modifier
+    private AbonnementService abonnementService = new AbonnementService(); // Service pour interagir avec la base de données
 
-    @FXML
-    void naviguerVersAjout(ActionEvent event) {
-        if (mainContainer != null && ajouterRoot != null) {
-            mainContainer.getChildren().setAll(ajouterRoot); // Afficher la vue d'ajout
-        }
+    /**
+     * Charge les données de l'abonnement dans le formulaire.
+     *
+     * @param abonnement L'abonnement à modifier.
+     */
+    public void chargerAbonnement(Abonnement abonnement) {
+        this.abonnementActuel = abonnement;
+        TFNom.setText(abonnement.getNom());
+        TFDescription.setText(abonnement.getDescriptiona());
+        TFDuree.setText(String.valueOf(abonnement.getDuree()));
+        TFPrix.setText(String.valueOf(abonnement.getPrix()));
+        TFSalleNom.setText(abonnement.getSalleNom());
     }
-    @FXML
-    void rechercherAbonnement() {
-        String nomRechercher = TFRechercheNom.getText().trim();
-        if (nomRechercher.isEmpty()) {
-            afficherAlerte("Erreur", "Veuillez entrer un nom d'abonnement !");
-            return;
-        }
 
+    /**
+     * Enregistre les modifications de l'abonnement.
+     */
+    @FXML
+    private void enregistrerModifications() {
         try {
-            abonnementSelectionne = abonnementService.getAbonnementByNom(nomRechercher);
-            if (abonnementSelectionne != null) {
-                TFNom.setText(abonnementSelectionne.getNom());
-                TFDescription.setText(abonnementSelectionne.getDescriptiona());
-                TFDuree.setText(String.valueOf(abonnementSelectionne.getDuree()));
-                TFPrix.setText(String.valueOf(abonnementSelectionne.getPrix()));
-                TFSalleNom.setText(abonnementSelectionne.getSalleNom());
-            } else {
-                afficherAlerte("Aucun résultat", "Aucun abonnement trouvé avec ce nom.");
+            // Valider les entrées
+            if (TFNom.getText().isEmpty() || TFDescription.getText().isEmpty() ||
+                    TFDuree.getText().isEmpty() || TFPrix.getText().isEmpty() || TFSalleNom.getText().isEmpty()) {
+                throw new IllegalArgumentException("Tous les champs doivent être remplis.");
             }
-        } catch (SQLException e) {
+
+            // Mettre à jour les valeurs de l'abonnement
+            abonnementActuel.setNom(TFNom.getText());
+            abonnementActuel.setDescriptiona(TFDescription.getText());
+            abonnementActuel.setDuree(Integer.parseInt(TFDuree.getText()));
+            abonnementActuel.setPrix(Double.parseDouble(TFPrix.getText()));
+            abonnementActuel.setSalleNom(TFSalleNom.getText());
+
+            // Enregistrer les modifications dans la base de données
+            abonnementService.update(abonnementActuel);
+
+            // Afficher un message de succès
+            afficherAlerte("Succès", "Abonnement modifié avec succès.", Alert.AlertType.INFORMATION);
+
+            // Fermer la fenêtre de modification
+            fermerFenetre();
+
+        } catch (NumberFormatException e) {
+            afficherAlerte("Erreur", "La durée et le prix doivent être des nombres valides.", Alert.AlertType.ERROR);
+        } catch (IllegalArgumentException e) {
+            afficherAlerte("Erreur", e.getMessage(), Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            afficherAlerte("Erreur", "Une erreur est survenue lors de la modification : " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
-            afficherAlerte("Erreur", "Erreur lors de la recherche : " + e.getMessage());
         }
     }
-    private void afficherAlerte(String titre, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+    /**
+     * Affiche une alerte avec un message.
+     *
+     * @param titre   Le titre de l'alerte.
+     * @param message Le message à afficher.
+     * @param type    Le type d'alerte (INFORMATION, ERROR, etc.).
+     */
+    private void afficherAlerte(String titre, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle(titre);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-   // Méthode pour initialiser le formulaire avec les données de l'abonnement
-    public void chargerAbonnement(Abonnement abonnement) {
-        this.abonnementActuel = abonnement;
-        TFNom.setText(abonnement.getNom());
-        TFDescription.setText(abonnement.getDescriptiona());
-        TFSalleNom.setText(abonnement.getSalleNom());
-        TFPrix.setText(String.valueOf(abonnement.getPrix()));
-        TFDuree.setText(String.valueOf(abonnement.getDuree()));
+
+    /**
+     * Ferme la fenêtre de modification.
+     */
+    private void fermerFenetre() {
+        Stage stage = (Stage) TFNom.getScene().getWindow();
+        stage.close();
     }
-
-    // Méthode appelée lors du clic sur le bouton "Enregistrer"
-   /* @FXML
-    private void modifierAbonnement(ActionEvent event) {
-        try {
-            // Récupération des valeurs des champs
-            String nom = TFNom.getText();
-            String description = TFDescription.getText();
-            String salleNom = TFSalleNom.getText();
-            double prix = Double.parseDouble(TFPrix.getText());
-            int duree = Integer.parseInt(TFDuree.getText());
-
-            // Validation des entrées
-            if (nom.isEmpty() || description.isEmpty() || salleNom.isEmpty()) {
-                throw new IllegalArgumentException("Les champs Nom, Description et SalleNom ne peuvent pas être vides.");
-            }
-
-            // Mise à jour de l'abonnement
-            abonnementActuel.setNom(nom);
-            abonnementActuel.setDescriptiona(description);
-            abonnementActuel.setSalleNom(salleNom);
-            abonnementActuel.setPrix(prix);
-            abonnementActuel.setDuree(duree);
-
-            // Appel du service pour mettre à jour l'abonnement dans la base de données
-            AbonnementService abonnementService = new AbonnementService();
-            abonnementService.update(abonnementActuel);
-
-            // Afficher un message de succès
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setContentText("Abonnement modifié avec succès !");
-            alert.showAndWait();
-
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText("Le prix et la durée doivent être des nombres valides.");
-            alert.showAndWait();
-        } catch (IllegalArgumentException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText("Erreur lors de la modification de l'abonnement : " + e.getMessage());
-            alert.showAndWait();
-        }
-    }*/
-    @FXML
-    /*private void modifierAbonnement(ActionEvent event) {
-        try {
-            /*if (abonnementActuel == null) {
-                afficherAlerte("Erreur", "Aucun abonnement à modifier.");
-                return;
-            }
-
-            // Récupération des valeurs des champs
-            String nom = TFNom.getText();
-            String description = TFDescription.getText();
-            String salleNom = TFSalleNom.getText();
-            double prix = Double.parseDouble(TFPrix.getText());
-            int duree = Integer.parseInt(TFDuree.getText());
-
-            // Validation des entrées
-            if (nom.isEmpty() || description.isEmpty() || salleNom.isEmpty()) {
-                throw new IllegalArgumentException("Les champs Nom, Description et SalleNom ne peuvent pas être vides.");
-            }
-
-            // Mise à jour de l'abonnement
-            abonnementActuel.setNom(nom);
-            abonnementActuel.setDescriptiona(description);
-            abonnementActuel.setSalleNom(salleNom);
-            abonnementActuel.setPrix(prix);
-            abonnementActuel.setDuree(duree);
-
-            // Appel du service pour mettre à jour l'abonnement dans la base de données
-            abonnementService.update(abonnementActuel);
-
-            // Afficher un message de succès
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setContentText("Abonnement modifié avec succès !");
-            alert.showAndWait();
-
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText("Le prix et la durée doivent être des nombres valides.");
-            alert.showAndWait();
-        } catch (IllegalArgumentException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setContentText("Erreur lors de la modification de l'abonnement : " + e.getMessage());
-            alert.showAndWait();
-        }
-    }*/
-    void modifierAbonnement(ActionEvent event) {
-        try {
-            // Récupérer les valeurs des champs
-            String nom = TFNom.getText();
-            String description = TFDescription.getText();
-            String salleNom = TFSalleNom.getText();
-            double prix = Double.parseDouble(TFPrix.getText());
-            int duree = Integer.parseInt(TFDuree.getText());
-
-            // Vérifier que les champs ne sont pas vides
-            if (nom.isEmpty() || description.isEmpty() || salleNom.isEmpty()) {
-                System.out.println("Tous les champs doivent être remplis.");
-                return;
-            }
-
-            // Créer un objet Abonnement avec les nouvelles valeurs
-            Abonnement abonnement = new Abonnement(nom, description, duree, prix, salleNom);
-
-            // Modifier l'abonnement dans la base de données
-            abonnementService.update(abonnement);
-
-            System.out.println("Abonnement modifié avec succès !");
-        } catch (NumberFormatException e) {
-            System.out.println("Erreur de format : Le prix et la durée doivent être des nombres valides.");
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la modification de l'abonnement : " + e.getMessage());
-            e.printStackTrace(); // Afficher la stack trace pour le débogage
-        }
-    }
-    @FXML
-    private TableView<Abonnement> tableAbonnements;
-    @FXML
-    private void naviguerVersAffichageAbonnements() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AfficherAbonnements.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) tableAbonnements.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
 }

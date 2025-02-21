@@ -1,36 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #F0F8FF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjouterAbonnement">
-   <children>
-
-
-      <!-- Titre -->
-      <Label layoutX="200.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2E86C1;" text="Ajouter un Abonnement" />
-
-      <!-- Formulaire -->
-      <Label layoutX="50.0" layoutY="80.0" style="-fx-font-size: 14px; -fx-text-fill: #1B4F72;" text="Nom" />
-      <TextField fx:id="TFNom" layoutX="200.0" layoutY="80.0" style="-fx-background-color: #D6EAF8; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-
-      <Label layoutX="50.0" layoutY="130.0" style="-fx-font-size: 14px; -fx-text-fill: #1B4F72;" text="Description" />
-      <TextField fx:id="TfDescriptiona" layoutX="200.0" layoutY="130.0" style="-fx-background-color: #D6EAF8; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-
-      <Label layoutX="50.0" layoutY="180.0" style="-fx-font-size: 14px; -fx-text-fill: #1B4F72;" text="Durée (mois)" />
-      <TextField fx:id="TFDuree" layoutX="200.0" layoutY="180.0" style="-fx-background-color: #D6EAF8; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-
-      <Label layoutX="50.0" layoutY="230.0" style="-fx-font-size: 14px; -fx-text-fill: #1B4F72;" text="Prix (€)" />
-      <TextField fx:id="TFPrix" layoutX="200.0" layoutY="230.0" style="-fx-background-color: #D6EAF8; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-
-      <Label layoutX="50.0" layoutY="280.0" style="-fx-font-size: 14px; -fx-text-fill: #1B4F72;" text="Nom de la Salle" />
-      <TextField fx:id="TFSalleNom" layoutX="200.0" layoutY="280.0" style="-fx-background-color: #D6EAF8; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-
-      <!-- Bouton Ajouter -->
-      <Button fx:id="BTAjouter" layoutX="250.0" layoutY="330.0" onAction="#AjouterAbonnement" style="-fx-background-color: #28B463; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;" text="Ajouter" />
-      <Button fx:id="BTModifier" layoutX="400.0" layoutY="330.0" onAction="#naviguerVersModification" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;" text="Modifier" />
-      <Button layoutX="400.0" layoutY="380.0" onAction="#naviguerVersAffichage" text="Afficher" />
-   </children>
-</AnchorPane>
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.AjouterAbonnement">
+   <Label text="Ajouter un Abonnement" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+   <TextField fx:id="TFNom" promptText="Nom"/>
+   <TextField fx:id="TFDescription" promptText="Description"/>
+   <TextField fx:id="TFDuree" promptText="Durée (jours)"/>
+   <TextField fx:id="TFPrix" promptText="Prix"/>
+   <TextField fx:id="TFSalleNom" promptText="Nom de la salle"/>
+   <Button text="Ajouter" onAction="#AjouterAbonnement"/>
+</VBox>

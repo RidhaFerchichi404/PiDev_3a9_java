@@ -5,9 +5,10 @@ import services.PromotionService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class AjouterPromotion {
 
@@ -17,7 +18,7 @@ public class AjouterPromotion {
     @FXML private TextField valeurReductionField;
     @FXML private DatePicker dateDebutPicker;
     @FXML private DatePicker dateFinPicker;
-    @FXML private TextField abonnementIdField; // Ajout de l'ID d'abonnement comme champ
+    @FXML private TextField abonnementIdField;
 
     private PromotionService promotionService;
 
@@ -26,14 +27,29 @@ public class AjouterPromotion {
     }
 
     @FXML
+    public void initialize() {
+        if (abonnementIdField == null) {
+            System.out.println("Erreur : abonnementIdField n'a pas été injecté.");
+        } else {
+            System.out.println("abonnementIdField a été injecté avec succès.");
+        }
+    }
+
+    @FXML
     public void addPromotion() {
+        // Vérifier que tous les champs sont injectés
+        if (abonnementIdField == null) {
+            showAlert("Erreur", "Le champ abonnementIdField n'a pas été initialisé.");
+            return;
+        }
+
         // Récupération des valeurs des champs
         String codePromo = codePromoField.getText();
         String description = descriptionField.getText();
         String typeReduction = typeReductionField.getText();
         String valeurReductionStr = valeurReductionField.getText();
-        Date dateDebut = Date.valueOf(dateDebutPicker.getValue());
-        Date dateFin = Date.valueOf(dateFinPicker.getValue());
+        LocalDate dateDebut = dateDebutPicker.getValue();
+        LocalDate dateFin = dateFinPicker.getValue();
         String abonnementIdStr = abonnementIdField.getText();
 
         // Validation des champs
@@ -42,7 +58,7 @@ public class AjouterPromotion {
             return;
         }
 
-        // Conversion de la valeur de réduction en BigDecimal
+        // Conversion et validation des valeurs
         BigDecimal valeurReduction;
         try {
             valeurReduction = new BigDecimal(valeurReductionStr);
@@ -51,7 +67,6 @@ public class AjouterPromotion {
             return;
         }
 
-        // Validation de l'ID d'abonnement
         int abonnementId;
         try {
             abonnementId = Integer.parseInt(abonnementIdStr);
@@ -60,19 +75,10 @@ public class AjouterPromotion {
             return;
         }
 
-
-        // Vérifie si l'ID d'abonnement existe dans la base de données
-        if (!isAbonnementExist(abonnementId)) {
-            showAlert("Erreur", "L'ID d'abonnement n'existe pas.");
-            return;
-        }
-
         // Création de la promotion
-
-        Promotion promotion = new Promotion(codePromo, description, typeReduction, valeurReduction, dateDebut, dateFin, abonnementId );
+        Promotion promotion = new Promotion(codePromo, description, typeReduction, valeurReduction, Date.valueOf(dateDebut), Date.valueOf(dateFin), abonnementId);
 
         try {
-            // Appel au service pour ajouter la promotion
             promotionService.create(promotion);
             showAlert("Succès", "La promotion a été ajoutée avec succès.");
         } catch (SQLException e) {
@@ -81,16 +87,6 @@ public class AjouterPromotion {
         }
     }
 
-    // Méthode pour vérifier si l'ID d'abonnement existe dans la base de données
-    private boolean isAbonnementExist(int abonnementId) {
-        // Ici tu peux interroger ta base de données pour vérifier si l'abonnement existe
-        // Exemple de code à implémenter dans PromotionService :
-        // SELECT COUNT(*) FROM abonnement WHERE AbonnementID = ?
-        // Retourne true si l'abonnement existe.
-        return true; // Exemple, à remplacer par une réelle logique de vérification
-    }
-
-    // Méthode pour afficher les alertes
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

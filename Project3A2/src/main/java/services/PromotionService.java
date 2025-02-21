@@ -50,6 +50,20 @@ public class PromotionService implements IPromotion<Promotion> {
         }
         return promotions;
     }*/
+    public boolean checkIfAbonnementExists(int abonnementId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM abonnement WHERE AbonnementID = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, abonnementId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Retourne true si l'abonnement existe
+                }
+            }
+        }
+        return false; // Retourne false si l'abonnement n'existe pas
+    }
+
     // Update an existing promotion
     public void update(Promotion promotion) throws SQLException {
         String query = "UPDATE promotion SET  Description = ?  WHERE PromotionID = ?";

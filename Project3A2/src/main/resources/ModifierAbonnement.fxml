@@ -1,59 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="500.0" spacing="15" style="-fx-background-color: #ECF0F1; -fx-padding: 20; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModifierAbonnement">
-
-    <!-- Titre -->
-    <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1B4F72;" text="Modifier un Abonnement" />
-
-    <!-- Barre de recherche -->
-    <HBox alignment="CENTER" spacing="10">
-        <TextField fx:id="TFRechercheNom" promptText="Rechercher par nom" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" />
-        <Button fx:id="BTRechercher" onAction="#rechercherAbonnement" style="-fx-background-color: #2E86C1; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 5;" text="Rechercher" />
-    </HBox>
-
-    <!-- Formulaire -->
-    <GridPane alignment="CENTER" hgap="10" vgap="10">
-        <columnConstraints>
-            <ColumnConstraints minWidth="120" />
-            <ColumnConstraints minWidth="200" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints minHeight="30" />
-            <RowConstraints minHeight="30" />
-            <RowConstraints minHeight="30" />
-            <RowConstraints minHeight="30" />
-            <RowConstraints minHeight="30" />
-        </rowConstraints>
-
-        <Label text="Nom :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="TFNom" prefHeight="30.0" prefWidth="188.0" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-        <Label text="Description :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <TextField fx:id="TFDescription" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-        <Label text="Salle :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <TextField fx:id="TFSalleNom" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-        <Label text="Prix :" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <TextField fx:id="TFPrix" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-        <Label text="Durée :" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-        <TextField fx:id="TFDuree" style="-fx-background-color: white; -fx-border-color: #1B4F72; -fx-border-radius: 5; -fx-padding: 5;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    </GridPane>
-
-    <!-- Boutons -->
-    <HBox alignment="CENTER" spacing="15">
-        <Button onAction="#modifierAbonnement" style="-fx-background-color: #28B463; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5;" text="Enregistrer" />
-        <Button onAction="#naviguerVersAjout" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5;" text="Ajouter" />
-    </HBox>
-
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.ModifierAbonnement">
+    <Label text="Modifier un Abonnement" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <TextField fx:id="TFNom" promptText="Nom"/>
+    <TextField fx:id="TFDescription" promptText="Description"/>
+    <TextField fx:id="TFDuree" promptText="Durée (jours)"/>
+    <TextField fx:id="TFPrix" promptText="Prix"/>
+    <TextField fx:id="TFSalleNom" promptText="Nom de la salle"/>
+    <Button text="Enregistrer" onAction="#enregistrerModifications"/>
 </VBox>

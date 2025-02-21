@@ -48,6 +48,27 @@ public class AjouterAbonnement {
             mainContainer.getChildren().setAll(afficherRoot); // Afficher la vue d'affichage
         }
     }
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    @FXML
+    private void ouvrirAjout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter un Abonnement");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire d'ajout", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
     @FXML
     void AjouterAbonnement(ActionEvent event) {
         try {
@@ -103,6 +124,7 @@ public class AjouterAbonnement {
             e.printStackTrace();
 
         }}
+
     @FXML
     void naviguerVersModification(ActionEvent event) {
         if (mainContainer != null && modifierRoot != null) {

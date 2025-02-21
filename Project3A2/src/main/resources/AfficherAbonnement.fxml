@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherAbonnement">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #1a1a1a;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AfficherAbonnement"> <!-- Assurez-vous que le contrôleur est correct -->
     <children>
-        <Label layoutX="200.0" layoutY="20.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Liste des Abonnements" />
+        <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
 
-        <TableView fx:id="tableAbonnements" layoutX="50.0" layoutY="60.0" prefHeight="300.0" prefWidth="600.0">
-            <columns>
-                <TableColumn fx:id="colNom" prefWidth="100.0" text="Nom" />
-                <TableColumn fx:id="colDescription" prefWidth="150.0" text="Description" />
-                <TableColumn fx:id="colDuree" prefWidth="75.0" text="Durée" />
-                <TableColumn fx:id="colPrix" prefWidth="75.0" text="Prix" />
-                <TableColumn fx:id="colSalleNom" prefWidth="100.0" text="Salle" />
-                <TableColumn fx:id="colActions" prefWidth="100.0" text="Actions" />
-            </columns>
-        </TableView>
+            <Label text="Liste des Abonnements"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
-        <Button layoutX="250.0" layoutY="380.0" onAction="#naviguerVersAjout" text="Ajouter un abonnement" />
-        <!-- Bouton pour ajouter une promotion -->
-        <Button text="Ajouter Promotion" onAction="#openAddPromotionForm" />
+            <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-border-color: #ff8c00;">
+                <content>
+                    <FlowPane fx:id="abonnementsContainer" hgap="20" vgap="20" style="-fx-background-color: black;">
+                    </FlowPane>
+                </content>
+            </ScrollPane>
+
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Ajouter un abonnement" onAction="#ouvrirAjout"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            </HBox>
+        </VBox>
     </children>
 </AnchorPane>

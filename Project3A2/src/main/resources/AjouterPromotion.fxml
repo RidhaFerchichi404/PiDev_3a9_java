@@ -12,9 +12,9 @@
           prefHeight="250.0" prefWidth="400.0"
           hgap="10" vgap="10">
 
-    <!-- Label et TextField pour l'ID de la salle -->
-    <Label text="ID de la salle" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <TextField fx:id="salleIdField" promptText="Entrez l'ID de la salle" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <!-- Label et TextField pour l'ID de l'abonnement -->
+    <Label text="ID de l'abonnement" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="abonnementIdField" promptText="Entrez l'ID de l'abonnement" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
     <!-- Label et TextField pour le code promo -->
     <Label text="Code de la promotion" GridPane.rowIndex="1" GridPane.columnIndex="0"/>

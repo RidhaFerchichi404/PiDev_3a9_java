@@ -55,6 +55,18 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         }
         return -1;
     }
+    public boolean checkIfAbonnementExists(int abonnementId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM Abonnement WHERE AbonnementID = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, abonnementId);
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        }
+        return false;
+    }
+
     /*public int getIdByName(String name) throws SQLException {
         System.out.println("Recherche de la salle avec le nom : " + name); // Log pour débogage
         String query = "SELECT SalleID FROM salledesport WHERE Nom = ?";
@@ -102,21 +114,25 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             stmt.executeUpdate();
         }
     }*/
+    @Override
     public void update(Abonnement abonnement) throws SQLException {
         if (abonnement == null) {
             throw new IllegalArgumentException("L'objet Abonnement ne peut pas être null.");
         }
 
-        String query = "UPDATE Abonnement SET Description = ?, duree = ?, Prix = ?, SalleName = ? WHERE Nom = ?";
+        // Utiliser l'ID pour cibler l'enregistrement
+        String query = "UPDATE Abonnement SET Nom = ?, Description = ?, duree = ?, Prix = ?, SalleName = ? WHERE AbonnementID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            stmt.setString(1, abonnement.getdescriptiona());
-            stmt.setInt(2, abonnement.getDuree());
-            stmt.setDouble(3, abonnement.getPrix());
-            stmt.setString(4, abonnement.getSalleNom());
-            stmt.setString(5, abonnement.getNom());
+            stmt.setString(1, abonnement.getNom());
+            stmt.setString(2, abonnement.getdescriptiona());
+            stmt.setInt(3, abonnement.getDuree());
+            stmt.setDouble(4, abonnement.getPrix());
+            stmt.setString(5, abonnement.getSalleNom());
+            stmt.setInt(6, abonnement.getId()); // Utiliser l'ID pour cibler l'enregistrement
             stmt.executeUpdate();
         }
     }
+
 
     /*@Override
     public void delete(Abonnement abonnement) throws SQLException {

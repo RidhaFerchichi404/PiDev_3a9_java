@@ -1,15 +1,16 @@
 package gui;
 
 import entities.Abonnement;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.AbonnementService;
 
@@ -20,24 +21,33 @@ import java.util.List;
 public class AfficherAbonnement {
 
     @FXML
-    private TableView<Abonnement> tableAbonnements;
-    @FXML
-    private TableColumn<Abonnement, String> colNom;
-    @FXML
-    private TableColumn<Abonnement, String> colDescription;
-    @FXML
-    private TableColumn<Abonnement, Integer> colDuree;
-    @FXML
-    private TableColumn<Abonnement, Double> colPrix;
-    @FXML
-    private TableColumn<Abonnement, String> colSalleNom;
-    @FXML
-    private TableColumn<Abonnement, Void> colActions; // Nouvelle colonne pour les boutons de suppression
+    private FlowPane abonnementsContainer; // Conteneur principal pour les abonnements
 
-    private VBox mainContainer;
-    private Parent ajouterRoot;
     private AbonnementService abonnementService = new AbonnementService();
-
+    private Parent ajouterRoot;
+    private VBox mainContainer; // Add this field
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    @FXML
+    private void ouvrirAjout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter un Abonnement");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire d'ajout", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+    // Add this method
     public void setMainContainer(VBox mainContainer) {
         this.mainContainer = mainContainer;
     }
@@ -47,113 +57,128 @@ public class AfficherAbonnement {
     }
 
     @FXML
-    public void naviguerVersAjout() {
-        if (mainContainer != null && ajouterRoot != null) {
-            mainContainer.getChildren().setAll(ajouterRoot);
-        }
-    }
-
-    // Méthode pour ouvrir le formulaire d'ajout de promotion
-    private Runnable addPromotionAction;
-
-    public void setAddPromotionAction(Runnable addPromotionAction) {
-        this.addPromotionAction = addPromotionAction;
-    }
-
-    @FXML
-    public void openAddPromotionForm() {
-        if (addPromotionAction != null) {
-            addPromotionAction.run();
-        }}
-
-
-    @FXML
     public void initialize() {
-        System.out.println("Initialisation AfficherAbonnement...");
-
-        colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("descriptiona"));
-        colDuree.setCellValueFactory(new PropertyValueFactory<>("duree"));
-        colPrix.setCellValueFactory(new PropertyValueFactory<>("prix"));
-        colSalleNom.setCellValueFactory(new PropertyValueFactory<>("salleNom"));
-
-        ajouterBoutonSuppression(); // Ajout des boutons de suppression
-
-        chargerAbonnements();
-    }
-
-    private void chargerAbonnements() {
         try {
+            // Récupérer tous les abonnements depuis la base de données
             List<Abonnement> abonnements = abonnementService.readAll();
-            System.out.println("Nombre d'abonnements récupérés : " + abonnements.size());
-            ObservableList<Abonnement> observableList = FXCollections.observableArrayList(abonnements);
-            tableAbonnements.setItems(observableList);
-            tableAbonnements.refresh();
+            afficherAbonnements(abonnements);
         } catch (SQLException e) {
-            System.out.println("Erreur lors du chargement des abonnements : " + e.getMessage());
-            e.printStackTrace(); // Ajoutez cette ligne pour voir la stack trace complète
-        }
-    }
-    /*@FXML
-    public void openAddPromotionForm() {
-        try {
-            // Charger le fichier FXML pour le formulaire d'ajout de promotion
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ajout_promotion.fxml"));
-            Parent root = loader.load();
-
-            // Créer une nouvelle scène pour afficher le formulaire d'ajout de promotion
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Ajouter Promotion");
-            stage.show();
-
-        } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
-    private void ajouterBoutonSuppression() {
-        colActions.setCellFactory(param -> new TableCell<>() {
-            private final Button btnSupprimer = new Button("Supprimer");
+    }
 
-            {
-                btnSupprimer.setStyle("-fx-background-color: #ff5555; -fx-text-fill: white; -fx-border-radius: 5px;");
-                btnSupprimer.setOnAction(event -> {
-                    Abonnement abonnement = getTableView().getItems().get(getIndex());
-                    supprimerAbonnement(abonnement);
-                });
-            }
+    private void afficherAbonnements(List<Abonnement> abonnements) {
+        abonnementsContainer.getChildren().clear(); // Vider le conteneur avant d'ajouter de nouveaux éléments
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btnSupprimer);
-                }
-            }
-        });
+        for (Abonnement abonnement : abonnements) {
+            // Créer un cadre pour chaque abonnement
+            VBox cadreAbonnement = new VBox(10); // Espacement de 10 entre les éléments
+            cadreAbonnement.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+
+            // Ajouter les détails de l'abonnement
+            Label nomLabel = new Label("Nom : " + abonnement.getNom());
+            Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
+            Label prixLabel = new Label("Prix : " + abonnement.getPrix());
+            Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
+
+            // Ajouter les boutons de suppression et de modification
+            Button supprimerButton = new Button("Supprimer");
+            Button modifierButton = new Button("Modifier");
+
+            // Associer des actions aux boutons
+            supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
+            modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
+
+            // Ajouter les éléments au cadre
+            cadreAbonnement.getChildren().addAll(nomLabel, descriptionLabel, prixLabel, dureeLabel, supprimerButton, modifierButton);
+
+            // Ajouter le cadre au conteneur principal
+            abonnementsContainer.getChildren().add(cadreAbonnement);
+        }
     }
 
     private void supprimerAbonnement(Abonnement abonnement) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText("Voulez-vous vraiment supprimer cet abonnement ?");
-        alert.setContentText("Cette action est irréversible.");
+        try {
+            // Supprimer l'abonnement de la base de données
+            //abonnementService.delete(abonnement.getId());
 
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                try {
-                    abonnementService.delete(abonnement);
-                    chargerAbonnements(); // Rafraîchissement après suppression
-                    System.out.println("Abonnement supprimé avec succès");
-                } catch (SQLException e) {
-                    System.out.println("Erreur lors de la suppression : " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        });
+            // Recharger la liste des abonnements
+            List<Abonnement> abonnements = abonnementService.readAll();
+            afficherAbonnements(abonnements);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+    private VBox creerCarteAbonnement(Abonnement abonnement) {
+        VBox carte = new VBox(10);
+        carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
 
+        Label nomLabel = new Label("Nom : " + abonnement.getNom());
+        nomLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 16px;");
 
+        Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
+        descriptionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
+        dureeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label prixLabel = new Label("Prix : " + abonnement.getPrix() + " €");
+        prixLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label salleLabel = new Label("Salle : " + abonnement.getSalleNom());
+        salleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        // Boutons pour modifier et supprimer
+        HBox boutonsContainer = new HBox(10);
+        Button modifierButton = new Button("Modifier");
+        modifierButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white;");
+        modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
+
+        Button supprimerButton = new Button("Supprimer");
+        supprimerButton.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;");
+        supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
+
+        boutonsContainer.getChildren().addAll(modifierButton, supprimerButton);
+        carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, boutonsContainer);
+
+        return carte;
+    }
+    public void actualiser() {
+        abonnementsContainer.getChildren().clear(); // Vider le conteneur actuel
+
+        try {
+            List<Abonnement> abonnements = abonnementService.readAll(); // Récupérer tous les abonnements
+            for (Abonnement abonnement : abonnements) {
+                abonnementsContainer.getChildren().add(creerCarteAbonnement(abonnement)); // Ajouter chaque abonnement
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement des abonnements : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void modifierAbonnement(Abonnement abonnement) {
+        try {
+            // Charger le fichier FXML pour la modification
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierAbonnement.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur et passer l'abonnement à modifier
+            ModifierAbonnement controller = loader.getController();
+            controller.chargerAbonnement(abonnement);
+
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Modifier l'Abonnement");
+            stage.show();
+
+            // Rafraîchir l'affichage après la modification
+            stage.setOnHidden(event -> actualiser());
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement du formulaire de modification : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
