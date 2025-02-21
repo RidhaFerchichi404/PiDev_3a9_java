@@ -1,20 +1,23 @@
 package PC.gestion.gui;
 
-import PC.gestion.entities.Comment;
-import PC.gestion.entities.Post;
-import PC.gestion.services.ServiceComment;
-import PC.gestion.services.ServicePost;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
+import PC.gestion.entities.Post;
+import PC.gestion.entities.Comment;
+import PC.gestion.services.ServicePost;
+import PC.gestion.services.ServiceComment;
 
-import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ajouterCommentsAdmin {
 
@@ -23,7 +26,6 @@ public class ajouterCommentsAdmin {
 
     @FXML
     private Button BTNsupprimer;
-
 
     @FXML
     private FlowPane FPcomments;
@@ -37,189 +39,130 @@ public class ajouterCommentsAdmin {
     @FXML
     private TextField TFnbLikes;
 
-    private int postId;
     private Comment selectedComment;
-    private  int commentId;
+    private int postId;
 
     public void setPostId(int postId) {
         this.postId = postId;
-        loadComments();
     }
-
-    public void setCommentId( int commentId) {
-        this.commentId = commentId;
-    }
-
-    public void setSelectedComment(String comment) {
-        this.selectedComment = findCommentByText(comment);
-        if (this.selectedComment != null) {
-            TFcomment.setText(this.selectedComment.getComment());
-            TFnbLikes.setText(String.valueOf(this.selectedComment.getLikes()));
-        }
-    }
-
-
 
     @FXML
     public void initialize() {
-        loadComments();
         loadPosts();
-        FPcomments.setOnMouseClicked(event -> handleCommentSelection());
-        FPposts.setOnMouseClicked(event -> handlePostSelection());
-    }
-
-    private void loadComments() {
-        if (postId == 0) {
-            return;
-        }
-        ServiceComment serviceComment = new ServiceComment();
-        try {
-            ObservableList<Comment> comments = FXCollections.observableArrayList(serviceComment.getCommentsByPostId(postId));
-            System.out.println("Comments loaded: " + comments.size());
-            FPcomments.getChildren().clear();
-            for (Comment comment : comments) {
-                HBox commentBox = createCommentBox(comment);
-                FPcomments.getChildren().add(commentBox);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private HBox createCommentBox(Comment comment) {
-        Label commentLabel = new Label(comment.getComment());
-        HBox hBox = new HBox(commentLabel);
-        hBox.setSpacing(10);
-        return hBox;
-    }
-
-    private HBox createPostBox(Post post) {
-        Label postLabel = new Label(post.getDescription());
-        ImageView postImageView = new ImageView(new Image("file:" + post.getImage()));
-        postImageView.setFitHeight(50);
-        postImageView.setFitWidth(50);
-        HBox hBox = new HBox(postImageView, postLabel);
-        hBox.setStyle("-fx-border-color: black; -fx-border-width: 1;");
-        hBox.setSpacing(10);
-        return hBox;
     }
 
     private void loadPosts() {
         ServicePost servicePost = new ServicePost();
         try {
-            ObservableList<Post> posts = FXCollections.observableArrayList(servicePost.afficherAllPosts());
-            System.out.println("Posts loaded: " + posts.size());
-            FPposts.getChildren().clear();
+            List<Post> posts = servicePost.afficherAllPosts();
             for (Post post : posts) {
-                HBox postBox = createPostBox(post);
-                FPposts.getChildren().add(postBox);
+                VBox vBox = new VBox(10);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+
+                ImageView imageView = new ImageView(new Image("file:" + post.getImage()));
+                imageView.setFitWidth(100);
+                imageView.setFitHeight(100);
+
+                Label labelType = new Label(post.getType());
+
+                vBox.getChildren().addAll(imageView, labelType);
+                FPposts.getChildren().add(vBox);
+                vBox.setOnMouseClicked(event -> {
+                    loadComments(post);
+                    highlightSelectedPost(vBox);
+                });
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @FXML
-    private void handlePostSelection() {
-        for (javafx.scene.Node node : FPposts.getChildren()) {
-            node.getStyleClass().remove("selected-post");
-            node.setOnMouseClicked(event -> {
-                HBox selectedBox = (HBox) node;
-                for (javafx.scene.Node child : selectedBox.getChildren()) {
-                    if (child instanceof Label) {
-                        Label selectedLabel = (Label) child;
-                        Post selectedPost = findPostByDescription(selectedLabel.getText());
-                        if (selectedPost != null) {
-                            setPostId(selectedPost.getIdp());
-                            selectedBox.getStyleClass().add("highlight");
-                        }
-                        break;
-                    }
-                }
-            });
+    private void highlightSelectedPost(VBox selectedVBox) {
+        for (Node node : FPposts.getChildren()) {
+            if (node instanceof VBox) {
+                VBox vBox = (VBox) node;
+                vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+            }
         }
+        selectedVBox.setStyle("-fx-border-color: blue; -fx-border-width: 2; -fx-padding: 10;");
     }
 
-    private Post findPostByDescription(String description) {
-        ServicePost servicePost = new ServicePost();
+    private void loadComments(Post post) {
+        FPcomments.getChildren().clear();
+        ServiceComment serviceComment = new ServiceComment();
         try {
-            for (Post post : servicePost.afficherAllPosts()) {
-                if (post.getDescription().equals(description)) {
-                    return post;
-                }
+            List<Comment> comments = serviceComment.getCommentsByPostId(post.getIdp());
+            for (Comment comment : comments) {
+                VBox vBox = new VBox(10);
+                vBox.setAlignment(Pos.CENTER);
+                vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+
+                Label labelComment = new Label(comment.getComment());
+                Label labelLikes = new Label("Likes: " + comment.getLikes());
+
+                vBox.getChildren().addAll(labelComment, labelLikes);
+                FPcomments.getChildren().add(vBox);
+                vBox.setOnMouseClicked(event -> {
+                    selectComment(comment);
+                    highlightSelectedComment(vBox);
+                });
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    private void highlightSelectedComment(VBox selectedVBox) {
+        for (Node node : FPcomments.getChildren()) {
+            if (node instanceof VBox) {
+                VBox vBox = (VBox) node;
+                vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+            }
+        }
+        selectedVBox.setStyle("-fx-border-color: blue; -fx-border-width: 2; -fx-padding: 10;");
+    }
+
+    private void selectComment(Comment comment) {
+        selectedComment = comment;
+        TFcomment.setText(comment.getComment());
+        TFnbLikes.setText(String.valueOf(comment.getLikes()));
     }
 
     @FXML
-    private void handleCommentSelection() {
-        for (javafx.scene.Node node : FPcomments.getChildren()) {
-            node.setOnMouseClicked(event -> {
-                HBox selectedBox = (HBox) node;
-                for (javafx.scene.Node child : selectedBox.getChildren()) {
-                    if (child instanceof Label) {
-                        Label selectedLabel = (Label) child;
-                        Comment selectedComment = findCommentByText(selectedLabel.getText());
-                        if (selectedComment != null) {
-                            commentId = selectedComment.getId();
-                            TFcomment.setText(selectedComment.getComment());
-                            TFnbLikes.setText(String.valueOf(selectedComment.getLikes()));
-                            selectedBox.getStyleClass().add("highlight");
-                        }
-                        break;
-                    }
-                }
-            });
+    void handleDeleteComment(ActionEvent event) {
+        if (selectedComment != null) {
+            ServiceComment serviceComment = new ServiceComment();
+            ServicePost servicePost = new ServicePost();
+            try {
+                serviceComment.delete(selectedComment);
+                loadComments(servicePost.getPostById(selectedComment.getIdPost()));
+                selectedComment = null;
+                TFcomment.clear();
+                TFnbLikes.clear();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @FXML
-    private void handleModifyComment() {
+    void handleModifyComment(ActionEvent event) {
         if (selectedComment != null) {
             selectedComment.setComment(TFcomment.getText());
             selectedComment.setLikes(Integer.parseInt(TFnbLikes.getText()));
-            selectedComment.setIdPost(postId);
-            selectedComment.setId(commentId);
-
             ServiceComment serviceComment = new ServiceComment();
             try {
                 serviceComment.update(selectedComment);
-                loadComments();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Comment not found");
-        }
-    }
-
-    private Comment findCommentByText(String text) {
-        ServiceComment serviceComment = new ServiceComment();
-        try {
-            for (Comment comment : serviceComment.getCommentsByPostId(postId)) {
-                if (comment.getComment().equals(text)) {
-                    return comment;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @FXML
-    private void handleDeleteComment() {
-        if (selectedComment != null) {
-            ServiceComment serviceComment = new ServiceComment();
-            try {
-                serviceComment.delete(selectedComment);
-                loadComments();
+                ServicePost servicePost = new ServicePost();
+                loadComments(servicePost.getPostById(selectedComment.getIdPost()));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }
+
+
+

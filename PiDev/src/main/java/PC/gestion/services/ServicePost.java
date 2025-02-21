@@ -6,7 +6,6 @@ import PC.gestion.utils.MyConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServicePost implements IServicePost<Post> {
     private static Connection connection;
@@ -62,18 +61,20 @@ public class ServicePost implements IServicePost<Post> {
     }
 
     @Override
-    public void getPostById(int postId) throws SQLException {
+    public Post getPostById(int postId) throws SQLException {
         String sql = "SELECT * FROM post WHERE idp = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, postId);
         ResultSet resultSet = statement.executeQuery();
+        Post post = null;
         while (resultSet.next()) {
             int id = resultSet.getInt("idp");
             String description = resultSet.getString("description");
             String image = resultSet.getString("image");
             String type = resultSet.getString("type");
-            Post post = new Post(id, description, image, type);
+            post = new Post(id, description, image, type);
         }
+        return post;
     }
 
     public static ArrayList<Comment> getCommentsForPost(int postId) throws SQLException {
