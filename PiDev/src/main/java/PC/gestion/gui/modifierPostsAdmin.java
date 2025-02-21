@@ -92,6 +92,14 @@ public class modifierPostsAdmin implements Initializable {
     @FXML
     private void ModifierPoste() {
         if (selectedPost != null) {
+            if (TFdescriptionModifier.getText().isEmpty() || TFpathModifier.getText().isEmpty() || type.getSelectedToggle() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Validation Error");
+                alert.setContentText("Description, image path, and type cannot be empty.");
+                alert.showAndWait();
+                return;
+            }
             selectedPost.setDescription(TFdescriptionModifier.getText());
             selectedPost.setImage(TFpathModifier.getText());
             selectedPost.setType(((RadioButton) type.getSelectedToggle()).getText());

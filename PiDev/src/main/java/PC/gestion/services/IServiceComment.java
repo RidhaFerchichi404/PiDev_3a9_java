@@ -9,5 +9,6 @@ public interface IServiceComment<T> {
     void delete(T t) throws SQLException;
     ArrayList<T> afficherAllComments() throws SQLException;
     ArrayList<T> getCommentsByPostId(int postId) throws SQLException;
+    String getUserName(int idUser) throws SQLException;
 }
 

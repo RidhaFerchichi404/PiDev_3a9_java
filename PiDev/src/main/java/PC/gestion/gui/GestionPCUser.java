@@ -15,11 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.*;
-
+import java.sql.SQLException;
 import java.util.List;
 
-public class listerPostsUser {
+public class GestionPCUser {
 
     @FXML
     private FlowPane FPposts;
@@ -34,7 +33,7 @@ public class listerPostsUser {
                 vBox.setAlignment(Pos.CENTER);
                 vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
 
-                ImageView imageView = new ImageView(new Image("file:"+post.getImage()));
+                ImageView imageView = new ImageView(new Image("file:" + post.getImage()));
                 imageView.setFitWidth(100);
                 imageView.setFitHeight(100);
 
@@ -48,7 +47,7 @@ public class listerPostsUser {
                         Parent root = loader.load();
                         afficherPostsUser controller = loader.getController();
                         controller.setPost(post);
-                        Stage stage = new Stage();
+                        Stage stage = (Stage) FPposts.getScene().getWindow();
                         stage.setScene(new Scene(root));
                         stage.show();
                     } catch (IOException e) {
@@ -60,5 +59,6 @@ public class listerPostsUser {
             e.printStackTrace();
         }
     }
-
 }
+
+

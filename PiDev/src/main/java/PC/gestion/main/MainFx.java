@@ -18,13 +18,12 @@ public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loaderAdmin = new FXMLLoader(getClass().getResource("/InterfaceAdmin.fxml"));
-            Parent rootAdmin = loaderAdmin.load();
-            FXMLLoader loaderUser = new FXMLLoader(getClass().getResource("/InterfaceUser.fxml"));
+
+            FXMLLoader loaderUser = new FXMLLoader(getClass().getResource("/InterfaceAdmin.fxml"));
             Parent rootUser = loaderUser.load();
 
-            HBox root = new HBox(rootAdmin, rootUser);
-            Scene scene = new Scene(root);
+
+            Scene scene = new Scene(rootUser);
 
             primaryStage.setTitle("Posts Management");
             primaryStage.setScene(scene);

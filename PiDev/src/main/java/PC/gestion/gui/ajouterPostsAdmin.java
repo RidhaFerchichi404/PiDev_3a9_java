@@ -35,6 +35,30 @@ public class ajouterPostsAdmin {
         String description = TFdescriptionPost.getText();
         String image = TFimagePathPost.getText();
         String type = "";
+        if (image.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("WARNING");
+            alert.setContentText("Image path cannot be empty.");
+            alert.showAndWait();
+            return;
+        }
+        if (description.isEmpty() || !description.matches("[a-zA-Z0-9 ]+")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("WARNING");
+            alert.setContentText("Description cannot be empty and must only contain letters and numbers.");
+            alert.showAndWait();
+            return;
+        }
+        if (type.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("WARNING");
+            alert.setContentText("Type cannot be empty.");
+            alert.showAndWait();
+            return;
+        }
         if (RBmarathonPost.isSelected()) {
             type = "Marathon";
         } else if (RBpromotionPost.isSelected()) {

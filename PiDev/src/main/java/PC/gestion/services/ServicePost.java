@@ -13,6 +13,8 @@ public class ServicePost implements IServicePost<Post> {
         this.connection = MyConnection.getInstance().getCnx();
     }
 
+
+
     @Override
     public void ajouter(Post post) throws SQLException {
         String sql = "INSERT INTO post (description, image, type) VALUES (?, ?, ?)";
@@ -51,10 +53,12 @@ public class ServicePost implements IServicePost<Post> {
         ResultSet rs = st.getResultSet();
         while (rs.next()) {
             int id = rs.getInt("idp");
+            int idUser = rs.getInt("idUser");
             String description = rs.getString("description");
             String image = rs.getString("image");
             String type = rs.getString("type");
-            Post p = new Post(id, description, rs.getString("image"), rs.getString("type"));
+            Date date=rs.getDate("dateU");
+            Post p = new Post(id, description, rs.getString("image"), rs.getString("type"),idUser,date);
             posts.add(p);
         }
         return posts;
@@ -75,6 +79,20 @@ public class ServicePost implements IServicePost<Post> {
             post = new Post(id, description, image, type);
         }
         return post;
+    }
+
+    @Override
+    public String getUserNamePost(int idUser) throws SQLException {
+        System.out.println(idUser);
+        String sql = "SELECT first_name FROM user WHERE id = ?";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, idUser);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getString("first_name");
+                } else {
+                    return null;
+                }
     }
 
     public static ArrayList<Comment> getCommentsForPost(int postId) throws SQLException {

@@ -29,7 +29,7 @@ public class afficherPostsUser {
     private ImageView IVimage;
 
     @FXML
-    private TextArea TAdescription;
+    private Label LBdescription;
 
     @FXML
     private Label LBdate;
@@ -53,8 +53,15 @@ public class afficherPostsUser {
 
 
     public void addComment() {
-        ServicePost servicePost = new ServicePost();
-        String commentText = TFcomment.getText();
+        String commentText = TFcomment.getText().trim();
+        if (commentText.isEmpty() || !commentText.matches("[a-zA-Z0-9\\p{Punct}\\s]+")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Invalid Comment");
+            alert.setContentText("Comment must only contain letters, punctuation, and numbers, and cannot be empty.");
+            alert.showAndWait();
+            return;
+        }
 
         int postId = selectedPost.getIdp();
         Date commentDate = new Date(System.currentTimeMillis());
@@ -80,19 +87,33 @@ public class afficherPostsUser {
         }
     }
 
-    public void setPost(Post selectedPost) {
-        if (selectedPost != null) {
-            this.selectedPost = selectedPost;
-            LBnom.setText("test1");
-            IVimage.setImage(new Image("file:" + selectedPost.getImage()));
-            TAdescription.setText(selectedPost.getDescription());
-        }
-    }
+public void setPost(Post selectedPost) {
+                    if (selectedPost != null) {
+                        this.selectedPost = selectedPost;
+                        try {
+                            ServicePost servicePost = new ServicePost();
+                            System.out.println("User ID: " + selectedPost.getIdUser());
+                            System.out.println("Post ID: " + selectedPost.getIdp());
+                            System.out.println("Post Date: " + selectedPost.getDate());
+                            Date postDate = selectedPost.getDate();
+                            if (postDate != null) {
+                                LBdate.setText(postDate.toString());
+                            } else {
+                                LBdate.setText("No date available");
+                            }
+                            LBnom.setText(servicePost.getUserNamePost(selectedPost.getIdUser()));
+                            IVimage.setImage(new Image("file:" + selectedPost.getImage()));
+                            LBdescription.setText(selectedPost.getDescription());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
 
     @FXML
     private void handleBackButtonAction() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listerPostsUser.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GestionPCUser.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) BTNback.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -108,9 +129,8 @@ public class afficherPostsUser {
             Parent root = loader.load();
 
             afficherCommentsUser controller = loader.getController();
-            controller.setPostComments(this.selectedPost.getIdp());
-            controller.setCurrentPost(this.selectedPost);
-            controller.setPreviousSceneC(BTNviewComment.getScene());
+            controller.setPost(this.selectedPost);
+
             Stage stage = (Stage) BTNviewComment.getScene().getWindow();
             stage.setTitle("Comments");
             stage.setScene(new Scene(root));

@@ -11,6 +11,7 @@ public class Post{
     private String description;
     private String image;
     private String type;
+    private Date date;
     private int idUser;
 
 
@@ -40,6 +41,15 @@ public class Post{
         this.image = image;
         this.type = type;
         this.idUser = idUser;
+    }
+
+    public Post(int id, String description, String image, String type,int idUser,Date date) {
+        this.idp = id;
+        this.description = description;
+        this.image = image;
+        this.type = type;
+        this.idUser = idUser;
+        this.date = date;
     }
 
     public int getIdp() {
@@ -80,6 +90,14 @@ public class Post{
 
     public void setIdUser(int idUser){
         this.idUser = idUser;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String toString() {

@@ -83,4 +83,17 @@ public class ServiceComment implements IServiceComment<Comment> {
         }
         return comments;
     }
+
+        @Override
+        public String getUserName(int idUser) throws SQLException {
+            String sql = "SELECT first_name FROM user WHERE id = ?";
+            PreparedStatement pst = connection.prepareStatement(sql);
+            pst.setInt(1, idUser);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getString("first_name");
+            }
+            return null;
+        }
+
 }

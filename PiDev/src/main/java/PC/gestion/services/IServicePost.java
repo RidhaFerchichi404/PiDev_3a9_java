@@ -11,4 +11,5 @@ public interface IServicePost<T> {
     void delete(T t) throws SQLException;
     ArrayList<T> afficherAllPosts() throws SQLException;
     Post getPostById(int postId) throws SQLException;
+    String getUserNamePost(int idUser) throws SQLException;
 }
