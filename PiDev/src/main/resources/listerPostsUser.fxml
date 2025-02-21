@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.listerPostsUser">
+   <children>
+      <VBox alignment="CENTER" layoutX="9.0" layoutY="9.0" prefHeight="382.0" prefWidth="582.0" spacing="20.0">
+         <children>
+            <Label text="Posts" />
+            <FlowPane fx:id="FPposts" prefHeight="361.0" prefWidth="582.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

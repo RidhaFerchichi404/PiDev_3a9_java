@@ -26,12 +26,14 @@ public class ServiceComment implements IServiceComment<Comment> {
 
     @Override
     public void update(Comment comment) throws SQLException {
-        String sql = "UPDATE comment SET comment = ?, date = ?, likes = ?  where id = ?";
-        PreparedStatement pst = connection.prepareStatement(sql);
-        pst.setString(1, comment.getComment());
-        pst.setDate(2, (Date) comment.getDate());
-        pst.setInt(3, comment.getLikes());
-        pst.executeUpdate();
+        String query = "UPDATE comment SET comment = ?, likes = ?, idPost = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, comment.getComment());
+            preparedStatement.setInt(2, comment.getLikes());
+            preparedStatement.setInt(3, comment.getIdPost());
+            preparedStatement.setInt(4, comment.getId());
+            preparedStatement.executeUpdate();
+        }
     }
 
     @Override

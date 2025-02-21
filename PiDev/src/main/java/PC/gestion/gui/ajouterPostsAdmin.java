@@ -7,7 +7,7 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 
-public class ajouterPosts {
+public class ajouterPostsAdmin {
 
     @FXML
     private Button BTNajouterPost;

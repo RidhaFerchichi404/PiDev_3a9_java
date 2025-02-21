@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import PC.gestion.entities.Post;
 import javafx.stage.Stage;
 
-public class afficherPosts {
+public class afficherPostsUser {
 
     @FXML
     private Button BTNajouterComment;
@@ -84,7 +84,6 @@ public class afficherPosts {
         if (selectedPost != null) {
             this.selectedPost = selectedPost;
             LBnom.setText("test1");
-            LBdate.setText("test2");
             IVimage.setImage(new Image("file:" + selectedPost.getImage()));
             TAdescription.setText(selectedPost.getDescription());
         }
@@ -93,7 +92,7 @@ public class afficherPosts {
     @FXML
     private void handleBackButtonAction() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listerPosts.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listerPostsUser.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) BTNback.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -105,10 +104,10 @@ public class afficherPosts {
     @FXML
     private void handleViewCommentsButtonAction() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherComments.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherCommentsUser.fxml"));
             Parent root = loader.load();
 
-            afficherComments controller = loader.getController();
+            afficherCommentsUser controller = loader.getController();
             controller.setPostComments(this.selectedPost.getIdp());
             controller.setCurrentPost(this.selectedPost);
             controller.setPreviousSceneC(BTNviewComment.getScene());

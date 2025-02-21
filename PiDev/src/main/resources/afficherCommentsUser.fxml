@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.afficherComments">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.afficherCommentsUser">
    <children>
       <VBox layoutX="3.0" layoutY="1.0" prefHeight="400.0" prefWidth="593.0" spacing="10.0">
          <children>
-            <ListView fx:id="LVcomments" prefHeight="359.0" prefWidth="594.0" />
+            <FlowPane fx:id="FPcomments" prefHeight="347.0" prefWidth="593.0" />
             <HBox alignment="CENTER" prefHeight="16.0" prefWidth="594.0" spacing="50.0">
                <children>
                   <Button fx:id="BTNback" mnemonicParsing="false" onAction="#handleBackButtonAction" text="Retourner" />

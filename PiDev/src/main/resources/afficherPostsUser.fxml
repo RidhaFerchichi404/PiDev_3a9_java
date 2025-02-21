@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="406.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.afficherPosts">
+<AnchorPane prefHeight="528.0" prefWidth="706.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.afficherPostsUser">
    <children>
-      <VBox alignment="CENTER" prefHeight="406.0" prefWidth="600.0">
+      <VBox alignment="CENTER" prefHeight="528.0" prefWidth="706.0">
          <children>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="600.0" spacing="100.0">
                <children>
@@ -21,7 +20,9 @@
                </children>
             </HBox>
             <ImageView fx:id="IVimage" fitHeight="285.0" fitWidth="572.0" pickOnBounds="true" preserveRatio="true" />
+            <Label text="Description" />
             <TextArea fx:id="TAdescription" prefHeight="46.0" prefWidth="600.0" />
+            <Label text="Commentez ici" />
             <TextField fx:id="TFcomment" />
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="600.0" spacing="100.0">
                <children>

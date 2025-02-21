@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="479.0" prefWidth="666.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PC.gestion.gui.InterfaceUser">
+    <TabPane layoutX="5.0" layoutY="5.0" prefHeight="473.0" prefWidth="657.0">
+        <tabs>
+            <Tab text="List Posts">
+                <content>
+                    <fx:include source="listerPostsUser.fxml" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</AnchorPane>
