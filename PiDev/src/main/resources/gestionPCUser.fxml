@@ -17,6 +17,7 @@
                   <ComboBox fx:id="ComboBox" promptText="Select category...">
                       <items>
                           <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Show all" />
                               <String fx:value="Promotion" />
                               <String fx:value="Marathon" />
                               <String fx:value="Regime" />
