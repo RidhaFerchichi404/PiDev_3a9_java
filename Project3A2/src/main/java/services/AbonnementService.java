@@ -1,8 +1,10 @@
 package services;
 
 import entities.Abonnement;
+import entities.Promotion;
 import utils.MyConnection;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -167,9 +169,37 @@ public class AbonnementService implements IAbonnement<Abonnement>{
                 abonnement.setPrix(rs.getDouble("Prix"));
                 abonnement.setSalleDeSportId(rs.getInt("SalleID"));
                 abonnement.setSalleNom(rs.getString("SalleName"));
+
+                // Charger les promotions associées à cet abonnement
+                List<Promotion> promotions = getPromotionsForAbonnement(abonnement.getId());
+                abonnement.setPromotions(promotions);
+
                 abonnements.add(abonnement);
             }
         }
         return abonnements;
+    }
+
+    private List<Promotion> getPromotionsForAbonnement(int abonnementId) throws SQLException {
+        List<Promotion> promotions = new ArrayList<>();
+        String query = "SELECT * FROM promotion WHERE AbonnementID = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, abonnementId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Promotion promotion = new Promotion();
+                    promotion.setPromotionId(rs.getInt("PromotionID"));
+                    promotion.setCodePromo(rs.getString("CodePromo"));
+                    promotion.setDescription(rs.getString("Description"));
+                    promotion.setTypeReduction(rs.getString("TypeReduction"));
+                    promotion.setValeurReduction(BigDecimal.valueOf(rs.getDouble("ValeurReduction")));
+                    promotion.setDateDebut(rs.getDate("DateDebut"));
+                    promotion.setDateFin(rs.getDate("DateFin"));
+                    promotion.setAbonnementId(rs.getInt("AbonnementID"));
+                    promotions.add(promotion);
+                }
+            }
+        }
+        return promotions;
     }
 }

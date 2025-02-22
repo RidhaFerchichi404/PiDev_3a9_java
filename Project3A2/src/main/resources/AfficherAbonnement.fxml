@@ -7,7 +7,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #1a1a1a;"
             xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="gui.AfficherAbonnement"> <!-- Assurez-vous que le contrôleur est correct -->
+            fx:controller="gui.AfficherAbonnement">
     <children>
         <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
               AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">

@@ -1,6 +1,7 @@
 package gui;
 
 import entities.Abonnement;
+import entities.Promotion;
 import javafx.geometry.Pos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,8 +46,83 @@ public class AfficherAbonnement {
             e.printStackTrace();
         }
     }
-
     private void afficherAbonnements(List<Abonnement> abonnements) {
+        abonnementsContainer.getChildren().clear();
+
+        for (Abonnement abonnement : abonnements) {
+            VBox carteAbonnement = creerCarteAbonnement(abonnement);
+            abonnementsContainer.getChildren().add(carteAbonnement);
+        }
+    }
+
+    private VBox creerCarteAbonnement(Abonnement abonnement) {
+        VBox carte = new VBox(10);
+        carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
+
+        // Informations de l'abonnement
+        Label nomLabel = new Label("Nom : " + abonnement.getNom());
+        nomLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 16px;");
+
+        Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
+        descriptionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
+        dureeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label prixLabel = new Label("Prix : " + abonnement.getPrix() + " €");
+        prixLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label salleLabel = new Label("Salle : " + abonnement.getSalleNom());
+        salleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        // Affichage des promotions
+        VBox promotionsContainer = new VBox(5);
+        promotionsContainer.setStyle("-fx-padding: 10; -fx-background-color: #333333; -fx-border-color: #4CAF50; -fx-border-radius: 5;");
+
+        Label promotionsTitle = new Label("Promotions :");
+        promotionsTitle.setStyle("-fx-text-fill: #4CAF50; -fx-font-size: 14px; -fx-font-weight: bold;");
+        promotionsContainer.getChildren().add(promotionsTitle);
+
+        List<Promotion> promotions = abonnement.getPromotions();
+        if (promotions != null && !promotions.isEmpty()) {
+            for (Promotion promotion : promotions) {
+                Label promotionLabel = new Label(
+                        "➤ " + promotion.getCodePromo() + " : " + promotion.getValeurReduction() + "% de réduction"
+                );
+                promotionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+                promotionsContainer.getChildren().add(promotionLabel);
+            }
+        } else {
+            Label noPromotionLabel = new Label("Aucune promotion disponible.");
+            noPromotionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+            promotionsContainer.getChildren().add(noPromotionLabel);
+        }
+
+        // Boutons pour modifier, supprimer et ajouter une promotion
+        HBox boutonsContainer = new HBox(10);
+        boutonsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+
+        Button modifierButton = new Button("Modifier");
+        modifierButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white;");
+        modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
+
+        Button supprimerButton = new Button("Supprimer");
+        supprimerButton.setStyle("-fx-background-color: #ff3333; -fx-text-fill: white;");
+        supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
+
+        Button ajouterPromotionButton = new Button("Ajouter une promotion");
+        ajouterPromotionButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        ajouterPromotionButton.setOnAction(event -> ouvrirAjoutPromotion(abonnement));
+
+        boutonsContainer.getChildren().addAll(modifierButton, supprimerButton, ajouterPromotionButton);
+
+        // Ajouter les éléments à la carte
+        carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, promotionsContainer, boutonsContainer);
+
+        return carte;
+    }
+
+   /* private void afficherAbonnements(List<Abonnement> abonnements) {
         abonnementsContainer.getChildren().clear(); // Vider le conteneur avant d'ajouter de nouveaux éléments
 
         for (Abonnement abonnement : abonnements) {
@@ -107,7 +183,7 @@ public class AfficherAbonnement {
         carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, boutonsContainer);
 
         return carte;
-    }
+    }*/
     private void supprimerAbonnement(Abonnement abonnement) {
         System.out.println("SupprimerAbonnement appelé pour : " + abonnement.getNom()); // Debug
         try {
@@ -180,6 +256,9 @@ public class AfficherAbonnement {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public void setAjouterRoot(Parent ajouterRoot) {
+        this.ajouterRoot = ajouterRoot;
     }
     @FXML
     private void ouvrirAjout() {

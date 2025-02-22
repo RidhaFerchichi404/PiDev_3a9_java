@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Abonnement {
@@ -10,6 +11,7 @@ public class Abonnement {
     private double prix;
     private String salleNom;
     private int salleDeSportId;
+    private List<Promotion> promotions;
     public Abonnement(String nom, String descriptiona, int duree, double prix, String salleNom) {
         this.id= id;
         this.nom = nom;
@@ -19,6 +21,13 @@ public class Abonnement {
         this.salleNom = salleNom;
 
 
+    }
+    public List<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(List<Promotion> promotions) {
+        this.promotions = promotions;
     }
 
     public Abonnement() {

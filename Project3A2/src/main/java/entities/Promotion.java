@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public class Promotion {
     private int promotionId;
+
     private String codePromo;
     private String description;
     private String typeReduction;
@@ -26,7 +27,7 @@ public class Promotion {
         this.abonnementId = abonnementId;
         this.salleId = salleId;
     }*/
-    public Promotion(String codePromo, String description, String typeReduction,
+    public Promotion(String codePromo, String description, String titre, String typeReduction,
                      BigDecimal valeurReduction, Date dateDebut, Date dateFin,
                      int abonnementId) {
         this.codePromo = codePromo;
@@ -36,9 +37,13 @@ public class Promotion {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.abonnementId = abonnementId;
+
         //this.salleId = salleId;
     }
 
+    public Promotion() {
+
+    }
 
 
     @Override
@@ -134,5 +139,9 @@ public class Promotion {
 
     public void setSalleId(int salleId) {
         this.salleId = salleId;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateDebut = dateCreation;
     }
 }

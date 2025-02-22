@@ -65,7 +65,8 @@ public class AjouterPromotion {
         }
 
         // Création de la promotion
-        Promotion promotion = new Promotion(codePromo, description, typeReduction, valeurReduction, Date.valueOf(dateDebut), Date.valueOf(dateFin), abonnementId);
+        String titre = "";   
+        Promotion promotion = new Promotion(codePromo, description, typeReduction, titre ,valeurReduction, Date.valueOf(dateDebut), Date.valueOf(dateFin), abonnementId);
 
         try {
             promotionService.create(promotion);
