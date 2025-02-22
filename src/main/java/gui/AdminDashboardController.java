@@ -4,9 +4,13 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.SkinBase;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -30,8 +34,16 @@ public class AdminDashboardController {
 
     @FXML
     public void handleSalles() {
-        displayContent("Salles Section");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherCards.fxml"));
+            Parent sallesView = loader.load();
+
+            // Remplacer le contenu actuel avec la nouvelle vue
+            mainContent.getChildren().setAll(sallesView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
+
 
 
     @FXML
@@ -79,5 +91,9 @@ public class AdminDashboardController {
         slideIn.setFromX(-mainContent.getWidth());
         slideIn.setToX(0);
         slideIn.play();
+    }
+
+    public StackPane getMainContent() {
+        return mainContent;
     }
 }

@@ -201,4 +201,66 @@
     -fx-padding-bottom: 20px;
 }
 
+.button:hover {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+}
+
+.logout-button:hover {
+    -fx-background-color: #CC0000;
+}/* Style des boutons par défaut */
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+}
+
+/* Effet hover sur les boutons */
+.button:hover {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);
+}
+
+/* Bouton Logout spécifique */
+#logoutButton {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 15;
+    -fx-padding: 12;
+}
+
+/* Effet hover du bouton Logout */
+#logoutButton:hover {
+    -fx-background-color: #FF3300;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+/* Style uniforme pour tous les boutons */
+.button {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
+    -fx-cursor: hand;
+}
+
+/* Effet hover pour tous les boutons */
+.button:hover {
+    -fx-background-color: #FF3300;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);
+}
 

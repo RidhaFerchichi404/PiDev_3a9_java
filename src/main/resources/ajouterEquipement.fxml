@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="532.0" prefWidth="867.0" style="-fx-background-color: #1a1a1a; -fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjouterEquipementController">
+
+    <VBox alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+
+        <!-- ✅ Titre -->
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;" text="Ajouter un Équipement" />
+
+        <VBox prefHeight="199.0" prefWidth="787.0" spacing="10" style="-fx-background-color: #262626; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10;">
+
+            <!-- 🔹 Nom de l'équipement -->
+            <HBox spacing="10">
+                <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Nom :" />
+                <TextField fx:id="nomField" promptText="Nom de l'équipement" style="-fx-background-radius: 5; -fx-padding: 5;" />
+            </HBox>
+
+            <!-- 🔹 Fonctionnement -->
+            <HBox spacing="10">
+                <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Fonctionnel :" />
+                <CheckBox fx:id="fonctionnementCheck" />
+            </HBox>
+
+            <!-- 🔹 Dates de vérification -->
+            <HBox spacing="20">
+                <VBox>
+                    <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Dernière Vérification :" />
+                </VBox>
+
+                <VBox />
+            </HBox>
+              <DatePicker fx:id="derniereVerifDate" />
+              <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Prochaine Vérification :" />
+              <DatePicker fx:id="prochaineVerifDate" />
+        </VBox>
+
+        <!-- ✅ Boutons d'action -->
+        <HBox alignment="CENTER" spacing="20">
+            <Button fx:id="enregistrerButton" onAction="#enregistrerEquipement" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 15;" text="Enregistrer" />
+
+            <Button fx:id="fermerButton" onAction="#fermerFenetre" style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 15;" text="Annuler" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -4,25 +4,51 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.geometry.Pos?>
 
 <HBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="gui.AdminDashboardController" spacing="3" styleClass="main-container2" stylesheets="@styles.css">
+      fx:controller="gui.AdminDashboardController" spacing="3"
+      style="-fx-background-color: #121212;">
 
     <!-- Sidebar Menu -->
-    <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="250">
-        <Label text="Dashboard Menu" styleClass="menu-title"/>
-        <Button text="Produits" styleClass="menu-button" onAction="#handleProduits"/>
-        <Button text="Posts" styleClass="menu-button" onAction="#handlePosts"/>
-        <Button text="Salles" styleClass="menu-button" onAction="#handleSalles"/>
-        <Button text="Utilisateurs" styleClass="menu-button" onAction="#handleProfile"/>
-        <Button text="Logout"
-                onAction="#logoutUser"
-                style="-fx-font-size: 14px; -fx-background-color: #ff3333; -fx-text-fill: white; -fx-pref-width: 200px;"/>
+    <VBox fx:id="sidebar" spacing="20" alignment="TOP_CENTER"
+          style="-fx-background-color: #1A1A1A; -fx-padding: 20; -fx-pref-width: 250; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.3), 12, 0, 4, 4);">
 
+        <!-- Title -->
+        <Label text=" Dashboard"
+               style="-fx-text-fill: #FF6600; -fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+
+        <!-- Menu Buttons (Tous en orange vif avec la même taille) -->
+        <Button text="Produits" onAction="#handleProduits"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="produitsButton" />
+
+        <Button text="Posts" onAction="#handlePosts"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="postsButton" />
+
+        <Button text="Salles" onAction="#handleSalles"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="sallesButton" />
+
+        <Button text="Utilisateurs" onAction="#handleProfile"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="utilisateursButton" />
+
+        <!-- Logout Button at the Bottom -->
+        <VBox alignment="BOTTOM_CENTER" spacing="10" VBox.vgrow="ALWAYS">
+            <Button text="Logout" onAction="#logoutUser"
+                    style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 16px; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                    fx:id="logoutButton" />
+        </VBox>
     </VBox>
 
     <!-- Main Content Area -->
-    <StackPane fx:id="mainContent" styleClass="main-content">
-        <Label text="Welcome to the Dashboard" styleClass="main-title"/>
+    <StackPane fx:id="mainContent" alignment="CENTER"
+               style="-fx-background-color: #1A1A1A; -fx-background-radius: 20; -fx-padding: 40; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 4, 4);">
+
+        <!-- Welcome Text -->
+        <Label text="Bienvenue sur le Dashboard"
+               style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.4), 10, 0, 2, 2);" />
     </StackPane>
 </HBox>

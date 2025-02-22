@@ -46,9 +46,17 @@ public class AjouterUserController {
     @FXML
     private Button AddButton;
     @FXML
-    private void initialize() {
-        roleComboBox.getItems().addAll("Coach", "Client");
-        roleComboBox.setValue("Client"); // valeur par défaut, par exemple
+    private Runnable afterSaveAction;  // Déclare une action à exécuter après enregistrement
+
+    public void setAfterSaveAction(Runnable action) {
+        this.afterSaveAction = action;
+    }
+
+
+        private void initialize() {
+            roleComboBox.getItems().addAll("Admin", "Coach", "Client"); // Ajout de l'option Admin
+            roleComboBox.setValue("Client"); // Par défaut, sélectionne "Client"
+
     }
 
 

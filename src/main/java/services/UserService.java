@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements IService<User> {
+public class UserService implements org.example.service.IService<User> {
 
     private Connection cnx;
 

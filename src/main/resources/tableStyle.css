@@ -1,0 +1,113 @@
+.table-view {
+    -fx-background-color: #333333;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #262626;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 35px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #ff8c00;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ff8c00;
+    -fx-font-weight: bold;
+}
+.button:hover {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+}
+
+.logout-button:hover {
+    -fx-background-color: #CC0000;
+}/* Style des boutons par défaut */
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+}
+
+/* Effet hover sur les boutons */
+.button:hover {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);
+}
+
+/* Bouton Logout spécifique */
+#logoutButton {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 15;
+    -fx-padding: 12;
+}
+
+/* Effet hover du bouton Logout */
+#logoutButton:hover {
+    -fx-background-color: #FF3300;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+/* Style uniforme pour tous les boutons */
+.button {
+    -fx-background-color: #FF6600;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 15;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 50px;
+    -fx-cursor: hand;
+}
+
+/* Effet hover pour tous les boutons */
+.button:hover {
+    -fx-background-color: #FF3300;
+    -fx-text-fill: white;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);
+}
+
+
+.table-row-cell {
+    -fx-background-color: #262626;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #333333;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #ff8c00;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: white;
+    -fx-alignment: center;
+    -fx-padding: 5 10;
+}
+
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #262626;
+}
+
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #ff8c00;
+    -fx-background-radius: 5em;
+} 

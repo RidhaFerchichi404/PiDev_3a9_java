@@ -42,10 +42,17 @@ public class MainMenuController {
     }
 
     @FXML
-    public void handleSalles() {
-        displayContent("Salles Section");
-    }
+    private void handleSalles() {
+        try {
+            // Charger la nouvelle vue (FXML)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherfrontsalle.fxml"));
+            Parent sallesView = loader.load();
 
+            // Remplacer le contenu actuel avec la nouvelle vue
+            mainContent.getChildren().setAll(sallesView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
     @FXML
     private void handleProfile() {
         try {

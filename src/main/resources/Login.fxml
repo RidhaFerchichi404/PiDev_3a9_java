@@ -9,19 +9,34 @@
 <!-- Login Page -->
 <VBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="gui.LoginController" spacing="20" prefWidth="500" prefHeight="400"
-      stylesheets="@styles.css"> <!-- Link the styles.css file here -->
+      alignment="CENTER"
+      style="-fx-background-color: #121212; -fx-padding: 40; -fx-spacing: 20;">
 
-    <Label text="Login" styleClass="title-label"/>
+    <Label text="Welcome to Spotify"
+           style="-fx-text-fill: #FF6600; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10;" />
 
-    <Label text="Email:" styleClass="form-label"/>
-    <TextField fx:id="emailField" promptText="Enter your email" styleClass="form-textfield"/>
+    <Label text="Email:"
+           style="-fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 0;" />
+    <TextField fx:id="emailField"
+               promptText="Enter your email"
+               style="-fx-background-color: #1E1E1E; -fx-text-fill: #FF6600; -fx-border-color: #FF6600; -fx-border-radius: 5; -fx-padding: 10; -fx-pref-width: 250px;" />
 
-    <Label text="Password:" styleClass="form-label"/>
-    <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="form-textfield"/>
+    <Label text="Password:"
+           style="-fx-text-fill: #FFFFFF; -fx-font-size: 14px; -fx-padding: 5 0 5 0;" />
+    <PasswordField fx:id="passwordField"
+                   promptText="Enter your password"
+                   style="-fx-background-color: #1E1E1E; -fx-text-fill: #FF6600; -fx-border-color: #FF6600; -fx-border-radius: 5; -fx-padding: 10; -fx-pref-width: 250px;" />
 
     <!-- Text node for error messages -->
-    <Text fx:id="errorMessage" />
+    <Text fx:id="errorMessage"
+          style="-fx-text-fill: #FF4C4C; -fx-font-size: 12px; -fx-padding: 5;" />
 
-    <Button text="Login" styleClass="submit-button" onAction="#handleLogin"/>
-    <Button fx:id="submitButton" text="Register" styleClass="submit-button" onAction="#goToRegister"/>
+    <Button text="Login"
+            style="-fx-background-color: #FF6600; -fx-text-fill: #121212; -fx-font-weight: bold; -fx-background-radius: 10; -fx-pref-width: 250px; -fx-padding: 10;"
+            onAction="#handleLogin" />
+
+    <Button fx:id="submitButton"
+            text="Register"
+            style="-fx-background-color: #FF6600; -fx-text-fill: #121212; -fx-font-weight: bold; -fx-background-radius: 10; -fx-pref-width: 250px; -fx-padding: 10;"
+            onAction="#goToRegister" />
 </VBox>

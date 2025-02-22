@@ -7,20 +7,32 @@
 <?import javafx.scene.control.Label?>
 
 <HBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="gui.MainMenuController" spacing="3" styleClass="main-container2" stylesheets="@styles.css">
+      fx:controller="gui.MainMenuController" spacing="0" styleClass="main-container2" stylesheets="@styles.css">
 
     <!-- Sidebar Menu -->
-    <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="250">
-        <Label text="Client Menu" styleClass="menu-title"/>
-        <Button text="Produits" styleClass="menu-button" onAction="#handleProduits"/>
-        <Button text="Posts" styleClass="menu-button" onAction="#handlePosts"/>
-        <Button text="Salles" styleClass="menu-button" onAction="#handleSalles"/>
-        <Button text="Profile" styleClass="menu-button" onAction="#handleProfile"/>
-        <Button text="Logout" onAction="#handleLogout" styleClass="menu-button logout-button"/>
+    <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="250" spacing="20"
+          style="-fx-background-color: #1E1E1E; -fx-padding: 20;">
+        <Label text="Client Menu" styleClass="menu-title" />
+        <Button text="Produits" styleClass="menu-button" onAction="#handleProduits" />
+        <Button text="Posts" styleClass="menu-button" onAction="#handlePosts" />
+        <Button text="Salles" styleClass="menu-button" onAction="#handleSalles" />
+        <Button text="Profile" styleClass="menu-button" onAction="#handleProfile" />
+        <Button text="Logout"
+                onAction="#handleLogout"
+                style="-fx-background-color: linear-gradient(to right, #FF6600, #FF3300);
+                       -fx-text-fill: #FFFFFF;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 15;
+                       -fx-padding: 10;
+                       -fx-border-color: transparent;
+                       -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2);
+                       -fx-pref-width: 200px;
+                       -fx-cursor: hand;" />
     </VBox>
 
     <!-- Main Content Area -->
-    <StackPane fx:id="mainContent" styleClass="main-content">
+    <StackPane fx:id="mainContent" style="-fx-background-color: #1A1A1A; -fx-padding: 30;"
+               HBox.hgrow="ALWAYS">
         <Label text="Welcome to the Client Menu" styleClass="main-title"/>
     </StackPane>
 </HBox>

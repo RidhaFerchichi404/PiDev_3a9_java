@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="400" minWidth="600" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherSallesFrontController">
+
+    <VBox alignment="CENTER" layoutX="105.6" layoutY="93.6" prefHeight="588.0" prefWidth="769.0" spacing="25" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="63.0">
+
+        <!-- Titre principal -->
+        <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ff6600;                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 2, 2);" text="🏋️ Sportify - Découvrez Nos Salles 🏋️" />
+
+        <!-- Barre de recherche -->
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <TextField fx:id="searchField" promptText="Rechercher un équipement..." style="-fx-font-size: 14px; -fx-pref-width: 350px; -fx-padding: 10;                               -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10;                               -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
+            <Button fx:id="searchButton" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold;                            -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="🔍 Rechercher" />
+        </HBox>
+
+        <!-- Section des cartes -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="700.0" prefWidth="802.0" style="-fx-background: transparent; -fx-border-color: #ff6600; -fx-background-radius: 15;                            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" vbarPolicy="AS_NEEDED">
+            <FlowPane fx:id="cardsContainer" hgap="25" prefHeight="1000.0" prefWidth="742.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;                              -fx-alignment: center;" vgap="25" />
+        </ScrollPane>
+
+        <!-- Boutons secondaires -->
+        <HBox alignment="CENTER" prefHeight="82.0" prefWidth="841.0" spacing="20">
+            <Button fx:id="chatbotButton" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold;                            -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="🤖 Ouvrir Chatbot" />
+
+            <Button fx:id="historiqueButton" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold;                            -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="📜 Voir Historique" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0"
+            style="-fx-background-color: #000000; -fx-padding: 30;"
+            xmlns="http://javafx.com/javafx/17.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AfficherExercicesFrontController">
+
+    <VBox alignment="CENTER" spacing="30"
+          AnchorPane.bottomAnchor="20.0"
+          AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0"
+          AnchorPane.topAnchor="20.0"
+          style="-fx-background-color: #1a1a1a; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 20, 0, 4, 4);">
+
+        <!-- ✅ Titre principal avec effet visuel -->
+        <Label text="Exercices de l'Équipement"
+               style="-fx-font-size: 36px; -fx-text-fill: #FF6600; -fx-font-weight: bold; -fx-alignment: center; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.7), 10, 0, 2, 2);" />
+
+        <!-- ✅ Conteneur des cartes avec ScrollPane -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    prefHeight="750.0" prefWidth="1150.0"
+                    style="-fx-background: transparent; -fx-border-color: transparent; -fx-background-radius: 15; -fx-padding: 20;">
+
+            <!-- ✅ FlowPane pour structurer les exercices avec un affichage propre -->
+            <FlowPane fx:id="exercicesContainer" hgap="30" vgap="30"
+                      prefHeight="700.0" prefWidth="1100.0"
+                      prefWrapLength="1050.0"
+                      style="-fx-background-color: #000000; -fx-background-radius: 15; -fx-padding: 30; -fx-alignment: center;" />
+        </ScrollPane>
+
+        <!-- ✅ Bouton Retour modernisé -->
+        <Button fx:id="btnRetour" onAction="#retourner"
+                text="Retour"
+                style="-fx-background-color: linear-gradient(to right, #FF6600, #CC5200);
+                       -fx-text-fill: #000000;
+                       -fx-font-weight: bold;
+                       -fx-font-size: 18px;
+                       -fx-background-radius: 15;
+                       -fx-padding: 12 30;
+                       -fx-cursor: hand;
+                       -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);" />
+    </VBox>
+</AnchorPane>

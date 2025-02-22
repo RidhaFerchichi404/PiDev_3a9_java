@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #1a1a1a; -fx-padding: 20;"
+            xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AfficherImagesExerciceController">
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="10.0"
+          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+
+        <!-- ✅ Titre modernisé -->
+        <Label text="📸 Images de l'Exercice"
+               style="-fx-font-size: 30px; -fx-text-fill: #ff8c00; -fx-font-weight: bold; -fx-alignment: center;" />
+
+        <!-- ✅ Conteneur pour affichage plein écran -->
+        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" vbarPolicy="NEVER"
+                    prefHeight="600.0" prefWidth="980.0"
+                    style="-fx-background: black; -fx-border-color: #ff8c00; -fx-border-width: 2px; -fx-padding: 10;">
+
+            <!-- ✅ ImageView en plein écran -->
+            <ImageView fx:id="imageView" preserveRatio="true"
+                       fitWidth="950.0" fitHeight="580.0"
+                       style="-fx-background-color: black;"/>
+        </ScrollPane>
+
+        <!-- ✅ Bouton Fermer modernisé -->
+        <Button fx:id="closeButton" onAction="#fermerFenetre"
+                style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 15 30; -fx-font-size: 16px;"
+                text="❌ Fermer" />
+    </VBox>
+
+</AnchorPane>
