@@ -12,7 +12,7 @@
       alignment="CENTER"
       style="-fx-background-color: #121212; -fx-padding: 40; -fx-spacing: 20;">
 
-    <Label text="Welcome to Spotify"
+    <Label text="Welcome to Sportify"
            style="-fx-text-fill: #FF6600; -fx-font-size: 28px; -fx-font-weight: bold; -fx-padding: 10;" />
 
     <Label text="Email:"
@@ -29,7 +29,7 @@
 
     <!-- Text node for error messages -->
     <Text fx:id="errorMessage"
-          style="-fx-text-fill: #FF4C4C; -fx-font-size: 12px; -fx-padding: 5;" />
+          style="-fx-text-fill:#FFFFFF; -fx-font-size: 12px; -fx-padding: 5;" />
 
     <Button text="Login"
             style="-fx-background-color: #FF6600; -fx-text-fill: #121212; -fx-font-weight: bold; -fx-background-radius: 10; -fx-pref-width: 250px; -fx-padding: 10;"

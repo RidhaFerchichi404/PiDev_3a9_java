@@ -11,7 +11,7 @@
 
 <AnchorPane minHeight="400" minWidth="600" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherSallesFrontController">
 
-    <VBox alignment="CENTER" layoutX="105.6" layoutY="93.6" prefHeight="588.0" prefWidth="769.0" spacing="25" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="56.0" AnchorPane.topAnchor="63.0">
+    <VBox alignment="CENTER" layoutX="90.4" layoutY="60.8" prefHeight="754.0" prefWidth="825.0" spacing="25" AnchorPane.bottomAnchor="-18.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="30.0">
 
         <!-- Titre principal -->
         <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ff6600;                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 2, 2);" text="🏋️ Sportify - Découvrez Nos Salles 🏋️" />
@@ -24,7 +24,7 @@
 
         <!-- Section des cartes -->
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="700.0" prefWidth="802.0" style="-fx-background: transparent; -fx-border-color: #ff6600; -fx-background-radius: 15;                            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" vbarPolicy="AS_NEEDED">
-            <FlowPane fx:id="cardsContainer" hgap="25" prefHeight="1000.0" prefWidth="742.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;                              -fx-alignment: center;" vgap="25" />
+            <FlowPane fx:id="cardsContainer" hgap="25" prefHeight="1355.0" prefWidth="987.0" style="-fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;                              -fx-alignment: center;" vgap="25" />
         </ScrollPane>
 
         <!-- Boutons secondaires -->

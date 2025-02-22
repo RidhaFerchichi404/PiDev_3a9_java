@@ -7,15 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import entities.Equipement;
 import services.EquipementService;
 
+import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class AfficherEquipementsFrontController {
 
@@ -56,21 +60,21 @@ public class AfficherEquipementsFrontController {
     }
 
     private VBox createEquipementCard(Equipement equipement) {
-        // Création de la carte principale
+        // ✅ Création de la carte principale
         VBox card = new VBox(15);
         card.setStyle(
-                "-fx-background-color: #1A1A1A; " +  // ✅ Fond noir profond
-                        "-fx-border-color: #FF6600; " +     // ✅ Bordure orange vif
-                        "-fx-border-radius: 20; " +         // ✅ Coins arrondis
+                "-fx-background-color: #1A1A1A; " +
+                        "-fx-border-color: #FF6600; " +
+                        "-fx-border-radius: 20; " +
                         "-fx-background-radius: 20; " +
                         "-fx-padding: 20; " +
                         "-fx-spacing: 15; " +
                         "-fx-alignment: center; " +
                         "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 12, 0, 4, 4); " +
-                        "-fx-cursor: hand;");               // ✅ Curseur interactif
+                        "-fx-cursor: hand;");
 
         card.setPrefWidth(300);
-        card.setPrefHeight(150);
+        card.setPrefHeight(300);
 
         // ✅ Effet de survol (hover)
         card.setOnMouseEntered(e -> card.setStyle(
@@ -95,15 +99,29 @@ public class AfficherEquipementsFrontController {
                         "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 12, 0, 4, 4); " +
                         "-fx-cursor: hand;"));
 
+        // ✅ Image par défaut de l'équipement
+        ImageView equipImage = new ImageView();
+        try {
+            // Charge une image par défaut (equipement.jpg) depuis les ressources
+            Image image = new Image(getClass().getResourceAsStream("/images/equipement.jpg"));
+            equipImage.setImage(image);
+            equipImage.setFitWidth(200);
+            equipImage.setFitHeight(150);
+            equipImage.setPreserveRatio(true);
+            equipImage.setStyle("-fx-border-radius: 10; -fx-background-radius: 10;");
+        } catch (Exception e) {
+            System.out.println("❌ Erreur de chargement de l'image de l'équipement : " + e.getMessage());
+        }
+
         // ✅ Nom de l'équipement en blanc
         Label nomLabel = new Label(" Équipement: " + equipement.getNom());
         nomLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
 
-        // ✅ Bouton "Voir Exercices" avec texte en noir
+        // ✅ Bouton "Voir Exercices" avec effet hover
         Button voirExerciceButton = new Button(" Voir Exercices");
         voirExerciceButton.setStyle(
                 "-fx-background-color: linear-gradient(to right, #FF6600, #CC5200); " +
-                        "-fx-text-fill: #000000; " +  // ✅ Texte en noir
+                        "-fx-text-fill: #000000; " +
                         "-fx-font-weight: bold; " +
                         "-fx-font-size: 14px; " +
                         "-fx-background-radius: 10; " +
@@ -111,10 +129,9 @@ public class AfficherEquipementsFrontController {
                         "-fx-padding: 10 20; " +
                         "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.4), 8, 0, 2, 2);");
 
-        // ✅ Effet de survol du bouton
         voirExerciceButton.setOnMouseEntered(e -> voirExerciceButton.setStyle(
                 "-fx-background-color: #FF3300; " +
-                        "-fx-text-fill: #000000; " +  // ✅ Texte en noir
+                        "-fx-text-fill: #000000; " +
                         "-fx-font-weight: bold; " +
                         "-fx-font-size: 14px; " +
                         "-fx-background-radius: 10; " +
@@ -135,7 +152,7 @@ public class AfficherEquipementsFrontController {
         voirExerciceButton.setOnAction(event -> voirExercices(equipement));
 
         // ✅ Ajout des éléments dans la carte
-        card.getChildren().addAll(nomLabel, voirExerciceButton);
+        card.getChildren().addAll(equipImage, nomLabel, voirExerciceButton);
         return card;
     }
 

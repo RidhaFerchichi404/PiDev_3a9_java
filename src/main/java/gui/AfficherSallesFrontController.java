@@ -39,7 +39,7 @@ public class AfficherSallesFrontController {
 
 
     private final SalleDeSportService salleService = new SalleDeSportService();
-   // Remplace par ta clé API OpenAI
+    private static final String OPENAI_API_KEY = ""; // Remplace par ta clé API OpenAI
 
     @FXML
     public void initialize() {
@@ -138,11 +138,11 @@ public class AfficherSallesFrontController {
         });
 
         // Label nom de la salle
-        Label nomLabel = new Label("🏠 Salle: " + salle.getNom());
+        Label nomLabel = new Label(" Salle: " + salle.getNom());
         nomLabel.setStyle("-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;");
 
         // Label zone de la salle
-        Label zoneLabel = new Label("📍 Zone: " + salle.getZone());
+        Label zoneLabel = new Label(" Zone: " + salle.getZone());
         zoneLabel.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 16px;");
 
         // Image de la salle
@@ -168,7 +168,7 @@ public class AfficherSallesFrontController {
         }
 
         // Bouton voir équipements
-        Button voirEquipementsButton = new Button("👀 Voir Équipements");
+        Button voirEquipementsButton = new Button("Voir Équipements");
         voirEquipementsButton.setStyle("-fx-background-color: #FF6600; "
                 + "-fx-text-fill: white; "
                 + "-fx-font-weight: bold; "

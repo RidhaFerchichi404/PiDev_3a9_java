@@ -43,7 +43,7 @@ public class AfficherEquipementsController {
     private int idSalle;
 
     // ✅ Twilio Credentials
-
+   
 
     @FXML
     public void initialize() {
