@@ -6,6 +6,7 @@ import PC.gestion.utils.MyConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServicePost implements IServicePost<Post> {
     private static Connection connection;
@@ -116,4 +117,44 @@ public class ServicePost implements IServicePost<Post> {
         return comments;
     }
 
+    @Override
+    public ArrayList<Post> sortPostsByMostComments() throws SQLException {
+        ArrayList<Post> posts = afficherAllPosts();
+        posts.sort((p1, p2) -> {
+            try {
+                int commentsCount1 = getCommentsForPost(p1.getIdp()).size();
+                int commentsCount2 = getCommentsForPost(p2.getIdp()).size();
+                return Integer.compare(commentsCount2, commentsCount1);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        });
+        return posts;
+    }
+
+    @Override
+    public List<Post> afficherPostsByType(String selectedType) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM post WHERE type = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, selectedType);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("idp");
+                String description = resultSet.getString("description");
+                String image = resultSet.getString("image");
+                String type = resultSet.getString("type");
+                int idUser = resultSet.getInt("idUser");
+                Date date = resultSet.getDate("dateU");
+                Post post = new Post(id, description, image, type, idUser, date);
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return posts;
+    }
 }
