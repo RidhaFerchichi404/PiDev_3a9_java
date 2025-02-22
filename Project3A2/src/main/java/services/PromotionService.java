@@ -66,18 +66,13 @@ public class PromotionService implements IPromotion<Promotion> {
 
     // Update an existing promotion
     public void update(Promotion promotion) throws SQLException {
-        String query = "UPDATE promotion SET  Description = ?  WHERE PromotionID = ?";
+        String query = "UPDATE promotion SET CodePromo = ?, ValeurReduction = ?, DateDebut = ?, DateFin = ? WHERE PromotionID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
             stmt.setString(1, promotion.getCodePromo());
-            stmt.setString(1, promotion.getDescription());
-            stmt.setInt(2, promotion.getPromotionId());
-            stmt.setString(3, promotion.getTypeReduction());
-            stmt.setBigDecimal(4, promotion.getValeurReduction());
-            stmt.setDate(5, promotion.getDateDebut());
-            stmt.setDate(6, promotion.getDateFin());
-            stmt.setInt(7, promotion.getAbonnementId());
-            stmt.setInt(8, promotion.getSalleId());
-            stmt.setInt(9, promotion.getPromotionId());
+            stmt.setBigDecimal(2, promotion.getValeurReduction());
+            stmt.setDate(3, promotion.getDateDebut());
+            stmt.setDate(4, promotion.getDateFin());
+            stmt.setInt(5, promotion.getPromotionId()); // Utiliser l'ID pour cibler l'enregistrement
             stmt.executeUpdate();
         }
     }

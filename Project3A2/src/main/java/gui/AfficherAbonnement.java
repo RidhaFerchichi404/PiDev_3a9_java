@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import services.AbonnementService;
+import services.PromotionService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,8 +55,93 @@ public class AfficherAbonnement {
             abonnementsContainer.getChildren().add(carteAbonnement);
         }
     }
-
     private VBox creerCarteAbonnement(Abonnement abonnement) {
+        VBox carte = new VBox(10);
+        carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
+
+        // Informations de l'abonnement
+        Label nomLabel = new Label("Nom : " + abonnement.getNom());
+        nomLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 16px;");
+
+        Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
+        descriptionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
+        dureeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label prixLabel = new Label("Prix : " + abonnement.getPrix() + " €");
+        prixLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        Label salleLabel = new Label("Salle : " + abonnement.getSalleNom());
+        salleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+        // Affichage des promotions
+        VBox promotionsContainer = new VBox(5);
+        promotionsContainer.setStyle("-fx-padding: 10; -fx-background-color: #333333; -fx-border-color: #ff8c00; -fx-border-radius: 5;");
+
+        Label promotionsTitle = new Label("Promotions :");
+        promotionsTitle.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 14px; -fx-font-weight: bold;");
+        promotionsContainer.getChildren().add(promotionsTitle);
+
+        List<Promotion> promotions = abonnement.getPromotions();
+        if (promotions != null && !promotions.isEmpty()) {
+            for (Promotion promotion : promotions) {
+                HBox promotionBox = new HBox(10); // Conteneur pour la promotion et les boutons
+                promotionBox.setAlignment(Pos.CENTER_LEFT);
+
+                // Informations de la promotion
+                Label promotionLabel = new Label(
+                        "➤ " + promotion.getCodePromo() + " : " + promotion.getValeurReduction() + "% de réduction"
+                );
+                promotionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+
+                // Bouton Modifier
+                Button modifierPromotionButton = new Button("Modifier");
+                modifierPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;");
+                modifierPromotionButton.setOnAction(event -> modifierPromotion(promotion));
+
+                // Bouton Supprimer
+                Button supprimerPromotionButton = new Button("Supprimer");
+                supprimerPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;");
+                supprimerPromotionButton.setOnAction(event -> supprimerPromotion(promotion));
+
+                // Ajouter les éléments à la promotionBox
+                promotionBox.getChildren().addAll(promotionLabel, modifierPromotionButton, supprimerPromotionButton);
+
+                // Ajouter la promotionBox au conteneur des promotions
+                promotionsContainer.getChildren().add(promotionBox);
+            }
+        } else {
+            Label noPromotionLabel = new Label("Aucune promotion disponible.");
+            noPromotionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+            promotionsContainer.getChildren().add(noPromotionLabel);
+        }
+
+        // Boutons pour modifier, supprimer et ajouter une promotion
+        HBox boutonsContainer = new HBox(10);
+        boutonsContainer.setAlignment(Pos.CENTER);
+
+        Button modifierButton = new Button("Modifier");
+        modifierButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white;");
+        modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
+
+        Button supprimerButton = new Button("Supprimer");
+        supprimerButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white;");
+        supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
+
+        Button ajouterPromotionButton = new Button("Ajouter une promotion");
+        ajouterPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white;");
+        ajouterPromotionButton.setOnAction(event -> ouvrirAjoutPromotion(abonnement));
+
+        boutonsContainer.getChildren().addAll(modifierButton, supprimerButton, ajouterPromotionButton);
+
+        // Ajouter les éléments à la carte
+        carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, promotionsContainer, boutonsContainer);
+
+        return carte;
+    }
+
+   /* private VBox creerCarteAbonnement(Abonnement abonnement) {
         VBox carte = new VBox(10);
         carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
 
@@ -120,7 +206,7 @@ public class AfficherAbonnement {
         carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, promotionsContainer, boutonsContainer);
 
         return carte;
-    }
+    }*/
 
    /* private void afficherAbonnements(List<Abonnement> abonnements) {
         abonnementsContainer.getChildren().clear(); // Vider le conteneur avant d'ajouter de nouveaux éléments
@@ -307,4 +393,43 @@ public class AfficherAbonnement {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void modifierPromotion(Promotion promotion) {
+        try {
+            // Charger le formulaire de modification de promotion
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierPromotion.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur du formulaire de modification
+            ModifierPromotion controller = loader.getController();
+            controller.chargerPromotion(promotion); // Charger les données de la promotion
+
+            // Créer une nouvelle scène
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Modifier la promotion");
+            stage.show();
+
+            // Rafraîchir l'affichage après la modification
+            stage.setOnHidden(event -> actualiser());
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire de modification de promotion.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+    private void supprimerPromotion(Promotion promotion) {
+        try {
+            // Supprimer la promotion de la base de données
+            PromotionService promotionService = new PromotionService();
+            promotionService.delete(promotion.getPromotionId());
+
+            // Rafraîchir l'affichage
+            actualiser();
+
+            showAlert("Succès", "La promotion a été supprimée avec succès.", Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            showAlert("Erreur", "Erreur lors de la suppression de la promotion.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
 }
