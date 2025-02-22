@@ -8,7 +8,7 @@
       fx:controller="gui.AjouterAbonnement">
    <Label text="Ajouter un Abonnement" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
    <TextField fx:id="TFNom" promptText="Nom"/>
-   <TextField fx:id="TFDescription" promptText="Description"/>
+   <TextField fx:id="TfDescriptiona" promptText="Description"/>
    <TextField fx:id="TFDuree" promptText="Durée (jours)"/>
    <TextField fx:id="TFPrix" promptText="Prix"/>
    <TextField fx:id="TFSalleNom" promptText="Nom de la salle"/>

@@ -143,11 +143,11 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         }
     }*/
     @Override
-    public void delete(Abonnement abonnement) throws SQLException {
-        System.out.println("Tentative de suppression de l'abonnement avec ID: " + abonnement.getId());
+    public void delete(int id) throws SQLException {
+        System.out.println("Tentative de suppression de l'abonnement avec ID: " + id);
         String query = "DELETE FROM Abonnement WHERE AbonnementID = ?";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
-            stmt.setInt(1, abonnement.getId());
+            stmt.setInt(1, id);
             int rowsDeleted = stmt.executeUpdate();
             System.out.println("Nombre de lignes supprimées : " + rowsDeleted); // Vérifier combien de lignes sont affectées
         }
@@ -160,6 +160,7 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         try (Statement stmt = cnx.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Abonnement abonnement = new Abonnement();
+                abonnement.setId(rs.getInt("AbonnementID"));
                 abonnement.setNom(rs.getString("Nom"));
                 abonnement.setdescriptiona(rs.getString("Description"));
                 abonnement.setDuree(rs.getInt("Duree"));

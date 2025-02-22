@@ -11,6 +11,7 @@ public class Abonnement {
     private String salleNom;
     private int salleDeSportId;
     public Abonnement(String nom, String descriptiona, int duree, double prix, String salleNom) {
+        this.id= id;
         this.nom = nom;
         this.descriptiona = descriptiona;
         this.duree = duree;

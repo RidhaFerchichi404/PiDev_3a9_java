@@ -124,20 +124,21 @@ public class AfficherCards implements Initializable {
     }
 
     private void supprimerAbonnement(Abonnement abonnement) {
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirmation de suppression");
-        confirmation.setHeaderText(null);
-        confirmation.setContentText("Voulez-vous vraiment supprimer l'abonnement " + abonnement.getNom() + " ?");
+        System.out.println("SupprimerAbonnement appelé pour : " + abonnement.getNom()); // Debug
+        try {
+            // Supprimer de la base de données
+            abonnementService.delete(abonnement.getId());
 
-        Optional<ButtonType> result = confirmation.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                abonnementService.delete(abonnement);
-                actualiser();
-                showAlert("Succès", "Abonnement supprimé avec succès", Alert.AlertType.INFORMATION);
-            } catch (SQLException e) {
-                showAlert("Erreur", "Erreur lors de la suppression: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
+            // Rafraîchir l'affichage
+            actualiser();
+
+            System.out.println("Abonnement supprimé avec succès !"); // Debug
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression : " + e.getMessage()); // Debug
+            e.printStackTrace();
+
+            // Afficher une alerte en cas d'erreur
+            showAlert("Erreur", "Une erreur est survenue lors de la suppression de l'abonnement.", Alert.AlertType.ERROR);
         }
     }
 

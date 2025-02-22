@@ -25,7 +25,8 @@ public class AfficherAbonnement {
 
     private AbonnementService abonnementService = new AbonnementService();
     private Parent ajouterRoot;
-    private VBox mainContainer; // Add this field
+    private VBox mainContainer;
+
     private void showAlert(String title, String content, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -33,6 +34,7 @@ public class AfficherAbonnement {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
     @FXML
     private void ouvrirAjout() {
         try {
@@ -47,7 +49,7 @@ public class AfficherAbonnement {
             e.printStackTrace();
         }
     }
-    // Add this method
+
     public void setMainContainer(VBox mainContainer) {
         this.mainContainer = mainContainer;
     }
@@ -71,44 +73,33 @@ public class AfficherAbonnement {
         abonnementsContainer.getChildren().clear(); // Vider le conteneur avant d'ajouter de nouveaux éléments
 
         for (Abonnement abonnement : abonnements) {
-            // Créer un cadre pour chaque abonnement
-            VBox cadreAbonnement = new VBox(10); // Espacement de 10 entre les éléments
-            cadreAbonnement.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
+            // Créer une carte pour chaque abonnement
+            VBox carteAbonnement = creerCarteAbonnement(abonnement);
 
-            // Ajouter les détails de l'abonnement
-            Label nomLabel = new Label("Nom : " + abonnement.getNom());
-            Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
-            Label prixLabel = new Label("Prix : " + abonnement.getPrix());
-            Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
-
-            // Ajouter les boutons de suppression et de modification
-            Button supprimerButton = new Button("Supprimer");
-            Button modifierButton = new Button("Modifier");
-
-            // Associer des actions aux boutons
-            supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
-            modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
-
-            // Ajouter les éléments au cadre
-            cadreAbonnement.getChildren().addAll(nomLabel, descriptionLabel, prixLabel, dureeLabel, supprimerButton, modifierButton);
-
-            // Ajouter le cadre au conteneur principal
-            abonnementsContainer.getChildren().add(cadreAbonnement);
+            // Ajouter la carte au conteneur principal
+            abonnementsContainer.getChildren().add(carteAbonnement);
         }
     }
 
     private void supprimerAbonnement(Abonnement abonnement) {
+        System.out.println("SupprimerAbonnement appelé pour : " + abonnement.getNom()); // Debug
         try {
-            // Supprimer l'abonnement de la base de données
-            //abonnementService.delete(abonnement.getId());
+            // Supprimer de la base de données
+            abonnementService.delete(abonnement.getId());
 
-            // Recharger la liste des abonnements
-            List<Abonnement> abonnements = abonnementService.readAll();
-            afficherAbonnements(abonnements);
+            // Rafraîchir l'affichage
+            actualiser();
+
+            System.out.println("Abonnement supprimé avec succès !"); // Debug
         } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression : " + e.getMessage()); // Debug
             e.printStackTrace();
+
+            // Afficher une alerte en cas d'erreur
+            showAlert("Erreur", "Une erreur est survenue lors de la suppression de l'abonnement.", Alert.AlertType.ERROR);
         }
     }
+
     private VBox creerCarteAbonnement(Abonnement abonnement) {
         VBox carte = new VBox(10);
         carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
@@ -143,6 +134,7 @@ public class AfficherAbonnement {
 
         return carte;
     }
+
     public void actualiser() {
         abonnementsContainer.getChildren().clear(); // Vider le conteneur actuel
 
@@ -156,8 +148,14 @@ public class AfficherAbonnement {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void modifierAbonnement(Abonnement abonnement) {
+        if (abonnement == null) {
+            showAlert("Erreur", "Aucun abonnement sélectionné.", Alert.AlertType.ERROR);
+            return;
+        }
+
         try {
             // Charger le fichier FXML pour la modification
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModifierAbonnement.fxml"));
@@ -179,6 +177,9 @@ public class AfficherAbonnement {
         } catch (IOException e) {
             System.err.println("Erreur lors du chargement du formulaire de modification : " + e.getMessage());
             e.printStackTrace();
+
+            // Afficher une alerte en cas d'erreur
+            showAlert("Erreur", "Erreur lors du chargement du formulaire de modification.", Alert.AlertType.ERROR);
         }
     }
 }

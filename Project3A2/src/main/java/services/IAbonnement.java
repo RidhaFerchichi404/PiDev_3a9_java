@@ -8,6 +8,6 @@ public interface IAbonnement<T> {
     int getIdByName(String name) throws SQLException;
     Abonnement getAbonnementByNom(String nom) throws SQLException;
     void update(T t) throws SQLException;
-    void delete(T t) throws SQLException;
+    void delete(int id) throws SQLException;
     List<T> readAll() throws SQLException;
 }
