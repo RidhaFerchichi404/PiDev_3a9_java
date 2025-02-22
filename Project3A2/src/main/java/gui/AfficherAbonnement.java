@@ -182,4 +182,20 @@ public class AfficherAbonnement {
             showAlert("Erreur", "Erreur lors du chargement du formulaire de modification.", Alert.AlertType.ERROR);
         }
     }
+    @FXML
+    private void ouvrirAjoutPromotion() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPromotion.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Ajouter une promotion");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Erreur lors de l'ouverture du formulaire d'ajout de promotion.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
 }

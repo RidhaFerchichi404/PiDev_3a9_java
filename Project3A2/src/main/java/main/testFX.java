@@ -3,6 +3,7 @@ package main;
 import gui.AfficherAbonnement;
 import gui.AjouterAbonnement;
 import gui.ModifierAbonnement;
+import gui.AjouterPromotion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +33,10 @@ public class testFX extends Application {
             FXMLLoader afficherLoader = new FXMLLoader(getClass().getResource("/AfficherAbonnement.fxml"));
             Parent afficherRoot = afficherLoader.load();
 
+            // Chargement du formulaire d'ajout de promotion
+            FXMLLoader ajouterPromotionLoader = new FXMLLoader(getClass().getResource("/AjouterPromotion.fxml"));
+            Parent ajouterPromotionRoot = ajouterPromotionLoader.load();
+
             // Création de la VBox pour la vue d'affichage des abonnements
             VBox vbox = new VBox(10); // Ajuste l'espacement entre les cartes
             vbox.getChildren().add(afficherRoot); // Ajoute l'affichage des abonnements
@@ -41,12 +46,11 @@ public class testFX extends Application {
             AjouterAbonnement ajouterController = ajouterLoader.getController();
             ModifierAbonnement modifierController = modifierLoader.getController();
             AfficherAbonnement afficherController = afficherLoader.getController();
+            AjouterPromotion ajouterPromotionController = ajouterPromotionLoader.getController();
 
             // Configuration des actions et de la navigation entre les vues
             ajouterController.setModifierRoot(modifierRoot);
             ajouterController.setMainContainer(vbox);
-            //modifierController.setAjouterRoot(ajouterRoot);
-            //modifierController.setMainContainer(vbox);
             afficherController.setMainContainer(vbox);
             afficherController.setAjouterRoot(ajouterRoot);
 

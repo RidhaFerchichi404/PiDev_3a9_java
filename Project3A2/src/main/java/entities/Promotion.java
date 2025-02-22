@@ -60,6 +60,14 @@ public class Promotion {
         return promotionId;
     }
 
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public void setDateFin(Date dateFin) {
+        this.dateFin = dateFin;
+    }
+
     public void setPromotionId(int promotionId) {
         this.promotionId = promotionId;
     }
