@@ -5,21 +5,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjouterPromotion">
-    <Label text="Code promo"/>
-    <TextField fx:id="codePromoField"/>
-    <Label text="Description"/>
-    <TextField fx:id="descriptionField"/>
-    <Label text="Type de réduction"/>
-    <TextField fx:id="typeReductionField"/>
-    <Label text="Valeur de réduction"/>
-    <TextField fx:id="valeurReductionField"/>
-    <Label text="Date de début"/>
-    <DatePicker fx:id="dateDebutPicker"/>
-    <Label text="Date de fin"/>
-    <DatePicker fx:id="dateFinPicker"/>
-    <Label text="ID d'abonnement"/>
-    <TextField fx:id="abonnementIdField"/>
-    <Button text="Ajouter" onAction="#addPromotion"/>
+<VBox spacing="15" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AjouterPromotion" style="-fx-background-color: #1e1e1e; -fx-padding: 20;">
+    <!-- Titre -->
+    <Label text="Ajouter une promotion" style="-fx-text-fill: #ff8c00; -fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <!-- Code promo -->
+    <Label text="Code promo" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <TextField fx:id="codePromoField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+    <!-- Description -->
+    <Label text="Description" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <TextField fx:id="descriptionField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+    <!-- Type de réduction -->
+    <Label text="Type de réduction" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <TextField fx:id="typeReductionField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+    <!-- Valeur de réduction -->
+    <Label text="Valeur de réduction" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <TextField fx:id="valeurReductionField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+    <!-- Date de début -->
+    <Label text="Date de début" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <DatePicker fx:id="dateDebutPicker" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+    <!-- Date de fin -->
+    <Label text="Date de fin" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <DatePicker fx:id="dateFinPicker" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+    <!-- ID d'abonnement -->
+    <Label text="ID d'abonnement" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <TextField fx:id="abonnementIdField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+    <!-- Bouton Ajouter -->
+    <Button text="Ajouter" onAction="#addPromotion" style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20;" />
 </VBox>

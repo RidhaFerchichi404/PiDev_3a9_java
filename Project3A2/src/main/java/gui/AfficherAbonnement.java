@@ -2,6 +2,8 @@ package gui;
 
 import entities.Abonnement;
 import entities.Promotion;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javafx.geometry.Pos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import services.AbonnementService;
 import services.PromotionService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -32,7 +35,8 @@ public class AfficherAbonnement {
 
     private AbonnementService abonnementService = new AbonnementService();
 
-    private VBox mainContainer; // Ajoutez ce champ
+    private VBox mainContainer;
+    // Ajoutez ce champ
 
     // Ajoutez cette méthode
     public void setMainContainer(VBox mainContainer) {
@@ -55,7 +59,7 @@ public class AfficherAbonnement {
             abonnementsContainer.getChildren().add(carteAbonnement);
         }
     }
-    private VBox creerCarteAbonnement(Abonnement abonnement) {
+    /*private VBox creerCarteAbonnement(Abonnement abonnement) {
         VBox carte = new VBox(10);
         carte.setStyle("-fx-background-color: #262626; -fx-padding: 15; -fx-border-color: #ff8c00; -fx-border-radius: 10;");
 
@@ -139,7 +143,7 @@ public class AfficherAbonnement {
         carte.getChildren().addAll(nomLabel, descriptionLabel, dureeLabel, prixLabel, salleLabel, promotionsContainer, boutonsContainer);
 
         return carte;
-    }
+    }*/
 
    /* private VBox creerCarteAbonnement(Abonnement abonnement) {
         VBox carte = new VBox(10);
@@ -270,6 +274,128 @@ public class AfficherAbonnement {
 
         return carte;
     }*/
+   private VBox creerCarteAbonnement(Abonnement abonnement) {
+       VBox carte = new VBox(10);
+       carte.setStyle("-fx-background-color: #262626; -fx-padding: 20; -fx-border-color: #ff8c00; -fx-border-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
+
+       // Titre de l'abonnement
+       Label nomLabel = new Label(abonnement.getNom());
+       nomLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 18px; -fx-font-weight: bold;");
+
+       // Informations de l'abonnement
+       VBox infosContainer = new VBox(5);
+       infosContainer.setStyle("-fx-padding: 10; -fx-background-color: #333333; -fx-border-radius: 5;");
+
+       Label descriptionLabel = new Label("Description : " + abonnement.getDescriptiona());
+       descriptionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+       Label dureeLabel = new Label("Durée : " + abonnement.getDuree() + " jours");
+       dureeLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+       Label prixLabel = new Label("Prix : " + abonnement.getPrix() + " €");
+       prixLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+       Label salleLabel = new Label("Salle : " + abonnement.getSalleNom());
+       salleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+
+       infosContainer.getChildren().addAll(descriptionLabel, dureeLabel, prixLabel, salleLabel);
+
+       // Affichage des promotions
+       VBox promotionsContainer = new VBox(5);
+       promotionsContainer.setStyle("-fx-padding: 10; -fx-background-color: #444444; -fx-border-color: #ff8c00; -fx-border-radius: 5;");
+
+       Label promotionsTitle = new Label("Promotions :");
+       promotionsTitle.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 14px; -fx-font-weight: bold;");
+       promotionsContainer.getChildren().add(promotionsTitle);
+
+       List<Promotion> promotions = abonnement.getPromotions();
+       if (promotions != null && !promotions.isEmpty()) {
+           for (Promotion promotion : promotions) {
+               VBox promotionBox = new VBox(5);
+               promotionBox.setStyle("-fx-padding: 10; -fx-background-color: #555555; -fx-border-radius: 5;");
+
+               // Code promo et réduction
+               Label codePromoLabel = new Label("Code promo : " + promotion.getCodePromo());
+               codePromoLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 12px;");
+
+               // Dates de début et de fin
+               Label datesLabel = new Label("Du " + promotion.getDateDebut() + " au " + promotion.getDateFin());
+               datesLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+
+               // Prix initial et prix après réduction
+               BigDecimal prixInitial = BigDecimal.valueOf(abonnement.getPrix()); // Convertir en BigDecimal
+               BigDecimal reduction = promotion.getValeurReduction(); // Récupérer la réduction (BigDecimal)
+               BigDecimal cent = new BigDecimal(100);
+
+               // Calculer le prix après réduction
+               BigDecimal prixApresReduction = prixInitial.multiply(BigDecimal.ONE.subtract(reduction.divide(cent, 2, RoundingMode.HALF_UP)));
+
+               HBox prixContainer = new HBox(5);
+               Label prixInitialLabel = new Label(String.format("%.2f €", prixInitial));
+               prixInitialLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px; -fx-strikethrough: true;");
+
+               Label prixApresReductionLabel = new Label(String.format("→ %.2f €", prixApresReduction));
+               prixApresReductionLabel.setStyle("-fx-text-fill: #4CAF50; -fx-font-size: 14px; -fx-font-weight: bold;");
+
+               prixContainer.getChildren().addAll(prixInitialLabel, prixApresReductionLabel);
+
+               // Boutons pour modifier et supprimer la promotion
+               HBox boutonsPromotionContainer = new HBox(10);
+               boutonsPromotionContainer.setAlignment(Pos.CENTER);
+
+               Button modifierPromotionButton = new Button("Modifier");
+               modifierPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;");
+               modifierPromotionButton.setOnMouseEntered(e -> modifierPromotionButton.setStyle("-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 10px;"));
+               modifierPromotionButton.setOnMouseExited(e -> modifierPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;"));
+               modifierPromotionButton.setOnAction(event -> modifierPromotion(promotion));
+
+               Button supprimerPromotionButton = new Button("Supprimer");
+               supprimerPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;");
+               supprimerPromotionButton.setOnMouseEntered(e -> supprimerPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;"));
+               supprimerPromotionButton.setOnMouseExited(e -> supprimerPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 10px;"));
+               supprimerPromotionButton.setOnAction(event -> supprimerPromotion(promotion));
+
+               boutonsPromotionContainer.getChildren().addAll(modifierPromotionButton, supprimerPromotionButton);
+
+               // Ajouter les éléments à la promotionBox
+               promotionBox.getChildren().addAll(codePromoLabel, datesLabel, prixContainer, boutonsPromotionContainer);
+               promotionsContainer.getChildren().add(promotionBox);
+           }
+       } else {
+           Label noPromotionLabel = new Label("Aucune promotion disponible.");
+           noPromotionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px;");
+           promotionsContainer.getChildren().add(noPromotionLabel);
+       }
+
+       // Boutons pour modifier, supprimer et ajouter une promotion
+       HBox boutonsContainer = new HBox(10);
+       boutonsContainer.setAlignment(Pos.CENTER);
+
+       Button modifierButton = new Button("Modifier");
+       modifierButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;");
+       modifierButton.setOnMouseEntered(e -> modifierButton.setStyle("-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       modifierButton.setOnMouseExited(e -> modifierButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       modifierButton.setOnAction(event -> modifierAbonnement(abonnement));
+
+       Button supprimerButton = new Button("Supprimer");
+       supprimerButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;");
+       supprimerButton.setOnMouseEntered(e -> supprimerButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       supprimerButton.setOnMouseExited(e -> supprimerButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       supprimerButton.setOnAction(event -> supprimerAbonnement(abonnement));
+
+       Button ajouterPromotionButton = new Button("Ajouter une promotion");
+       ajouterPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;");
+       ajouterPromotionButton.setOnMouseEntered(e -> ajouterPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       ajouterPromotionButton.setOnMouseExited(e -> ajouterPromotionButton.setStyle("-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5 10;"));
+       ajouterPromotionButton.setOnAction(event -> ouvrirAjoutPromotion(abonnement));
+
+       boutonsContainer.getChildren().addAll(modifierButton, supprimerButton, ajouterPromotionButton);
+
+       // Ajouter les éléments à la carte
+       carte.getChildren().addAll(nomLabel, infosContainer, promotionsContainer, boutonsContainer);
+
+       return carte;
+   }
     private void supprimerAbonnement(Abonnement abonnement) {
         System.out.println("SupprimerAbonnement appelé pour : " + abonnement.getNom()); // Debug
         try {
@@ -298,7 +424,7 @@ public class AfficherAbonnement {
             controller.chargerAbonnement(abonnement);
 
             // Créer une nouvelle scène dans la fenêtre actuelle
-            Stage currentStage = (Stage) cardsContainer.getScene().getWindow();
+            Stage currentStage = (Stage) abonnementsContainer.getScene().getWindow(); // Utilisez abonnementsContainer au lieu de cardsContainer
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
             currentStage.setTitle("Modifier l'Abonnement");
