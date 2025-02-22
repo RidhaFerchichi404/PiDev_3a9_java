@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane prefHeight="611.0" prefWidth="848.0" style="-fx-background-color: #000000; -fx-padding: 20;" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AfficherEquipementsController">
+
+    <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="40.0" prefHeight="638.0" prefWidth="884.0" spacing="20">
+        <!-- ✅ Titre et Bouton d'ajout bien placés -->
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label prefHeight="35.0" prefWidth="669.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;" text="                                           Équipements de la Salle" />
+
+            <Region HBox.hgrow="ALWAYS" />
+   
+            <Button onAction="#ajouterEquipement" style="-fx-background-color: #4CAF50; -fx-text-fill: white;                            -fx-font-size: 14px; -fx-padding: 10 20;                            -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="Ajouter Équipement" />
+        </HBox>
+        <DatePicker fx:id="calendrierGlobal" style="-fx-font-size: 16px;" showWeekNumbers="true" />
+
+        <!-- ✅ Message affiché si aucun équipement disponible -->
+        <Label fx:id="noEquipementsLabel" style="-fx-font-size: 16px; -fx-text-fill: #ff4444; -fx-alignment: center;" text="Aucun équipement disponible" visible="false" />
+
+        <!-- ✅ Conteneur des cartes avec défilement -->
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
+            <content>
+                <FlowPane fx:id="cardsContainer" hgap="20" prefHeight="412.0" prefWidth="874.0" prefWrapLength="800" style="-fx-background-color: black; -fx-padding: 10;" vgap="20">
+                    <!-- ✅ QR Code intégré dans chaque carte -->
+                    <VBox fx:id="equipementCard" spacing="10" style="-fx-background-color: #1a1a1a; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <Label fx:id="nomLabel" style="-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;" />
+                        <Label fx:id="etatLabel" style="-fx-text-fill: white;" />
+                        <Label fx:id="derniereVerifLabel" style="-fx-text-fill: white;" />
+                        <Label fx:id="prochaineVerifLabel" style="-fx-text-fill: white;" />
+                        <ImageView fx:id="qrCodeImage" fitWidth="100" fitHeight="100" />
+                    </VBox>
+                </FlowPane>
+            </content>
+        </ScrollPane>
+    </VBox>
+</AnchorPane>

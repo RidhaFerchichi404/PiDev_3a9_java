@@ -1,0 +1,6 @@
+Vous: C'est quoi, le sport?
+Chatbot: Le sport est une activité physique ou mentale qui vise à améliorer la condition physique, la santé ou les performances d'une personne. Il peut être pratiqué individuellement ou en équipe et comprend une grande variété de disciplines telles que le football, le basketball, le tennis, la natation, la course à pied, etc. Le sport peut être pratiqué de manière récréative ou compétitive et est souvent associé à des valeurs telles que le fair-play, la discipline et le dépassement de soi.
+Vous: what is this application about ?
+Chatbot: This application is designed to provide information and assistance to users on a variety of topics. It may offer features such as answering questions, giving recommendations, or providing guidance on different subjects. The specific focus of the application will depend on its purpose and the services it offers.
+Vous: bonjour
+Chatbot: Bonjour! Comment puis-je vous aider aujourd'hui?

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.ModifierEquipementController"
+            style="-fx-background-color: #1a1a1a; -fx-padding: 20;">
+
+    <VBox spacing="20" alignment="CENTER_LEFT">
+        <!-- ✅ Titre bien centré et en orange -->
+        <Label text="Modifier l'Équipement"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+
+        <!-- ✅ Conteneur pour bien aligner les labels et les champs -->
+        <GridPane hgap="15" vgap="15">
+            <Label text="Nom :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="nomField" prefWidth="250" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Fonctionnement :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <CheckBox fx:id="fonctionnementCheck" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Dernière Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="derniereVerifDate" prefWidth="250" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Prochaine Vérification :" style="-fx-text-fill: white; -fx-font-size: 14px;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="prochaineVerifDate" prefWidth="250" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- ✅ Boutons bien espacés et alignés en bas -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Annuler" onAction="#fermerFenetre"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            <Button text="Enregistrer" onAction="#enregistrerModification"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

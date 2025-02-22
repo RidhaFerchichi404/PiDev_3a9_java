@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #1a1a1a; -fx-padding: 20;"
+            xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.AfficherExercicesFrontController">
+
+    <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="10.0"
+          AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+
+        <!-- ✅ Titre principal avec effet visuel -->
+        <Label text="🏋️ Exercices de l'Équipement 🏋️"
+               style="-fx-font-size: 28px; -fx-text-fill: #ff8c00; -fx-font-weight: bold; -fx-alignment: center;" />
+
+        <!-- ✅ Conteneur des cartes avec ScrollPane -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                    prefHeight="600.0" prefWidth="950.0"
+                    style="-fx-background: transparent; -fx-border-color: #ff8c00; -fx-border-width: 2px; -fx-padding: 15;">
+
+            <!-- ✅ FlowPane pour structurer les exercices avec un affichage propre -->
+            <FlowPane fx:id="exercicesContainer" hgap="30" vgap="30"
+                      prefHeight="580.0" prefWidth="920.0"
+                      prefWrapLength="900.0"
+                      style="-fx-background-color: black; -fx-padding: 20; -fx-alignment: center;" />
+        </ScrollPane>
+
+        <!-- ✅ Bouton Retour modernisé -->
+        <Button fx:id="btnRetour" onAction="#retourner"
+                style="-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 12 24; -fx-font-size: 16px;"
+                text="❌ Retour" />
+    </VBox>
+</AnchorPane>
