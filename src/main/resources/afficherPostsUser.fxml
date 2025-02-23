@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+            <?import javafx.scene.control.Button?>
+            <?import javafx.scene.control.Label?>
+            <?import javafx.scene.control.TextField?>
+            <?import javafx.scene.image.ImageView?>
+            <?import javafx.scene.layout.AnchorPane?>
+            <?import javafx.scene.layout.HBox?>
+            <?import javafx.scene.layout.VBox?>
+
+            <AnchorPane minHeight="400" minWidth="600" prefHeight="528.0" prefWidth="706.0" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.afficherPostsUser">
+
+                <VBox alignment="CENTER" prefHeight="528.0" prefWidth="706.0" spacing="25" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+                    <!-- Titre principal -->
+                    <Label style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #ff6600; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 2, 2);" text="🏋️ Sportify - Découvrez Nos Posts 🏋️" />
+
+                    <!-- Section des posts -->
+                    <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+                        <HBox alignment="CENTER" prefHeight="37.0" HBox.hgrow="ALWAYS" spacing="100.0">
+                            <Label fx:id="LBnom" text="Label" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
+                            <Label fx:id="LBdate" text="Label" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                        </HBox>
+                        <ImageView fx:id="IVimage" fitHeight="285.0" fitWidth="572.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                        <Label text="Description : " style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
+                        <Label fx:id="LBdescription" text="Label" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                        <Label text="Commentez ici : " style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
+                        <TextField fx:id="TFcomment" style="-fx-font-size: 14px; -fx-pref-width: 350px; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
+                    </VBox>
+
+                    <!-- Boutons secondaires -->
+                    <HBox alignment="CENTER" prefHeight="60.0" HBox.hgrow="ALWAYS" spacing="100.0">
+                        <Button fx:id="BTNback" mnemonicParsing="false" onAction="#handleBackButtonAction" text="Retourner" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" />
+                        <Button fx:id="BTNajouterComment" mnemonicParsing="false" onAction="#addComment" text="Ajouter commentaire" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" />
+                        <Button fx:id="BTNviewComment" mnemonicParsing="false" onAction="#handleViewCommentsButtonAction" text="Consulter les commentaires" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" />
+                    </HBox>
+                </VBox>
+            </AnchorPane>

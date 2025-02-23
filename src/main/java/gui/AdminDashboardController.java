@@ -48,7 +48,14 @@ public class AdminDashboardController {
 
     @FXML
     public void handlePosts() {
-        displayContent("Posts Section");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfaceAdmin.fxml"));
+            Parent postsView = loader.load();
+            mainContent.getChildren().setAll(postsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load interfaceAdminPosts");
+        }
     }
 
     @FXML

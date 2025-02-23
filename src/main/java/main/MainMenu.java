@@ -6,13 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 
 public class MainMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Charger la scène du menu principal
-        Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/Login.fxml")));
         primaryStage.setTitle("User Management Menu");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

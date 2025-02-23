@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #000000; -fx-padding: 30;"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.afficherCommentsUser">
+
+    <VBox alignment="TOP_CENTER" spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="📝 Comments"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #FF6600;"/>
+        </HBox>
+
+
+        <FlowPane fx:id="FPcomments" VBox.vgrow="ALWAYS" style="-fx-background-color: #121212; -fx-background-radius: 20; -fx-padding: 20;" />
+
+
+        <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Button fx:id="BTNback" mnemonicParsing="false" onAction="#handleBackButtonAction" text="Retourner"
+                    style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-padding: 10 20; -fx-font-weight: bold; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 4, 4); -fx-cursor: hand;" />
+            <Button fx:id="BTNlike" mnemonicParsing="false" onAction="#handleLikeButtonAction" text="Like commentaire"
+                    style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-padding: 10 20; -fx-font-weight: bold; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 4, 4); -fx-cursor: hand;" />
+        </HBox>
+    </VBox>
+</AnchorPane>

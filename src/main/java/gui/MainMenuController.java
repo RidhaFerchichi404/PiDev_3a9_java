@@ -57,7 +57,14 @@ public class MainMenuController {
 
     @FXML
     public void handlePosts() {
-        displayContent("Posts Section");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfaceUser.fxml"));
+            Parent postsView = loader.load();
+            mainContent.getChildren().setAll(postsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load interfaceUserPosts");
+        }
     }
 
     @FXML

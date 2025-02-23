@@ -62,7 +62,7 @@
 /* Main container background */
 .main-container2 {
     -fx-background-color: #1e1e1e; /* Dark gray background for contrast */
-    -fx-pref-height: 100vh;
+    -fx-pref-height: 100%;
     -fx-padding: 0;
 }
 
@@ -148,7 +148,7 @@
 /* Main content styling */
 .main-container2 {
     -fx-background-color: #1e1e1e;
-    -fx-pref-height: 100vh;
+    -fx-pref-height: 100%;
     -fx-padding: 0;
 }
 
