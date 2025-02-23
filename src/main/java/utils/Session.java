@@ -16,4 +16,8 @@ public class Session {
     public static void logout() {
         currentUser = null;
     }
+
+    public static String getRole() {
+        return currentUser != null ? currentUser.getRole() : null; // Return the role of the current user
+    }
 }

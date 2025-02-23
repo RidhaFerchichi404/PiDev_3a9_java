@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox styleClass="product-card" 
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.produit.ProductCardController"
+      style="-fx-background-color: #2d2d2d; -fx-background-radius: 8;"
+      prefWidth="280" prefHeight="350">
+    
+    <ImageView fx:id="productImage" 
+               fitWidth="280" 
+               fitHeight="200" 
+               preserveRatio="true"
+               style="-fx-background-color: #333333;"/>
+    
+    <VBox spacing="8" style="-fx-padding: 15;">
+        <Label fx:id="nameLabel" 
+               style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;"/>
+               
+        <Label fx:id="categoryLabel" 
+               style="-fx-text-fill: #bbbbbb;"/>
+               
+        <Label fx:id="priceLabel" 
+               style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #FF8C00;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="stockLabel" 
+                   style="-fx-text-fill: #bbbbbb;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="statusLabel"/>
+        </HBox>
+        
+        <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+            <Button fx:id="editButton" text="Modifier" onAction="#handleEdit"
+                    style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-min-width: 80;"/>
+            <Button fx:id="deleteButton" text="Supprimer" onAction="#handleDelete"
+                    style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-min-width: 80;"/>
+            <Button fx:id="commanderButton" text="Commander" onAction="#handleCommander"
+                    style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-min-width: 80;"/>
+        </HBox>
+    </VBox>
+</VBox> 

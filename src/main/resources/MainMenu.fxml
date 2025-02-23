@@ -14,6 +14,7 @@
           style="-fx-background-color: #1E1E1E; -fx-padding: 20;">
         <Label text="Client Menu" styleClass="menu-title" />
         <Button text="Produits" styleClass="menu-button" onAction="#handleProduits" />
+        <Button text="Commandes" styleClass="menu-button" onAction="#handleCommandes" />
         <Button text="Posts" styleClass="menu-button" onAction="#handlePosts" />
         <Button text="Salles" styleClass="menu-button" onAction="#handleSalles" />
         <Button text="Profile" styleClass="menu-button" onAction="#handleProfile" />

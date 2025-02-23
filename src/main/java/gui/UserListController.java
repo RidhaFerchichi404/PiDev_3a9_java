@@ -22,6 +22,7 @@ import javafx.stage.Modality;
 import utils.Session;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserListController {
@@ -41,7 +42,13 @@ public class UserListController {
     }
 
     private void loadUserList() {
-        List<User> users = userService.readAll();
+        List<User> users = null;
+        try {
+            users = userService.readAll();
+        } catch (SQLException e) {
+            showError("Erreur de chargement", e.getMessage());
+            return;
+        }
         if (users == null || users.isEmpty()) {
             System.out.println("No users found.");
             return;
@@ -177,11 +184,10 @@ public class UserListController {
     }
 
 
-    private void showAlert(String title, String message) {
+    private void showError(String title, String content) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

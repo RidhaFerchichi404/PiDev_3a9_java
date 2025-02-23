@@ -52,13 +52,13 @@ public class AjouterUserController {
         this.afterSaveAction = action;
     }
 
-
-        private void initialize() {
-            roleComboBox.getItems().addAll("Admin", "Coach", "Client"); // Ajout de l'option Admin
-            roleComboBox.setValue("Client"); // Par défaut, sélectionne "Client"
-
+    @FXML
+    public void initialize() {
+        // Initialize the roleComboBox with only Client and Coach options
+        roleComboBox.getItems().clear(); // Clear any existing items
+        roleComboBox.getItems().addAll("Client", "Coach", "Admin");
+        roleComboBox.setValue("Client"); // Set default value
     }
-
 
     private UserService userService = new UserService();
 

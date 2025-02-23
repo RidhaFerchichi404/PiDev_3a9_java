@@ -349,4 +349,6 @@ public class AfficherEquipementsController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
+
 }

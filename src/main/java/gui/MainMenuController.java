@@ -33,7 +33,26 @@ public class MainMenuController {
 
     @FXML
     public void handleProduits() {
-        displayContent("Produits Section");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/produit/ListProduits.fxml"));
+            Parent produitsView = loader.load();
+            mainContent.getChildren().setAll(produitsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load ListProduits.fxml");
+        }
+    }
+
+    @FXML
+    public void handleCommandes() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/commande/ListCommandes.fxml"));
+            Parent commandesView = loader.load();
+            mainContent.getChildren().setAll(commandesView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load ListCommandes.fxml");
+        }
     }
 
     @FXML

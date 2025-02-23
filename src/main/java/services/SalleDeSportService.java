@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SalleDeSportService implements org.example.service.IService<SalleDeSport> {
+public class SalleDeSportService implements IService<SalleDeSport> {
 
     private Connection cnx;
 
@@ -73,6 +73,7 @@ public class SalleDeSportService implements org.example.service.IService<SalleDe
         return salles;
     }
 
+    @Override
     public SalleDeSport readById(int id) throws SQLException {
         String req = "SELECT * FROM salle_de_sport WHERE id = ?";
         try (PreparedStatement ps = cnx.prepareStatement(req)) {

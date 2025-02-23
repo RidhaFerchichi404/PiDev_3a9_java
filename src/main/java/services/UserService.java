@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserService implements org.example.service.IService<User> {
+public class UserService implements IService<User> {
 
     private Connection cnx;
 
@@ -91,7 +91,6 @@ public class UserService implements org.example.service.IService<User> {
         }
     }
 
-
     @Override
     public void delete(User user) throws SQLException {
         String query = "DELETE FROM user WHERE id = ?";
@@ -100,7 +99,7 @@ public class UserService implements org.example.service.IService<User> {
         ps.executeUpdate();
     }
 
-    /*@Override
+    @Override
     public List<User> readAll() throws SQLException {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM user";
@@ -128,69 +127,36 @@ public class UserService implements org.example.service.IService<User> {
         }
 
         return users;
-    }*/
-
-    // Optional: Find a user by ID
-    public User findById(long id) throws SQLException {
-        String query = "SELECT * FROM user WHERE id = ?";
-        PreparedStatement ps = cnx.prepareStatement(query);
-        ps.setLong(1, id);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            User user = new User();
-            user.setId(rs.getLong("id"));
-            user.setFirstName(rs.getString("first_name"));
-            user.setLastName(rs.getString("last_name"));
-            user.setEmail(rs.getString("email"));
-            user.setPasswordHash(rs.getString("password_hash"));
-            user.setPhoneNumber(rs.getString("phone_number"));
-            user.setRole(rs.getString("role"));
-            user.setSubscriptionEndDate(rs.getDate("subscription_end_date") != null ? rs.getDate("subscription_end_date").toLocalDate() : null);
-            user.setActive(rs.getBoolean("is_active"));
-            user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-            user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
-            user.setViolationCount(rs.getInt("violation_count"));
-            user.setLocation(rs.getString("location"));
-            user.setCin(rs.getString("cin"));
-            user.setAge(rs.getInt("age"));
-            return user;
-        }
-
-        return null;
     }
-    public List<User> readAll() {
-        List<User> users = new ArrayList<>();
 
-        // Adjust the query to match your database table (users is likely the correct table name)
-        String query = "SELECT * FROM user"; // If the table name is "user", use it
-
-        try (PreparedStatement ps = cnx.prepareStatement(query);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
+    @Override
+    public User readById(int id) throws SQLException {
+        String query = "SELECT * FROM user WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
                 User user = new User();
-                user.setId(rs.getLong("id")); // Correct method to get the "id"
+                user.setId(rs.getLong("id"));
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
+                user.setPasswordHash(rs.getString("password_hash"));
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setRole(rs.getString("role"));
-                user.setAge(rs.getInt("age"));
+                user.setSubscriptionEndDate(rs.getDate("subscription_end_date") != null ? rs.getDate("subscription_end_date").toLocalDate() : null);
+                user.setActive(rs.getBoolean("is_active"));
+                user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+                user.setViolationCount(rs.getInt("violation_count"));
+                user.setLocation(rs.getString("location"));
                 user.setCin(rs.getString("cin"));
-
-                // Add the user to the list
-                users.add(user);
+                user.setAge(rs.getInt("age"));
+                return user;
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Print the stack trace for debugging purposes
-            throw new RuntimeException("Unable to load users from the database.");
         }
-
-        return users;
+        return null;
     }
-
-
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -220,6 +186,7 @@ public class UserService implements org.example.service.IService<User> {
         }
         return users;
     }
+
     public boolean isEmailTaken(String email) {
         // Implement the database query to check if the email exists
         String query = "SELECT COUNT(*) FROM user WHERE email = ?";
@@ -234,8 +201,6 @@ public class UserService implements org.example.service.IService<User> {
         }
         return false;
     }
-
-
 
     public void deleteUser(User user) {
         // Show confirmation dialog
@@ -264,6 +229,7 @@ public class UserService implements org.example.service.IService<User> {
             System.out.println("User deletion canceled.");
         }
     }
+
     public User authenticateUser(String email, String password) {
         String query = "SELECT * FROM user WHERE email = ? AND password_hash = ?";
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
@@ -286,9 +252,4 @@ public class UserService implements org.example.service.IService<User> {
         }
         return null;
     }
-
-
-
-
-
 }

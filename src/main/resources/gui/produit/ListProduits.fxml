@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.produit.ListProduitsController"
+      style="-fx-background-color: #1a1a1a;"
+      prefWidth="1200" prefHeight="800">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header Section -->
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Label text="Gestion des Produits" 
+               style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="addProductButton" text="+ Nouveau Produit" onAction="#openAddProduit"
+                style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-padding: 8 15;"/>
+        <Button fx:id="refreshButton" text="Actualiser" onAction="#refreshProducts"
+                style="-fx-background-color: #32CD32; -fx-text-fill: white; -fx-padding: 8 15;"/>
+    </HBox>
+
+    <!-- Card View Container -->
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" 
+                style="-fx-background: #1a1a1a; -fx-border-color: transparent;">
+        <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" 
+                  style="-fx-background-color: #1a1a1a; -fx-padding: 10;">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+        </FlowPane>
+    </ScrollPane>
+</VBox> 

@@ -35,6 +35,10 @@
                 style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
                 fx:id="utilisateursButton" />
 
+        <Button text="Commandes" onAction="#handleCommandes"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="commandesButton" />
+
         <!-- Logout Button at the Bottom -->
         <VBox alignment="BOTTOM_CENTER" spacing="10" VBox.vgrow="ALWAYS">
             <Button text="Logout" onAction="#logoutUser"

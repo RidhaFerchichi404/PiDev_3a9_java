@@ -1,4 +1,4 @@
-package org.example.service;
+package services;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +13,8 @@ import java.util.List;
         void delete(T t) throws SQLException;
 
         List<T> readAll() throws SQLException;
+
+        T readById(int id) throws SQLException;
     }
 
 

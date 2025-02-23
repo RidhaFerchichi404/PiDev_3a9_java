@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controller.MainWindowController"
+           style="-fx-background-color: #1a1a1a;"
+           prefWidth="1200" prefHeight="800">
+    
+    <top>
+        <HBox spacing="15" alignment="CENTER_LEFT" 
+              style="-fx-background-color: #2d2d2d; -fx-padding: 15 25;">
+            
+            <Label text="SPORTIFY" 
+                   style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #FF8C00;"/>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <Button text="Produits" onAction="#showProduits"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; 
+                           -fx-border-color: #FF8C00; -fx-border-radius: 3;"/>
+                           
+            <Button text="Commandes" onAction="#showCommandes"
+                    style="-fx-background-color: transparent; -fx-text-fill: white;
+                           -fx-border-color: #FF8C00; -fx-border-radius: 3;"/>
+        </HBox>
+    </top>
+    
+    <center>
+        <StackPane fx:id="contentArea"/>
+    </center>
+</BorderPane> 

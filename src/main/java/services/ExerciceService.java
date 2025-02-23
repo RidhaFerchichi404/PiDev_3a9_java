@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciceService implements org.example.service.IService<Exercice> {
+public class ExerciceService implements IService<Exercice> {
 
     private Connection cnx;
 
@@ -96,6 +96,26 @@ public class ExerciceService implements org.example.service.IService<Exercice> {
         }
 
         return exercices;
+    }
+
+    @Override
+    public Exercice readById(int id) throws SQLException {
+        String query = "SELECT * FROM exercice WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Exercice(
+                    rs.getInt("id"),
+                    rs.getString("description"),
+                    rs.getString("image"),
+                    rs.getLong("id_user"),
+                    rs.getInt("id_equipement"),
+                    rs.getString("nom_exercice")
+                );
+            }
+        }
+        return null;
     }
 
 }

@@ -1,6 +1,5 @@
 package services;
 
-
 import entities.Equipement;
 import utils.MyConnection;
 
@@ -8,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquipementService implements org.example.service.IService<Equipement> {
+public class EquipementService implements IService<Equipement> {
 
     private Connection cnx;
 
@@ -72,6 +71,27 @@ public class EquipementService implements org.example.service.IService<Equipemen
         }
 
         return equipements;
+    }
+
+    @Override
+    public Equipement readById(int id) throws SQLException {
+        String query = "SELECT * FROM equipement WHERE id = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Equipement(
+                    rs.getInt("id"),
+                    rs.getInt("id_salle"),
+                    rs.getString("nom"),
+                    rs.getBoolean("fonctionnement"),
+                    rs.getDate("prochaine_verification"),
+                    rs.getDate("derniere_verification"),
+                    rs.getInt("id_user")
+                );
+            }
+        }
+        return null;
     }
 
     public List<Equipement> readBySalleId(int salleId) throws SQLException {
