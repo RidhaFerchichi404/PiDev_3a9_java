@@ -43,10 +43,7 @@ public class AfficherEquipementsController {
     private int idSalle;
 
     // ✅ Twilio Credentials
-    private static final String ACCOUNT_SID = "AC6061f00ef5486c9be7937f0fe8b5e2a5";
-    private static final String AUTH_TOKEN = "e3cad76f6696c81567438c47d1d29b4a";
-    private static final String FROM_PHONE = "+18312221870";
-    private static final String TO_PHONE = "+21692524011";
+
 
     @FXML
     public void initialize() {
