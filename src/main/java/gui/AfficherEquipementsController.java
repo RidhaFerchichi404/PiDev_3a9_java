@@ -45,6 +45,7 @@ public class AfficherEquipementsController {
     // ✅ Twilio Credentials
 
 
+
     @FXML
     public void initialize() {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
