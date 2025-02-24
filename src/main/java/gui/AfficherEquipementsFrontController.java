@@ -103,7 +103,7 @@ public class AfficherEquipementsFrontController {
         ImageView equipImage = new ImageView();
         try {
             // Charge une image par défaut (equipement.jpg) depuis les ressources
-            Image image = new Image(getClass().getResourceAsStream("/images/equipement.jpg"));
+            Image image = new Image(getClass().getResourceAsStream("/images/36906_0006_f_1542726117-2-1.jpg"));
             equipImage.setImage(image);
             equipImage.setFitWidth(200);
             equipImage.setFitHeight(150);

@@ -118,4 +118,17 @@ public class SalleDeSportService implements IService<SalleDeSport> {
 
         return salles;
     }
+    public int getNombreEquipements(int salleId) throws SQLException {
+        String req = "SELECT COUNT(*) FROM equipement WHERE id_salle = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(req)) {
+            ps.setInt(1, salleId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
 }

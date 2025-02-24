@@ -30,44 +30,60 @@ public class ModifyUserController {
     private Button btnSave;
 
     private User currentUser;
-    private UserService userService = new UserService();  // Initialize the service
+    private UserService userService = new UserService();  // Initialisation du service
 
+    /**
+     * Remplit les champs du formulaire avec les données de l'utilisateur
+     */
     public void setUser(User user) {
         this.currentUser = user;
 
-        // Populate the form fields with the user's data
-        txtFirstName.setText(user.getFirstName());
-        txtLastName.setText(user.getLastName());
-        txtEmail.setText(user.getEmail());
-        txtPhoneNumber.setText(user.getPhoneNumber());
-        txtCin.setText(user.getCin()); // Set CIN (nullable)
+        // ✅ Récupération correcte des champs (éviter les valeurs nulles)
+        txtFirstName.setText(user.getFirstName() != null ? user.getFirstName() : "");
+        txtLastName.setText(user.getLastName() != null ? user.getLastName() : "");
+        txtEmail.setText(user.getEmail() != null ? user.getEmail() : "");
+        txtPhoneNumber.setText(user.getPhoneNumber() != null ? user.getPhoneNumber() : ""); // Téléphone
+        txtCin.setText(user.getCin() != null ? user.getCin() : ""); // CIN
+
+        // ✅ Désactiver le champ CIN si l'utilisateur a moins de 18 ans
+        if (user.getAge() < 18) {
+            txtCin.setDisable(true);
+        } else {
+            txtCin.setDisable(false);
+        }
     }
 
-
+    /**
+     * Sauvegarder les modifications de l'utilisateur
+     */
     @FXML
     public void saveChanges() {
-        // Update the user object with the new data
+        // ✅ Mise à jour des champs
         currentUser.setFirstName(txtFirstName.getText());
         currentUser.setLastName(txtLastName.getText());
         currentUser.setEmail(txtEmail.getText());
-        currentUser.setPhoneNumber(txtPhoneNumber.getText());
 
-        // CIN validation: Only allow CIN if age is 18 or older
+        // ✅ Validation des champs pour éviter les null
+        String phoneNumber = txtPhoneNumber.getText();
+        currentUser.setPhoneNumber(!phoneNumber.isEmpty() ? phoneNumber : null);
+
+        // ✅ Sauvegarder le CIN seulement si l'utilisateur est majeur
         if (currentUser.getAge() >= 18) {
-            currentUser.setCin(txtCin.getText());
+            String cin = txtCin.getText();
+            currentUser.setCin(!cin.isEmpty() ? cin : null);
         } else {
-            currentUser.setCin(null); // Clear CIN if under 18
+            currentUser.setCin(null);
         }
 
-        // Save the changes using the UserService
+        // ✅ Mise à jour de l'utilisateur
         try {
-            userService.update(currentUser); // Save changes to the database
-            System.out.println("User updated successfully!");
+            userService.update(currentUser); // Mise à jour des données
+            System.out.println("✅ Utilisateur mis à jour avec succès !");
         } catch (SQLException e) {
-            System.err.println("Failed to update user: " + e.getMessage());
+            System.err.println("❌ Échec de la mise à jour de l'utilisateur : " + e.getMessage());
         }
 
-        // Close the modification window after saving
+        // ✅ Fermer la fenêtre après la sauvegarde
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
     }

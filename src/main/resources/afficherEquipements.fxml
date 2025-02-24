@@ -45,6 +45,10 @@
                text="❌ Aucun équipement disponible"
                visible="false" />
 
+        <!-- Boutons secondaires -->
+        <HBox alignment="CENTER" prefHeight="82.0" prefWidth="841.0" spacing="20">
+            <Button fx:id="statistiquesButton" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="📊 Statistiques" />
+        </HBox>
         <!-- ✅ Conteneur des cartes -->
         <ScrollPane fitToWidth="true" style="-fx-background: transparent;">
             <content>

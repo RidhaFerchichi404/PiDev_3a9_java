@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,14 +45,41 @@ public class AfficherEquipementsController {
 
     // ✅ Twilio Credentials
 
-
-
+    @FXML private Button statistiquesButton;
     @FXML
     public void initialize() {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         loadEquipements();
         configurerCalendrier();
         verifierDatesEtEnvoyerAlertes();
+        statistiquesButton.setOnAction(event -> afficherStatistiques());
+
+    }
+    private void afficherStatistiques() {
+        try {
+            List<Equipement> equipements = equipementService.readBySalleId(idSalle);
+
+            long fonctionnels = equipements.stream().filter(Equipement::isFonctionnement).count();
+            long nonFonctionnels = equipements.size() - fonctionnels;
+
+            double total = equipements.size();
+
+            PieChart pieChart = new PieChart();
+            pieChart.getData().add(new PieChart.Data("Fonctionnels (" + (int)((fonctionnels/total)*100) + "%)", fonctionnels));
+            pieChart.getData().add(new PieChart.Data("Non Fonctionnels (" + (int)((nonFonctionnels/total)*100) + "%)", nonFonctionnels));
+            pieChart.setTitle("État des Équipements");
+
+            Stage statsStage = new Stage();
+            VBox box = new VBox(pieChart);
+            box.setAlignment(Pos.CENTER);
+            box.setStyle("-fx-padding: 20; -fx-background-color: #121212;");
+            Scene scene = new Scene(box, 500, 400);
+            statsStage.setScene(scene);
+            statsStage.setTitle("Statistiques des équipements");
+            statsStage.show();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Erreur lors de l'affichage des statistiques", Alert.AlertType.ERROR);
+        }
     }
 
     public void setIdSalle(int idSalle) {
@@ -114,7 +142,15 @@ public class AfficherEquipementsController {
     }
 
     private void envoyerAlerteSMS(Equipement equipement) {
-        String message = "⚠️ Alerte ! L'équipement " + equipement.getNom() + " nécessite une vérification immédiate.";
+        String message = "⚠️ Alerte !\n"
+                + "Équipement : " + equipement.getNom() + "\n"
+                + "ID Équipement : " + equipement.getId() + "\n"
+                + "ID Salle : " + equipement.getIdSalle() + "\n"
+                + "Fonctionnement : " + (equipement.isFonctionnement() ? "✅ Fonctionnel" : "❌ En panne") + "\n"
+                + "Dernière Vérification : " + (equipement.getDerniereVerification() != null ? equipement.getDerniereVerification().toString() : "Non vérifiée") + "\n"
+                + "Prochaine Vérification : " + (equipement.getProchaineVerification() != null ? equipement.getProchaineVerification().toString() : "Non planifiée") + "\n"
+                + "🚨 Nécessite une vérification immédiate !";
+
         System.out.println("📩 Envoi SMS : " + message);
 
         // ✅ Envoi du SMS via Twilio

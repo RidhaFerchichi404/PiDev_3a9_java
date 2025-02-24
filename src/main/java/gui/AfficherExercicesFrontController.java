@@ -53,31 +53,52 @@ public class AfficherExercicesFrontController {
     }
 
     private VBox createExerciceCard(Exercice exercice) {
-        // ✅ Création de la carte principale
-        VBox card = new VBox(15);
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 1. Création de la carte (VBox) avec un style moderne
+        // ─────────────────────────────────────────────────────────────────────────────
+        VBox card = new VBox(12);
         card.setStyle(
-                "-fx-background-color: #1A1A1A; " +  // Fond noir profond
-                        "-fx-background-radius: 20; " +
-                        "-fx-padding: 20; " +
-                        "-fx-spacing: 15; " +
-                        "-fx-alignment: center; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.3), 10, 0, 4, 4); " +
-                        "-fx-cursor: hand;");               // Curseur interactif
+                "-fx-background-color: #1A1A1A; "
+                        + "-fx-background-radius: 20; "
+                        + "-fx-padding: 20; "
+                        + "-fx-spacing: 12; "
+                        + "-fx-alignment: center; "
+                        + "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.3), 10, 0, 4, 4); "
+                        + "-fx-cursor: hand;"
+        );
+        // Ajustez la taille de la carte pour laisser de la place au texte
+        card.setPrefWidth(300);
+        card.setPrefHeight(450);
 
-        card.setPrefWidth(280);
-        card.setPrefHeight(350);
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 2. Label du nom de l'exercice (wrapText pour ne pas couper le texte)
+        // ─────────────────────────────────────────────────────────────────────────────
+        Label nomLabel = new Label("Nom de l'exercice : " + exercice.getNomExercice());
+        nomLabel.setStyle("-fx-text-fill: #FF6600; -fx-font-size: 18px; -fx-font-weight: bold;");
+        nomLabel.setWrapText(true);
+        nomLabel.setMaxWidth(260); // Largeur max pour renvoyer à la ligne si nécessaire
 
-        // ✅ Nom de l'exercice en blanc
-        Label nomLabel = new Label("nom de l'exercice :"+exercice.getNomExercice());
-        nomLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;");
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 3. Label de la description (wrapText + couleur + taille)
+        // ─────────────────────────────────────────────────────────────────────────────
+        String description = (exercice.getDescription() != null && !exercice.getDescription().isEmpty())
+                ? exercice.getDescription()
+                : "Aucune description disponible";
+        Label descriptionLabel = new Label("Description : " + description);
+        descriptionLabel.setStyle("-fx-text-fill: #FFFFFF; -fx-font-size: 14px;");
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.setMaxWidth(260);
 
-        // ✅ Image de l'exercice
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 4. ImageView pour l'exercice
+        // ─────────────────────────────────────────────────────────────────────────────
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(220);
+        imageView.setFitWidth(200);
         imageView.setFitHeight(150);
         imageView.setPreserveRatio(true);
         imageView.setSmooth(true);
 
+        // Chargement de l'image depuis le fichier ou ressource
         try {
             String imagePath = exercice.getImage();
             if (imagePath != null && !imagePath.isEmpty()) {
@@ -92,52 +113,58 @@ public class AfficherExercicesFrontController {
             }
         } catch (Exception e) {
             System.out.println("Erreur de chargement d'image : " + e.getMessage());
+            imageView.setImage(new Image(getClass().getResourceAsStream("/images/default.png")));
         }
 
-        // ✅ Conteneur pour le bouton
-        HBox buttonsBox = new HBox(10);
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 5. Boutons d'action
+        //    - "Voir Image" : ouvrir une fenêtre ou pop-up pour agrandir l'image
+        //    - "Détails"    : afficher nom & description complets dans une fenêtre ou alerte
+        // ─────────────────────────────────────────────────────────────────────────────
+        Button voirImageButton = new Button("Voir Image");
+        voirImageButton.setStyle(
+                "-fx-background-color: #FF6600; "
+                        + "-fx-text-fill: #000000; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-font-size: 14px; "
+                        + "-fx-background-radius: 10; "
+                        + "-fx-cursor: hand; "
+                        + "-fx-padding: 8 20;"
+        );
+        // Exemple : ouvre la même vue, ou un pop-up, selon votre logique
+        voirImageButton.setOnAction(event -> voirImagesExercice(exercice));
+
+        Button detailsButton = new Button("Détails");
+        detailsButton.setStyle(
+                "-fx-background-color: #FF6600; "
+                        + "-fx-text-fill: #000000; "
+                        + "-fx-font-weight: bold; "
+                        + "-fx-font-size: 14px; "
+                        + "-fx-background-radius: 10; "
+                        + "-fx-cursor: hand; "
+                        + "-fx-padding: 8 20;"
+        );
+        // Affiche nom & description complets dans une simple alerte ou un pop-up
+        detailsButton.setOnAction(event -> {
+            showAlert(
+                    "Détails de l'exercice",
+                    "Nom complet : " + exercice.getNomExercice()
+                            + "\n\nDescription : " + description,
+                    Alert.AlertType.INFORMATION
+            );
+        });
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 6. Assemblage des éléments dans la carte
+        // ─────────────────────────────────────────────────────────────────────────────
+        HBox buttonsBox = new HBox(10, voirImageButton, detailsButton);
         buttonsBox.setStyle("-fx-alignment: center;");
-
-        // ✅ Bouton "Voir Image"
-        Button voirImagesButton = new Button("Voir Image");
-        voirImagesButton.setStyle(
-                "-fx-background-color: #FF6600; " +
-                        "-fx-text-fill: black; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-font-size: 14px; " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-cursor: hand; " +
-                        "-fx-padding: 10 20; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.4), 8, 0, 2, 2);");
-
-        // ✅ Effet hover du bouton
-        voirImagesButton.setOnMouseEntered(e -> voirImagesButton.setStyle(
-                "-fx-background-color: #FF3300; " +
-                        "-fx-text-fill: black; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-font-size: 14px; " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-cursor: hand; " +
-                        "-fx-padding: 10 20; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.6), 10, 0, 2, 2);"));
-
-        voirImagesButton.setOnMouseExited(e -> voirImagesButton.setStyle(
-                "-fx-background-color: #FF6600; " +
-                        "-fx-text-fill: black; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-font-size: 14px; " +
-                        "-fx-background-radius: 10; " +
-                        "-fx-cursor: hand; " +
-                        "-fx-padding: 10 20; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.4), 8, 0, 2, 2);"));
-
-        voirImagesButton.setOnAction(event -> voirImagesExercice(exercice));
-
-        buttonsBox.getChildren().add(voirImagesButton);
-        card.getChildren().addAll(imageView, nomLabel, buttonsBox);
+        card.getChildren().addAll(imageView, nomLabel, descriptionLabel, buttonsBox);
 
         return card;
     }
+
+
 
     private void voirImagesExercice(Exercice exercice) {
         try {

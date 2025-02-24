@@ -135,6 +135,7 @@ public class UserService implements IService<User> {
         try (PreparedStatement ps = cnx.prepareStatement(query)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 User user = new User();
                 user.setId(rs.getLong("id"));
@@ -143,20 +144,47 @@ public class UserService implements IService<User> {
                 user.setEmail(rs.getString("email"));
                 user.setPasswordHash(rs.getString("password_hash"));
                 user.setPhoneNumber(rs.getString("phone_number"));
-                user.setRole(rs.getString("role"));
-                user.setSubscriptionEndDate(rs.getDate("subscription_end_date") != null ? rs.getDate("subscription_end_date").toLocalDate() : null);
+
+                // ✅ Vérification des valeurs nulles
+                String role = rs.getString("role");
+                user.setRole(role != null ? role : "Client"); // Valeur par défaut si null
+
+                // ✅ Gérer les dates correctement
+                if (rs.getDate("subscription_end_date") != null) {
+                    user.setSubscriptionEndDate(rs.getDate("subscription_end_date").toLocalDate());
+                } else {
+                    user.setSubscriptionEndDate(null);
+                }
+
                 user.setActive(rs.getBoolean("is_active"));
-                user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
-                user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+
+                // ✅ Vérification des timestamps
+                if (rs.getTimestamp("created_at") != null) {
+                    user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                }
+                if (rs.getTimestamp("updated_at") != null) {
+                    user.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+                }
+
+                // ✅ Vérifier les valeurs numériques
                 user.setViolationCount(rs.getInt("violation_count"));
                 user.setLocation(rs.getString("location"));
-                user.setCin(rs.getString("cin"));
-                user.setAge(rs.getInt("age"));
+
+                // ✅ Gérer CIN et âge
+                String cin = rs.getString("cin");
+                user.setCin(cin != null ? cin : ""); // Valeur par défaut vide si null
+
+                int age = rs.getInt("age");
+                if (!rs.wasNull()) {
+                    user.setAge(age);
+                }
+
                 return user;
             }
         }
         return null;
     }
+
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
