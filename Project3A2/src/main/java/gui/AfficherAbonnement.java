@@ -506,7 +506,7 @@ public class AfficherAbonnement {
                prixInitialLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12px; -fx-strikethrough: true;");
 
                Label prixApresReductionLabel = new Label(String.format("→ %.2f DT", prixApresReduction));
-               prixApresReductionLabel.setStyle("-fx-text-fill: #4CAF50; -fx-font-size: 14px; -fx-font-weight: bold;");
+               prixApresReductionLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 14px; -fx-font-weight: bold;");
 
                prixContainer.getChildren().addAll(prixInitialLabel, prixApresReductionLabel);
 

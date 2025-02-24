@@ -27,7 +27,7 @@
                         style="-fx-background-color: #ff8c00; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
                 <Button text="Ajouter une promotion" onAction="#ouvrirAjoutPromotion"
-                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                        style="-fx-background-color: #f65905; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
 
@@ -37,10 +37,10 @@
                         style="-fx-background-color: #ff8c00; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
                 <Button text="Guide : Ajouter une promotion" onAction="#ouvrirGuideAjoutPromotion"
-                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                        style="-fx-background-color: #f65905; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
                 <Button text="Effacer le surlignage" onAction="#effacerSurlignage"
-                        style="-fx-background-color: #ff3333; -fx-text-fill: white;
+                        style="-fx-background-color: #f65905; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
         </VBox>
