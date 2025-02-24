@@ -16,8 +16,8 @@ public class AbonnementService implements IAbonnement<Abonnement>{
         cnx = MyConnection.getInstance().getConnection();
     }
 
-    public void create(Abonnement abonnement) throws SQLException {
-        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null /*|| abonnement.getSalleNom() == null*/) {
+   /* public void create(Abonnement abonnement) throws SQLException {
+        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null || abonnement.getSalleNom() == null) {
             throw new IllegalArgumentException("Les champs Nom, Description et SalleName ne peuvent pas être nuls.");
         }
         if (abonnement.getDuree() <= 0 || abonnement.getPrix() <= 0) {
@@ -40,9 +40,50 @@ public class AbonnementService implements IAbonnement<Abonnement>{
             stmt.setString(6, abonnement.getSalleNom());
             stmt.executeUpdate();
         }
+    }*/
+   // Vérifie si un abonnement avec le même nom existe déjà
+   public boolean abonnementExiste(String nom) throws SQLException {
+       String query = "SELECT COUNT(*) FROM Abonnement WHERE Nom = ?";
+       try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+           stmt.setString(1, nom);
+           ResultSet rs = stmt.executeQuery();
+           if (rs.next()) {
+               return rs.getInt(1) > 0; // Retourne true si un abonnement avec ce nom existe
+           }
+       }
+       return false;
+   }
+    public void create(Abonnement abonnement) throws SQLException {
+        if (abonnement.getNom() == null || abonnement.getdescriptiona() == null) {
+            throw new IllegalArgumentException("Les champs Nom et Description ne peuvent pas être nuls.");
+        }
+        if (abonnement.getDuree() <= 0 || abonnement.getPrix() <= 0) {
+            throw new IllegalArgumentException("La durée et le prix doivent être des valeurs positives.");
+        }
+
+        // Vérifier si un abonnement avec le même nom existe déjà
+        if (abonnementExiste(abonnement.getNom())) {
+            throw new SQLException("Un abonnement avec le même nom existe déjà.");
+        }
+
+        // Récupérer l'ID de la salle de sport à partir de son nom
+        int salleId = getIdByName(abonnement.getSalleNom());
+        if (salleId == -1) {
+            throw new SQLException("La salle de sport '" + abonnement.getSalleNom() + "' n'existe pas.");
+        }
+
+        // Ajouter l'abonnement à la base de données
+        String query = "INSERT INTO Abonnement (Nom, Description, duree, Prix, SalleID, SalleName) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setString(1, abonnement.getNom());
+            stmt.setString(2, abonnement.getdescriptiona());
+            stmt.setInt(3, abonnement.getDuree());
+            stmt.setDouble(4, abonnement.getPrix());
+            stmt.setInt(5, salleId);
+            stmt.setString(6, abonnement.getSalleNom());
+            stmt.executeUpdate();
+        }
     }
-
-
 
 
     // Correction ici : Utilisation de 'name' au lieu de 'salleNom'

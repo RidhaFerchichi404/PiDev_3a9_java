@@ -24,7 +24,7 @@
     <TextField fx:id="typeReductionField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
 
     <!-- Valeur de réduction -->
-    <Label text="Valeur de réduction" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
+    <Label text="Pourcentage de réduction(%)" style="-fx-text-fill: #ff8c00; -fx-font-size: 14px;" />
     <TextField fx:id="valeurReductionField" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
 
     <!-- Date de début -->

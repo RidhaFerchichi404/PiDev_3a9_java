@@ -30,6 +30,19 @@
                         style="-fx-background-color: #4CAF50; -fx-text-fill: white;
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
+
+            <!-- Ajouter des boutons pour les guides -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Guide : Ajouter un abonnement" onAction="#ouvrirGuideAjoutAbonnement"
+                        style="-fx-background-color: #ff8c00; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <Button text="Guide : Ajouter une promotion" onAction="#ouvrirGuideAjoutPromotion"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <Button text="Effacer le surlignage" onAction="#effacerSurlignage"
+                        style="-fx-background-color: #ff3333; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            </HBox>
         </VBox>
     </children>
 </AnchorPane>

@@ -4,6 +4,7 @@ import entities.Promotion;
 import utils.MyConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,24 @@ public class PromotionService implements IPromotion<Promotion> {
     }
     // Create a new promotion
     public void create(Promotion promotion) throws SQLException {
+        // Récupérer la date actuelle
+        LocalDate currentDate = LocalDate.now();
+
+        // Convertir les dates de la promotion en LocalDate pour faciliter la comparaison
+        LocalDate dateDebut = promotion.getDateDebut().toLocalDate();
+        LocalDate dateFin = promotion.getDateFin().toLocalDate();
+
+        // Vérifier que la date de début n'est pas antérieure à la date actuelle
+        if (dateDebut.isBefore(currentDate)) {
+            throw new IllegalArgumentException("La date de début ne peut pas être antérieure à la date actuelle.");
+        }
+
+        // Vérifier que la date de fin n'est pas antérieure à la date de début
+        if (dateFin.isBefore(dateDebut)) {
+            throw new IllegalArgumentException("La date de fin ne peut pas être antérieure à la date de début.");
+        }
+
+        // Si les vérifications sont passées, procéder à l'insertion dans la base de données
         String query = "INSERT INTO Promotion (CodePromo, Description, TypeReduction, ValeurReduction, DateDebut, DateFin, AbonnementID) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = cnx.prepareStatement(query)) {
             stmt.setString(1, promotion.getCodePromo());

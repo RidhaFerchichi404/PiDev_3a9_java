@@ -59,6 +59,9 @@ public class testFX extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            // Initialiser le guide après que la scène est prête
+            afficherController.initialiserGuide();
+
         } catch (IOException e) {
             System.out.println("Erreur lors du chargement des vues : " + e.getMessage());
             e.printStackTrace();
