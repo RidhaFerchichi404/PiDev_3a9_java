@@ -49,7 +49,7 @@
 
     <!-- Main Content Area -->
     <StackPane fx:id="mainContent" alignment="CENTER"
-               style="-fx-background-color: #1A1A1A; -fx-background-radius: 20; -fx-padding: 40; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 4, 4);">
+               style="-fx-background-color: #1A1A1A; -fx-background-radius: 20; -fx-padding: 40; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 4, 4);" HBox.hgrow="ALWAYS">
 
         <!-- Welcome Text -->
         <Label text="Bienvenue sur le Dashboard"

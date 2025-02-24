@@ -1,6 +1,5 @@
 package gui;
 
-
 import entities.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,7 @@ import services.UserService;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class AjouterUserController {
+public class AjouterAdminController {
 
     @FXML
     private TextField firstNameField;
@@ -56,7 +55,7 @@ public class AjouterUserController {
     public void initialize() {
         // Initialize the roleComboBox with only Client and Coach options
         roleComboBox.getItems().clear(); // Clear any existing items
-        roleComboBox.getItems().addAll("Client", "Coach");
+        roleComboBox.getItems().addAll("Client", "Coach", "Admin");
         roleComboBox.setValue("Client"); // Set default value
     }
 
@@ -90,7 +89,6 @@ public class AjouterUserController {
     }
 
 
-
     @FXML
     private void handleAddUser() {
         // Check input validity
@@ -106,28 +104,27 @@ public class AjouterUserController {
         String cin = cinField.getText();
         String phoneNumber = phoneNumberField.getText();
         String location = locationField.getText();
-        String role = roleComboBox.getValue(); // Get selected role
+        String role = roleComboBox.getValue();
 
-        // Create a user object
         User user = new User(firstName, lastName, email, passwordHash, age);
         user.setCin(cin.isEmpty() ? null : cin);
         user.setPhoneNumber(phoneNumber);
-        user.setRole(role); // Use the selected role ("Coach" or "Client")
+        user.setRole(role);
         user.setLocation(location);
 
-        // Insert into the database
         try {
             userService.create(user);
 
-            // Show success alert
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Succès");
             alert.setHeaderText(null);
             alert.setContentText("Utilisateur ajouté avec succès !");
             alert.showAndWait();
 
-            // Navigate to login screen after user is added
-            goToLoginScreen();
+            // Close the current window
+            Stage stage = (Stage) AddButton.getScene().getWindow();
+            stage.close();
+
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -136,21 +133,6 @@ public class AjouterUserController {
             alert.showAndWait();
         }
     }
-
-    // Method to navigate to the login screen
-    private void goToLoginScreen() {
-        try {
-            // Load the login FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-            Parent loginRoot = loader.load();
-
-            // Get the current scene and switch to the login screen
-
-            Stage currentStage = (Stage) AddButton.getScene().getWindow();
-            currentStage.setScene(new Scene(loginRoot));
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle any errors in loading the FXML
-        }
-    }
-
 }
+
+// Remove the goToLUserListScreen() method if not used elsewhere

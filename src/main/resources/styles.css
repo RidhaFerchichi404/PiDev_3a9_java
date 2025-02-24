@@ -263,4 +263,19 @@
     -fx-scale-y: 1.05;
     -fx-effect: dropshadow(gaussian, rgba(255, 102, 0, 0.5), 10, 0, 2, 2);
 }
+.button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, #FF6600, 10, 0.5, 0, 0);
+}
+
+.text-field {
+    -fx-border-width: 1.5px;
+    -fx-transition: all 0.3s;
+}
+
+.text-field:focused {
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, #FF6600, 10, 0.5, 0, 0);
+}
 

@@ -66,7 +66,7 @@ public class modifierCommentsAdmin {
                 FPposts.getChildren().add(card);
                 card.setOnMouseClicked(event -> {
                     loadComments(post);
-                    highlightSelectedPost(card);
+                    //highlightSelectedPost(card);
                 });
             }
         } catch (SQLException e) {
@@ -129,16 +129,6 @@ public class modifierCommentsAdmin {
 
         card.getChildren().addAll(postImage, typeLabel);
         return card;
-    }
-
-    private void highlightSelectedPost(VBox selectedVBox) {
-        for (Node node : FPposts.getChildren()) {
-            if (node instanceof VBox) {
-                VBox vBox = (VBox) node;
-                vBox.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;");
-            }
-        }
-        selectedVBox.setStyle("-fx-border-color: blue; -fx-border-width: 2; -fx-padding: 10;");
     }
 
     private void loadComments(Post post) {

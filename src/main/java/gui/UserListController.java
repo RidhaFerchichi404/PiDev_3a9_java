@@ -160,11 +160,11 @@ public class UserListController {
     @FXML
     private void handleajoutButtonClick() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterUser.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterAdminUser.fxml"));
             Parent addUserRoot = loader.load();
 
             // Récupérer le contrôleur d'ajout pour d'éventuelles actions après enregistrement
-            AjouterUserController addUserController = loader.getController();
+            AjouterAdminController addUserController = loader.getController();
 
             // Configurer une action après l'ajout d'un utilisateur pour rafraîchir la liste
             addUserController.setAfterSaveAction(this::loadUserList);
@@ -179,7 +179,7 @@ public class UserListController {
             loadUserList(); // Rafraîchir la liste des utilisateurs après ajout
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erreur lors de l'ouverture de AjouterUser.fxml");
+            System.err.println("Erreur lors de l'ouverture de AjouterAdminUser.fxml");
         }
     }
 

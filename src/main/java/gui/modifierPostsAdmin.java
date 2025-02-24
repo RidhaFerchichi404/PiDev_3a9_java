@@ -27,7 +27,6 @@ public class modifierPostsAdmin implements Initializable {
 
     @javafx.fxml.FXML
     private FlowPane FPposts;
-    ;
 
     @javafx.fxml.FXML
     private RadioButton RBmarathonModifier;

@@ -4,32 +4,37 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GestionPCUser">
-   <VBox prefHeight="400.0" prefWidth="600.0">
-      <children>
-          <HBox alignment="CENTER" prefHeight="29.0" prefWidth="600.0" spacing="15.0">
-              <children>
-                  <ComboBox fx:id="ComboBox" promptText="Select category...">
-                      <items>
-                          <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Show all" />
-                              <String fx:value="Promotion" />
-                              <String fx:value="Marathon" />
-                              <String fx:value="Regime" />
-                          </FXCollections>
-                      </items>
-                  </ComboBox>
-                  <Button onAction="#handleAscendentSort" text="Ascendent" />
-                  <Button onAction="#handleDescendentSort" text="Descendent" />
-                  <Button onAction="#handleMostCommented" text="Most Commented" />
-              </children>
-          </HBox>
-          <FlowPane fx:id="FPposts" prefHeight="363.0" prefWidth="580.0" />
-      </children>
-   </VBox>
+<AnchorPane minHeight="400" minWidth="600" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GestionPCUser" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <VBox alignment="CENTER" spacing="25" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="600.0" spacing="15.0" style="-fx-padding: 10;">
+                <children>
+                    <ComboBox fx:id="ComboBox" promptText="Select category..." style="-fx-font-size: 14px; -fx-pref-width: 350px; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Show all" />
+                                <String fx:value="Promotion" />
+                                <String fx:value="Marathon" />
+                                <String fx:value="Regime" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                    <Button onAction="#handleAscendentSort" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="Ascendent" />
+                    <Button onAction="#handleDescendentSort" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="Descendent" />
+                    <Button onAction="#handleMostCommented" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" text="Most Commented" />
+                </children>
+            </HBox>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+                <content>
+                    <FlowPane fx:id="FPposts" style="-fx-border-color: #ff6600; -fx-border-width: 1; -fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;" />
+                </content>
+            </ScrollPane>
+        </children>
+    </VBox>
 </AnchorPane>

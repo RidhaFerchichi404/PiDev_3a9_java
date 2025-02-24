@@ -35,21 +35,17 @@ public class ModifyUserController {
     public void setUser(User user) {
         this.currentUser = user;
 
-        // Populate fields with the user's existing data
+        // Populate the form fields with the user's data
         txtFirstName.setText(user.getFirstName());
         txtLastName.setText(user.getLastName());
         txtEmail.setText(user.getEmail());
         txtPhoneNumber.setText(user.getPhoneNumber());
-        txtCin.setText(user.getCin());  // Set CIN only if the user is 18 or older
+        txtCin.setText(user.getCin()); // Set CIN (nullable)
     }
+
 
     @FXML
     public void saveChanges() {
-        if (currentUser == null) {
-            System.err.println("No user is set for modification.");
-            return;
-        }
-
         // Update the user object with the new data
         currentUser.setFirstName(txtFirstName.getText());
         currentUser.setLastName(txtLastName.getText());
@@ -60,12 +56,12 @@ public class ModifyUserController {
         if (currentUser.getAge() >= 18) {
             currentUser.setCin(txtCin.getText());
         } else {
-            currentUser.setCin(null);  // Ensure CIN is cleared for users under 18
+            currentUser.setCin(null); // Clear CIN if under 18
         }
 
         // Save the changes using the UserService
         try {
-            userService.update(currentUser);  // Save changes to the database
+            userService.update(currentUser); // Save changes to the database
             System.out.println("User updated successfully!");
         } catch (SQLException e) {
             System.err.println("Failed to update user: " + e.getMessage());

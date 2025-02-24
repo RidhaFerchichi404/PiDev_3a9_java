@@ -83,15 +83,13 @@ public class User {
     public void setLocation(String location) { this.location = location; }
 
     public String getCin() { return cin; }
+
     public void setCin(String cin) {
-        if (age >= 18) { // Only set CIN if age is 18 or older
-            this.cin = cin;
-        } else {
-            this.cin = null; // Ensure CIN is null for users under 18
-        }
+        this.cin = cin; // Remove age-based validation here
     }
 
     public int getAge() { return age; }
+
     public void setAge(int age) {
         this.age = age;
         if (age < 18) { // Automatically set CIN to null if age is under 18

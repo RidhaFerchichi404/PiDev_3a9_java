@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-                <?import javafx.scene.control.Tab?>
-                <?import javafx.scene.control.TabPane?>
-                <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-                <AnchorPane prefHeight="739.0" prefWidth="1095.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceAdmin">
-    <TabPane layoutX="3.0" layoutY="3.0" prefHeight="739.0" prefWidth="1095.0" stylesheets="@styles.css" >
-                        <tabs>
-                            <Tab text="Ajouter Post" style="-fx-border-color: rgba(24,24,24,0.61);">
-                                <content>
-                                    <fx:include source="ajouterPostsAdmin.fxml" />
-                                </content>
-                            </Tab>
-                            <Tab text="Modifier Post" style="-fx-border-color: rgba(24,24,24,0.61);">
-                                <content>
-                                    <fx:include source="modifierPostsAdmin.fxml" />
-                                </content>
-                            </Tab>
-                            <Tab text="Modifier Comment" style="-fx-border-color: rgba(24,24,24,0.61);">
-                                <content>
-                                    <fx:include source="modifierCommentsAdmin.fxml" />
-                                </content>
-                            </Tab>
-                        </tabs>
-                    </TabPane>
-                </AnchorPane>
+<AnchorPane minHeight="400" minWidth="600" prefHeight="739.0" prefWidth="1095.0" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InterfaceAdmin">
+    <TabPane layoutX="3.0" layoutY="3.0" prefHeight="739.0" prefWidth="1095.0" stylesheets="@styles.css" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <tabs>
+            <Tab text="Ajouter Post" style="-fx-border-color: rgba(24,24,24,0.61);">
+                <content>
+                    <fx:include source="ajouterPostsAdmin.fxml" />
+                </content>
+            </Tab>
+            <Tab text="Modifier Post" style="-fx-border-color: rgba(24,24,24,0.61);">
+                <content>
+                    <fx:include source="modifierPostsAdmin.fxml" />
+                </content>
+            </Tab>
+            <Tab text="Modifier Comment" style="-fx-border-color: rgba(24,24,24,0.61);">
+                <content>
+                    <fx:include source="modifierCommentsAdmin.fxml" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</AnchorPane>

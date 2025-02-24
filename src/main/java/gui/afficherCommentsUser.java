@@ -147,6 +147,10 @@ public class afficherCommentsUser {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficherPostsUser.fxml"));
             Parent root = loader.load();
+
+            afficherPostsUser controller = loader.getController();
+            controller.setPost(currentPost);
+
             Stage stage = (Stage) BTNback.getScene().getWindow();
             StackPane mainMenu = (StackPane) stage.getScene().lookup("#mainContent");
             mainMenu.getChildren().clear();

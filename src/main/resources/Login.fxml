@@ -8,7 +8,7 @@
 
 <!-- Login Page -->
 <VBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="gui.LoginController" spacing="20" prefWidth="500" prefHeight="400"
+      fx:controller="gui.LoginController" spacing="20" prefWidth="900" prefHeight="700"
       alignment="CENTER"
       style="-fx-background-color: #121212; -fx-padding: 40; -fx-spacing: 20;">
 

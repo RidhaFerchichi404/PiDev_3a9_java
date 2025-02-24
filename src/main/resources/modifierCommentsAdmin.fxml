@@ -2,32 +2,32 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.ScrollPane?>
 <AnchorPane prefHeight="518.0" prefWidth="777.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.modifierCommentsAdmin" style="-fx-background-color: linear-gradient(to bottom, #1a1a1a, #121212); -fx-padding: 30;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
    <VBox alignment="CENTER" layoutX="4.0" layoutY="5.0" spacing="25" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <HBox alignment="TOP_CENTER" prefHeight="318.0" prefWidth="786.0">
-         <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="231.0" prefWidth="355.0">
-            <FlowPane fx:id="FPcomments" columnHalignment="CENTER" style="-fx-background-color: #0000004C;"/>
+         <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS">
+            <FlowPane fx:id="FPcomments" style="-fx-border-color: #ff6600; -fx-border-width: 1; -fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;" />
          </ScrollPane>
-         <ScrollPane fitToWidth="true" fitToHeight="true" prefHeight="231.0" prefWidth="343.0">
-            <FlowPane fx:id="FPposts" style="-fx-background-color: #0000004C;" />
+         <ScrollPane fitToWidth="true" fitToHeight="true" HBox.hgrow="ALWAYS">
+            <FlowPane fx:id="FPposts" style="-fx-border-color: #ff6600; -fx-border-width: 1; -fx-background-color: #1a1a1a; -fx-background-radius: 15; -fx-padding: 20;" />
          </ScrollPane>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-         <VBox prefHeight="100.0" prefWidth="403.0">
-            <Label text="Commentaire" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
-            <TextField fx:id="TFcomment" alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 350px; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
-            <Label text="Nombre de likes" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
-            <TextField fx:id="TFnbLikes" alignment="TOP_RIGHT" prefHeight="26.0" prefWidth="200.0" style="-fx-font-size: 14px; -fx-pref-width: 350px; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <VBox prefHeight="100.0" prefWidth="403.0" VBox.vgrow="ALWAYS">
+            <Label text="Commentaire" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
+            <TextField fx:id="TFcomment" alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="200.0" style="-fx-font-size: 12px; -fx-pref-width: 250px; -fx-padding: 5; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
+            <Label text="Nombre de likes" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ff6600;" />
+            <TextField fx:id="TFnbLikes" alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="200.0" style="-fx-font-size: 12px; -fx-pref-width: 250px; -fx-padding: 5; -fx-background-radius: 10; -fx-border-color: #ff6600; -fx-border-radius: 10; -fx-text-fill: white; -fx-background-color: #1e1e1e;" />
          </VBox>
-         <Button fx:id="BTNmodifier" mnemonicParsing="false" onAction="#handleModifyComment" text="Modifier commentaire" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" />
+         <Button fx:id="BTNmodifier" mnemonicParsing="false" onAction="#handleModifyComment" text="Modifier commentaire" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 5 10; -fx-cursor: hand;" />
       </HBox>
-      <Button fx:id="BTNsupprimer" mnemonicParsing="false" onAction="#handleDeleteComment" text="Supprimer" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 10 20; -fx-cursor: hand;" />
+      <Button fx:id="BTNsupprimer" mnemonicParsing="false" onAction="#handleDeleteComment" text="Supprimer" style="-fx-background-color: #ff6600; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-padding: 5 10; -fx-cursor: hand;" />
    </VBox>
 </AnchorPane>

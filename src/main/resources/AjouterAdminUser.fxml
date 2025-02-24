@@ -2,34 +2,26 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import java.net.URL?>
 
+<?import java.net.URL?>
+<?import javafx.scene.control.ComboBox?>
 <VBox xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="gui.AjouterUserController"
-      spacing="20" prefWidth="900" prefHeight="700"
-      alignment="CENTER" styleClass="main-container">
+      fx:controller="gui.AjouterAdminController" spacing="20"
+      prefWidth="500" prefHeight="600" styleClass="main-container">
 
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
 
     <!-- Header Section -->
-    <Label text="SPORTIFY" style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(from 0% 0% to 100% 0%, #FF6600 0%, #FFAA00 100%);">
-        <effect>
-            <DropShadow color="#FF6600" radius="15" spread="0.6"/>
-        </effect>
+    <Label text="SPORTIFY" styleClass="header-label">
         <VBox.margin>
-            <Insets top="30" bottom="30"/>
+            <Insets top="20" bottom="20"/>
         </VBox.margin>
     </Label>
 
@@ -75,7 +67,6 @@
         <Label text="Location:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
         <TextField fx:id="locationField" promptText="Enter your location"
                    styleClass="form-textfield" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-
         <!-- Role -->
         <Label text="Role:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
         <ComboBox fx:id="roleComboBox" promptText="Select role"
@@ -84,6 +75,8 @@
         <Button fx:id="AddButton" text="Add User" onAction="#handleAddUser"
                 styleClass="submit-button" GridPane.columnIndex="1" GridPane.rowIndex="9"
                 GridPane.halignment="RIGHT"/>
+
+
     </GridPane>
 
 </VBox>
