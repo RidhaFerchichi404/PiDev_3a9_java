@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.commande.AddressInputController"
+      style="-fx-background-color: #1a1a1a;"
+      prefWidth="800" prefHeight="600">
+    
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <HBox spacing="15" VBox.vgrow="ALWAYS">
+        <!-- Left side: Map -->
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="Sélectionnez votre emplacement sur la carte" 
+                   style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            
+            <WebView fx:id="mapView" VBox.vgrow="ALWAYS"/>
+            
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Rechercher un lieu..." HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: white; -fx-text-fill: black;"/>
+                <Button text="Rechercher" onAction="#handleSearch"
+                        style="-fx-background-color: #4a90e2; -fx-text-fill: white;"/>
+                <Button text="📍 Ma position" onAction="#handleMyLocation"
+                        style="-fx-background-color: #32CD32; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Right side: Address details -->
+        <VBox spacing="10" prefWidth="300">
+            <Label text="Détails de l'adresse" 
+                   style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+            
+            <ComboBox fx:id="governorateCombo" promptText="Gouvernorat" maxWidth="Infinity"
+                      style="-fx-background-color: white; -fx-text-fill: black;"/>
+                      
+            <ComboBox fx:id="cityCombo" promptText="Ville" maxWidth="Infinity"
+                      style="-fx-background-color: white; -fx-text-fill: black;"/>
+                      
+            <TextField fx:id="streetField" promptText="Rue"
+                       style="-fx-background-color: white; -fx-text-fill: black;"/>
+                       
+            <TextField fx:id="buildingField" promptText="Immeuble/Maison"
+                       style="-fx-background-color: white; -fx-text-fill: black;"/>
+                       
+            <TextField fx:id="postalCodeField" promptText="Code postal"
+                       style="-fx-background-color: white; -fx-text-fill: black;"/>
+            
+            <TextArea fx:id="previewArea" editable="false" wrapText="true" prefRowCount="2"
+                      style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+                      
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Annuler" onAction="#handleCancel"
+                        style="-fx-background-color: #FF4444; -fx-text-fill: white;"/>
+                <Button fx:id="validateButton" text="Valider" onAction="#handleValidate"
+                        style="-fx-background-color: #32CD32; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox> 

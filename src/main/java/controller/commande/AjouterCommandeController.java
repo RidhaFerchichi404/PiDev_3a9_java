@@ -2,22 +2,31 @@ package controller.commande;
 
 import entities.Commande;
 import entities.Produit;
+import entities.User;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.CommandeService;
 import services.ProduitService;
 import java.time.LocalDateTime;
 import javafx.collections.FXCollections;
 import utils.Session;
+import java.io.IOException;
 
 public class AjouterCommandeController {
     @FXML private ComboBox<Produit> produitCombo;
     @FXML private TextField nomClientField;
-    @FXML private TextField telephoneField;
     @FXML private TextArea adresseLivraisonField;
     @FXML private TextField quantiteField;
     @FXML private ComboBox<String> statutCombo;
+    
+    // New components
+    @FXML private PhoneInputController phoneInputController;
+    private AddressInputController addressInputController;
 
     private final CommandeService commandeService = new CommandeService();
     private final ProduitService produitService = new ProduitService();
@@ -51,6 +60,23 @@ public class AjouterCommandeController {
                 }
             }
         });
+
+        // Auto-fill user information
+        User currentUser = Session.getCurrentUser();
+        if (currentUser != null) {
+            nomClientField.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+            
+            // Set phone number if exists
+            String phone = currentUser.getPhoneNumber();
+            if (phone != null && !phone.isEmpty()) {
+                phoneInputController.setPhoneNumber(phone);
+            }
+            
+            // Set address if exists
+            if (currentUser.getLocation() != null && !currentUser.getLocation().isEmpty()) {
+                adresseLivraisonField.setText(currentUser.getLocation());
+            }
+        }
 
         // Load products into combo box
         try {
@@ -89,6 +115,53 @@ public class AjouterCommandeController {
         }
     }
 
+    @FXML
+    private void showAddressDialog() {
+        try {
+            System.out.println("Opening address dialog...");
+            // Get the correct resource URL
+            String fxmlPath = "/gui/commande/AddressInput.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            
+            if (loader.getLocation() == null) {
+                System.err.println("Could not find FXML file at: " + fxmlPath);
+                showError("Erreur", "Le fichier FXML n'a pas été trouvé: " + fxmlPath);
+                return;
+            }
+            
+            System.out.println("Loading FXML from: " + loader.getLocation());
+            Parent root = loader.load();
+            
+            addressInputController = loader.getController();
+            if (addressInputController == null) {
+                System.err.println("Controller was not initialized");
+                showError("Erreur", "Le contrôleur n'a pas été initialisé");
+                return;
+            }
+            
+            addressInputController.setOnAddressValidated(() -> {
+                adresseLivraisonField.setText(addressInputController.getFormattedAddress());
+            });
+            
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Saisie d'adresse");
+            Scene scene = new Scene(root);
+            dialog.setScene(scene);
+            
+            System.out.println("Showing address dialog");
+            dialog.showAndWait();
+        } catch (IOException e) {
+            System.err.println("Error loading address dialog: " + e.getMessage());
+            e.printStackTrace();
+            showError("Erreur", "Impossible d'ouvrir le formulaire d'adresse: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            showError("Erreur", "Une erreur inattendue s'est produite: " + e.getMessage());
+        }
+    }
+
     private String validateInputs() {
         StringBuilder errors = new StringBuilder();
 
@@ -105,11 +178,8 @@ public class AjouterCommandeController {
         }
 
         // Validation du téléphone
-        String phone = telephoneField.getText().trim();
-        if (phone.isEmpty()) {
-            errors.append("- Le numéro de téléphone est obligatoire\n");
-        } else if (!phone.matches("^216[0-9]{8}$")) {
-            errors.append("- Le numéro de téléphone doit être au format: 216XXXXXXXX\n");
+        if (!phoneInputController.isValid()) {
+            errors.append("- Le numéro de téléphone est invalide\n");
         }
 
         // Validation de l'adresse
@@ -152,18 +222,31 @@ public class AjouterCommandeController {
                 return;
             }
 
+            // Get the product and order quantity
+            Produit produit = produitCombo.getValue();
+            int orderQuantity = Integer.parseInt(quantiteField.getText().trim());
+
+            // Create the order
             Commande commande = new Commande(
-                produitCombo.getValue().getIdProduit(),
+                produit.getIdProduit(),
                 Session.getCurrentUser().getId(),
                 nomClientField.getText().trim(),
                 adresseLivraisonField.getText().trim(),
-                telephoneField.getText().trim(),
-                Integer.parseInt(quantiteField.getText().trim()),
+                phoneInputController.getFullPhoneNumber(),
+                orderQuantity,
                 LocalDateTime.now(),
                 statutCombo.getValue()
             );
 
+            // Update product stock
+            int newStock = produit.getQuantiteStock() - orderQuantity;
+            produit.setQuantiteStock(newStock);
+            produit.setDisponible(newStock > 0);
+
+            // Save both changes in a specific order to maintain data consistency
             commandeService.create(commande);
+            produitService.update(produit);
+            
             closeWindow();
         } catch (Exception e) {
             showError("Erreur", "Erreur lors de la création de la commande: " + e.getMessage());
@@ -187,6 +270,6 @@ public class AjouterCommandeController {
     }
 
     public void setProduit(Produit produit) {
-        this.produitCombo.setValue(produit); // Set the selected product in the ComboBox
+        this.produitCombo.setValue(produit);
     }
 } 

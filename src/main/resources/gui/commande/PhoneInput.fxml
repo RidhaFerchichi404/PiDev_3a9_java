@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.commande.PhoneInputController"
+      style="-fx-background-color: #1a1a1a;">
+    
+    <padding>
+        <Insets top="5" right="5" bottom="5" left="5"/>
+    </padding>
+
+    <ComboBox fx:id="countryCodeCombo" prefWidth="120"
+              style="-fx-background-color: white; -fx-text-fill: black;"/>
+              
+    <TextField fx:id="phoneNumberField" promptText="Numéro de téléphone" HBox.hgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-text-fill: black;"/>
+</HBox> 

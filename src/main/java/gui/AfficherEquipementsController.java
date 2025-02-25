@@ -388,4 +388,7 @@ public class AfficherEquipementsController {
     }
 
 
+   
+
+
 }

@@ -75,10 +75,11 @@
 
         <!-- HTTP Client pour les requêtes API -->
         <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-            <version>5.1</version>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>3.0.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -91,6 +92,17 @@
             <version>5.1.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.13.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -99,19 +111,31 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
-                <executions>
-                    <execution>
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>org.example.testfront</mainClass>
-                            <execArgs>
-                                <arg>--add-exports=javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED</arg>
-                                <arg>--add-exports=javafx.web/com.sun.javafx.webkit=ALL-UNNAMED</arg>
-                                <arg>--add-opens=javafx.web/com.sun.javafx.webkit=ALL-UNNAMED</arg>
-                            </execArgs>
-                        </configuration>
-                    </execution>
-                </executions>
+                <configuration>
+                    <mainClass>org.example.testfront</mainClass>
+                    <options>
+                        <option>--add-exports</option>
+                        <option>javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.base/com.sun.javafx.binding=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.base/com.sun.javafx.event=ALL-UNNAMED</option>
+                        <option>--add-exports</option>
+                        <option>javafx.web/com.sun.javafx.webkit=ALL-UNNAMED</option>
+                        <option>--add-opens</option>
+                        <option>javafx.controls/javafx.scene.control=ALL-UNNAMED</option>
+                        <option>--add-opens</option>
+                        <option>javafx.graphics/javafx.scene=ALL-UNNAMED</option>
+                        <option>--add-opens</option>
+                        <option>javafx.web/javafx.scene.web=ALL-UNNAMED</option>
+                    </options>
+                </configuration>
             </plugin>
         </plugins>
     </build>
