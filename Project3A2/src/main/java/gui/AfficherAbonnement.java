@@ -609,7 +609,24 @@ public class AfficherAbonnement {
         }
     }
 
+    @FXML
+    private void handleVoirPromotionsButtonClick() {
+        try {
+            // Charger la vue AbonnementsAvecPromotions.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichageuser.fxml"));
+            Parent root = loader.load();
 
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) abonnementsContainer.getScene().getWindow();
+
+            // Changer la scène pour afficher AbonnementsAvecPromotions
+            stage.setScene(new Scene(root));
+            stage.setTitle("Abonnements avec Promotions");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void ouvrirAjoutPromotion(Abonnement abonnement) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPromotion.fxml"));
@@ -632,6 +649,7 @@ public class AfficherAbonnement {
             e.printStackTrace();
         }
     }
+
     private void actualiser() {
         try {
             List<Abonnement> abonnements = abonnementService.readAll();

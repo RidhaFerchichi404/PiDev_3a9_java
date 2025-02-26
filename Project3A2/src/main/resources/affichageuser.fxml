@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gui.afficheruser"
+            prefHeight="400.0" prefWidth="600.0">
+    <Label text="Abonnements avec Promotions" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <FlowPane fx:id="abonnementsContainer" hgap="10" vgap="10" />
+    <Button text="Retour à la liste complète" onAction="#handleRetourButtonClick" style="-fx-background-color: #ff8c00; -fx-text-fill: white;" />
+</VBox>
+
+

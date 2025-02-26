@@ -1,9 +1,6 @@
 package main;
 
-import gui.AfficherAbonnement;
-import gui.AjouterAbonnement;
-import gui.ModifierAbonnement;
-import gui.AjouterPromotion;
+import gui.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,17 +22,39 @@ public class testFX extends Application {
         try {
             // Chargement des vues FXML
             FXMLLoader ajouterLoader = new FXMLLoader(getClass().getResource("/AjouterAbonnement.fxml"));
+            if (ajouterLoader.getLocation() == null) {
+                System.err.println("Fichier FXML introuvable : AjouterAbonnement.fxml");
+                return;
+            }
             Parent ajouterRoot = ajouterLoader.load();
 
             FXMLLoader modifierLoader = new FXMLLoader(getClass().getResource("/ModifierAbonnement.fxml"));
+            if (modifierLoader.getLocation() == null) {
+                System.err.println("Fichier FXML introuvable : ModifierAbonnement.fxml");
+                return;
+            }
             Parent modifierRoot = modifierLoader.load();
 
             FXMLLoader afficherLoader = new FXMLLoader(getClass().getResource("/AfficherAbonnement.fxml"));
+            if (afficherLoader.getLocation() == null) {
+                System.err.println("Fichier FXML introuvable : AfficherAbonnement.fxml");
+                return;
+            }
             Parent afficherRoot = afficherLoader.load();
 
-            // Chargement du formulaire d'ajout de promotion
             FXMLLoader ajouterPromotionLoader = new FXMLLoader(getClass().getResource("/AjouterPromotion.fxml"));
+            if (ajouterPromotionLoader.getLocation() == null) {
+                System.err.println("Fichier FXML introuvable : AjouterPromotion.fxml");
+                return;
+            }
             Parent ajouterPromotionRoot = ajouterPromotionLoader.load();
+
+            FXMLLoader promotionsLoader = new FXMLLoader(getClass().getResource("/affichageuser.fxml"));
+            if (promotionsLoader.getLocation() == null) {
+                System.err.println("Fichier FXML introuvable : AbonnementsAvecPromotions.fxml");
+                return;
+            }
+            Parent promotionsRoot = promotionsLoader.load();
 
             // Création de la VBox pour la vue d'affichage des abonnements
             VBox vbox = new VBox(10); // Ajuste l'espacement entre les cartes
@@ -47,6 +66,7 @@ public class testFX extends Application {
             ModifierAbonnement modifierController = modifierLoader.getController();
             AfficherAbonnement afficherController = afficherLoader.getController();
             AjouterPromotion ajouterPromotionController = ajouterPromotionLoader.getController();
+            afficheruser promotionsController = promotionsLoader.getController();
 
             // Configuration des actions et de la navigation entre les vues
             ajouterController.setModifierRoot(modifierRoot);

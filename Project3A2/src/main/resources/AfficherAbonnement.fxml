@@ -21,7 +21,7 @@
                     </FlowPane>
                 </content>
             </ScrollPane>
-
+            <Button text="Voir les abonnements avec promotions" onAction="#handleVoirPromotionsButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Ajouter un abonnement" onAction="#ouvrirAjout"
                         style="-fx-background-color: #ff8c00; -fx-text-fill: white;
