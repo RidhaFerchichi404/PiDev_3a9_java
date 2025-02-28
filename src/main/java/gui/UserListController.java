@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyEvent;
 import services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.control.TextField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,11 +26,15 @@ import utils.Session;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserListController {
 
     @FXML
     private FlowPane cardsContainer;
+
+    @FXML
+    private TextField searchTextField;  // Search text field
 
     private UserService userService;
     private User selectedUser;
@@ -39,6 +45,8 @@ public class UserListController {
 
     public void initialize() {
         loadUserList();
+        // Set up search functionality
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> filterUsers(newValue));
     }
 
     private void loadUserList() {
@@ -76,7 +84,6 @@ public class UserListController {
         // ✅ Image de profil par défaut
         ImageView imageView = new ImageView();
         try {
-            // Charge l'image par défaut
             imageView.setImage(new Image(getClass().getResourceAsStream("/images/user-placeholder.png")));
         } catch (Exception e) {
             System.out.println("Erreur lors du chargement de l'image par défaut : " + e.getMessage());
@@ -117,7 +124,6 @@ public class UserListController {
         return userCard;
     }
 
-
     private void handleDelete(User user) {
         try {
             userService.deleteUser(user);
@@ -129,6 +135,33 @@ public class UserListController {
         }
     }
 
+    private void filterUsers(String searchQuery) {
+        List<User> users = null;
+        try {
+            users = userService.readAll();
+        } catch (SQLException e) {
+            showError("Erreur de chargement", e.getMessage());
+            return;
+        }
+
+        if (users == null || users.isEmpty()) {
+            System.out.println("No users found.");
+            return;
+        }
+
+        // Filter users based on the search query
+        List<User> filteredUsers = users.stream()
+                .filter(user -> user.getFirstName().toLowerCase().contains(searchQuery.toLowerCase()) ||
+                        user.getLastName().toLowerCase().contains(searchQuery.toLowerCase()))
+                .collect(Collectors.toList());
+
+        // Clear existing cards and reload with filtered users
+        cardsContainer.getChildren().clear();
+        for (User user : filteredUsers) {
+            VBox userCard = createUserCard(user);
+            cardsContainer.getChildren().add(userCard);
+        }
+    }
 
     @FXML
     private void handleModifyButtonClick() {
@@ -183,11 +216,36 @@ public class UserListController {
         }
     }
 
-
     private void showError(String title, String content) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleSearchTextChanged(KeyEvent event) {
+        String searchText = searchTextField.getText().toLowerCase();
+        List<User> filteredUsers = null;
+
+        try {
+            List<User> allUsers = userService.readAll();
+            filteredUsers = allUsers.stream()
+                    .filter(user -> user.getFirstName().toLowerCase().contains(searchText) ||
+                            user.getLastName().toLowerCase().contains(searchText))
+                    .collect(Collectors.toList());
+        } catch (SQLException e) {
+            showError("Erreur de recherche", e.getMessage());
+            return;
+        }
+
+        cardsContainer.getChildren().clear();
+
+        if (filteredUsers != null) {
+            for (User user : filteredUsers) {
+                VBox userCard = createUserCard(user);
+                cardsContainer.getChildren().add(userCard);
+            }
+        }
     }
 }

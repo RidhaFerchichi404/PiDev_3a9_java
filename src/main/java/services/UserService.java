@@ -70,8 +70,13 @@ public class UserService implements IService<User> {
             params.add(user.getCin());
         }
 
+        // Remove the last comma and space (if any fields were added)
+        if (query.charAt(query.length() - 2) == ',') {
+            query.setLength(query.length() - 2);
+        }
+
         // Add the updated_at field to keep track of the modification date
-        query.append("updated_at = ? ");
+        query.append(", updated_at = ? ");
         params.add(Timestamp.valueOf(LocalDateTime.now()));
 
         // Add the WHERE clause
@@ -88,6 +93,10 @@ public class UserService implements IService<User> {
             // Execute the update
             int rowsAffected = ps.executeUpdate();
             System.out.println("Rows affected: " + rowsAffected);
+        } catch (SQLException e) {
+            // Handle SQLException more explicitly (logging, rethrowing, etc.)
+            System.err.println("Error executing update: " + e.getMessage());
+            throw e;  // Optionally rethrow the exception or handle it as needed
         }
     }
 

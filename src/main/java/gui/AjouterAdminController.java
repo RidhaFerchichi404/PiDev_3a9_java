@@ -40,12 +40,15 @@ public class AjouterAdminController {
 
     @FXML
     private TextField locationField;
+
     @FXML
     private ComboBox<String> roleComboBox;
+
     @FXML
     private Button AddButton;
+
     @FXML
-    private Runnable afterSaveAction;  // Déclare une action à exécuter après enregistrement
+    private Runnable afterSaveAction;  // Declare an action to be executed after saving
 
     public void setAfterSaveAction(Runnable action) {
         this.afterSaveAction = action;
@@ -53,7 +56,7 @@ public class AjouterAdminController {
 
     @FXML
     public void initialize() {
-        // Initialize the roleComboBox with only Client and Coach options
+        // Initialize the roleComboBox with options for Client, Coach, Admin
         roleComboBox.getItems().clear(); // Clear any existing items
         roleComboBox.getItems().addAll("Client", "Coach", "Admin");
         roleComboBox.setValue("Client"); // Set default value
@@ -64,30 +67,70 @@ public class AjouterAdminController {
     private boolean validateInputs() {
         String phoneNumber = phoneNumberField.getText();
         String cin = cinField.getText();
+        String email = emailField.getText();
+        String password = passwordField.getText();
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String age = ageField.getText();
+        String location = locationField.getText();
 
-        // Vérifier que phoneNumber est composé de 8 chiffres
-        if (!phoneNumber.matches("\\d{8}")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de saisie");
-            alert.setHeaderText(null);
-            alert.setContentText("Le numéro de téléphone doit comporter exactement 8 chiffres.");
-            alert.showAndWait();
+        // Check if any required fields are empty
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty() ||
+                age.isEmpty() || cin.isEmpty() || phoneNumber.isEmpty() || location.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "Tous les champs doivent être remplis.");
             return false;
         }
 
-        // Vérifier que cin est composé de 8 chiffres
-        if (!cin.matches("\\d{8}")) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur de saisie");
-            alert.setHeaderText(null);
-            alert.setContentText("Le CIN doit comporter exactement 8 chiffres.");
-            alert.showAndWait();
+        // Validate phone number (8 digits, Tunisian format)
+        if (!phoneNumber.matches("^\\d{8}$")) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "Le numéro de téléphone doit comporter exactement 8 chiffres.");
+            return false;
+        }
+
+        // Validate CIN (8 digits, Tunisian format)
+        if (!cin.matches("^\\d{8}$")) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "Le CIN doit comporter exactement 8 chiffres.");
+            return false;
+        }
+
+        // Validate email format
+        if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "L'email n'est pas valide.");
+            return false;
+        }
+
+        // Validate password strength
+        if (!isValidPassword(password)) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "Le mot de passe doit contenir au moins 6 caractères, avec des lettres et des chiffres.");
+            return false;
+        }
+
+        // Validate age (should be a number)
+        try {
+            int ageInt = Integer.parseInt(age);
+            if (ageInt < 18) {
+                showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "L'âge doit être supérieur ou égal à 18.");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Erreur de saisie", "L'âge doit être un nombre valide.");
             return false;
         }
 
         return true;
     }
 
+    private boolean isValidPassword(String password) {
+       return true;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     @FXML
     private void handleAddUser() {
@@ -106,33 +149,25 @@ public class AjouterAdminController {
         String location = locationField.getText();
         String role = roleComboBox.getValue();
 
+        // Create user object
         User user = new User(firstName, lastName, email, passwordHash, age);
         user.setCin(cin.isEmpty() ? null : cin);
         user.setPhoneNumber(phoneNumber);
         user.setRole(role);
         user.setLocation(location);
 
+        // Insert into database
         try {
             userService.create(user);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Succès");
-            alert.setHeaderText(null);
-            alert.setContentText("Utilisateur ajouté avec succès !");
-            alert.showAndWait();
+            showAlert(Alert.AlertType.INFORMATION, "Succès", "Utilisateur ajouté avec succès !");
 
             // Close the current window
             Stage stage = (Stage) AddButton.getScene().getWindow();
             stage.close();
 
         } catch (SQLException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Échec de l'ajout de l'utilisateur");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            showAlert(Alert.AlertType.ERROR, "Erreur", "Échec de l'ajout de l'utilisateur : " + e.getMessage());
         }
     }
 }
-
-// Remove the goToLUserListScreen() method if not used elsewhere

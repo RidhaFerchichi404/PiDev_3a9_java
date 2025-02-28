@@ -3,17 +3,23 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="gui.UserListController"
       spacing="15"
       style="-fx-padding: 20; -fx-background-color: #1e1e1e;">
 
+    <!-- ✅ Search TextField -->
+    <TextField fx:id="searchTextField" promptText="Rechercher par nom..."
+               onKeyReleased="#handleSearchTextChanged"
+               style="-fx-font-size: 16px; -fx-background-color: #333; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
+
     <!-- ✅ Bouton Modifier -->
     <Button text="Modifier Utilisateur Sélectionné"
             onAction="#handleModifyButtonClick"
             style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
-    <Button text="ajouter Utilisateur "
+    <Button text="Ajouter Utilisateur"
             onAction="#handleajoutButtonClick"
             style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
 

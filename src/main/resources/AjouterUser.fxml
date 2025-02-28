@@ -8,6 +8,7 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -81,9 +82,17 @@
         <ComboBox fx:id="roleComboBox" promptText="Select role"
                   styleClass="form-textfield" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
+        <!-- Add User Button -->
         <Button fx:id="AddButton" text="Add User" onAction="#handleAddUser"
                 styleClass="submit-button" GridPane.columnIndex="1" GridPane.rowIndex="9"
                 GridPane.halignment="RIGHT"/>
-    </GridPane>
 
+        <!-- CAPTCHA Section -->
+        <Label text="Verify you're human:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+        <HBox fx:id="captchaBox" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="10">
+            <Label fx:id="captchaLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <TextField fx:id="captchaInput" promptText="Enter CAPTCHA" style="-fx-prompt-text-fill: #999999; -fx-background-color: #f0f0f0;"/>
+            <Button fx:id="refreshCaptchaButton" text="Refresh" onAction="#refreshCaptcha"/>
+        </HBox>
+    </GridPane>
 </VBox>
