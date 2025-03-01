@@ -104,4 +104,27 @@ public class PromotionService implements IPromotion<Promotion> {
             stmt.executeUpdate();
         }
     }
+    // Méthode pour récupérer les promotions par ID d'abonnement
+    public List<Promotion> getPromotionsByAbonnementId(int abonnementId) throws SQLException {
+        List<Promotion> promotions = new ArrayList<>();
+        String query = "SELECT * FROM Promotion WHERE AbonnementID = ?";
+        try (PreparedStatement stmt = cnx.prepareStatement(query)) {
+            stmt.setInt(1, abonnementId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Promotion promotion = new Promotion();
+                    promotion.setPromotionId(rs.getInt("PromotionID"));
+                    promotion.setCodePromo(rs.getString("CodePromo"));
+                    promotion.setDescription(rs.getString("Description"));
+                    promotion.setTypeReduction(rs.getString("TypeReduction"));
+                    promotion.setValeurReduction(rs.getBigDecimal("ValeurReduction"));
+                    promotion.setDateDebut(rs.getDate("DateDebut"));
+                    promotion.setDateFin(rs.getDate("DateFin"));
+                    promotion.setAbonnementId(rs.getInt("AbonnementID"));
+                    promotions.add(promotion);
+                }
+            }
+        }
+        return promotions;
+    }
 }

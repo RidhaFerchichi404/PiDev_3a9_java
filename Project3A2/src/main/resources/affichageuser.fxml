@@ -14,6 +14,18 @@
             <!-- Titre -->
             <Label text="Abonnements avec Promotions"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+            <!-- Barre de recherche globale -->
+            <TextField fx:id="searchField" promptText="Rechercher un abonnement..." style="-fx-background-color: white; -fx-text-fill: black;"/>
+            <!-- Filtre de prix avec Slider et champs manuels -->
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="minPriceField" promptText="Prix min" style="-fx-background-color: white; -fx-text-fill: black;"/>
+                <Slider fx:id="priceSlider" min="0" max="10000" blockIncrement="100" showTickLabels="true" showTickMarks="true" majorTickUnit="1000" minorTickCount="5" style="-fx-background-color: transparent;"/>
+                <TextField fx:id="maxPriceField" promptText="Prix max" style="-fx-background-color: white; -fx-text-fill: black;"/>
+                <Button text="Filtrer" onAction="#handleFiltrePrix" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- Bouton de recherche globale -->
+            <Button text="Rechercher" onAction="#handleRecherche" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
 
             <!-- ScrollPane pour les abonnements -->
             <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-border-color: #ff8c00;">
@@ -25,12 +37,13 @@
 
             <!-- Boutons -->
             <HBox spacing="20" alignment="CENTER">
-                <Button text="Retour à la liste complète" onAction="#handleRetourButtonClick"
-                        style="-fx-background-color: #ff8c00; -fx-text-fill: white;
-                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <Button text="Lire la vidéo" onAction="#handleShowVideoButtonClick"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
                 <Button text="Payer" onAction="#handlePayerButtonClick"
                         style="-fx-background-color: #4CAF50; -fx-text-fill: white;
-               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                               -fx-font-weight: bold; -fx-background-radius: 5;"/>
+                <Button text="Lire la vidéo" onAction="#handleShowVideoButtonClick"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
         </VBox>
     </children>

@@ -4,12 +4,15 @@ import entities.Abonnement;
 import entities.Promotion;
 
 import java.math.BigDecimal;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.math.RoundingMode;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,16 +25,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import services.AbonnementService;
 import services.PromotionService;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class AfficherAbonnement {
+public class AfficherAbonnement implements Initializable {
 
     @FXML
     private FlowPane abonnementsContainer;
@@ -42,7 +48,16 @@ public class AfficherAbonnement {
     @FXML
     private TextField minPriceField; // Champ pour le prix minimum
     @FXML
-    private TextField maxPriceField; // Champ pour le prix maximum
+    private TextField maxPriceField;
+    @FXML
+    private MediaView mediaView;
+
+    private MediaPlayer mediaPlayer;
+    @FXML
+    private HBox videoControls; // Conteneur des boutons de contrôle vidéo
+
+
+    // Champ pour le prix maximum
 
     private AbonnementService abonnementService = new AbonnementService();
     private PromotionService promotionService = new PromotionService();
@@ -57,7 +72,7 @@ public class AfficherAbonnement {
         Stage primaryStage = (Stage) abonnementsContainer.getScene().getWindow();
         guide = new Guide(primaryStage);
     }
-    public void initialize() {
+    /*public void initialize() {
         // Initialiser le slider
         priceSlider.setMin(0); // Prix minimum par défaut
         priceSlider.setMax(10000); // Prix maximum par défaut
@@ -93,7 +108,103 @@ public class AfficherAbonnement {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }*/
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Initialiser le slider
+        priceSlider.setMin(0); // Prix minimum par défaut
+        priceSlider.setMax(10000); // Prix maximum par défaut
+        priceSlider.setBlockIncrement(100); // Incrément du slider
+        priceSlider.setShowTickLabels(true); // Afficher les étiquettes
+        priceSlider.setShowTickMarks(true); // Afficher les marques
+        priceSlider.setMajorTickUnit(1000); // Intervalle des étiquettes principales
+        priceSlider.setMinorTickCount(5); // Nombre de marques mineures entre les étiquettes principales
+
+        // Mettre à jour le slider lorsque les champs de prix changent
+        minPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double minPrice = Double.parseDouble(newValue);
+                priceSlider.setMin(minPrice);
+            } catch (NumberFormatException e) {
+                // Ignorer si la valeur n'est pas un nombre
+            }
+        });
+
+        maxPriceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double maxPrice = Double.parseDouble(newValue);
+                priceSlider.setMax(maxPrice);
+            } catch (NumberFormatException e) {
+                // Ignorer si la valeur n'est pas un nombre
+            }
+        });
+
+        // Charger tous les abonnements au démarrage
+        try {
+            List<Abonnement> abonnements = abonnementService.readAll();
+            afficherAbonnements(abonnements);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (mediaView != null && videoControls != null) {
+            URL videoUrl = getClass().getResource("/guide.mp4");
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+
+            Media media = new Media(videoUrl.toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Répéter la vidéo en boucle
+        } else {
+            System.err.println("Erreur : MediaView ou videoControls n'a pas été injecté par FXMLLoader.");
+        }
     }
+
+    /*private void handleShowVideoButtonClick() {
+        // Charger la vidéo lorsque l'utilisateur clique sur le bouton
+        URL videoUrl = getClass().getResource("/guide.mp4"); // Chemin de la vidéo dans resources
+        if (videoUrl == null) {
+            System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+            return;
+        }
+
+        Media media = new Media(videoUrl.toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaView.setMediaPlayer(mediaPlayer);
+
+        // Afficher le MediaView et les boutons de contrôle
+        mediaView.setVisible(true);
+        videoControls.setVisible(true);
+
+        // Configurer la boucle de lecture (optionnel)
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Répéter la vidéo en boucle
+    }*/
+
+    @FXML
+    private void handlePlayButtonClick() {
+        if (mediaPlayer != null) {
+            mediaPlayer.play();
+        }
+    }
+
+    @FXML
+    private void handlePauseButtonClick() {
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @FXML
+    private void handleStopButtonClick() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
+    }
+
     // Méthode pour ouvrir le guide d'ajout d'abonnement
     @FXML
     private void ouvrirGuideAjoutAbonnement() {
@@ -131,9 +242,92 @@ public class AfficherAbonnement {
         this.mainContainer = mainContainer;
     }
 
+    @FXML
+   /* private void handleShowVideoButtonClick() {
+        // Vérifiez que mediaView et videoControls ne sont pas null
+        if (mediaView != null && videoControls != null) {
+            // Chargez la vidéo
+            URL videoUrl = getClass().getResource("/guide.mp4"); // Chemin de la vidéo dans resources
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+
+            // Créez le Media et le MediaPlayer
+            Media media = new Media(videoUrl.toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+
+            // Affichez le MediaView et les boutons de contrôle
+            mediaView.setVisible(true);
+            videoControls.setVisible(true);
+
+            // Démarrez la lecture de la vidéo
+            mediaPlayer.play();
+
+            // Configurer la boucle de lecture (optionnel)
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Répéter la vidéo en boucle
+        } else {
+            System.err.println("Erreur : MediaView ou videoControls n'a pas été injecté par FXMLLoader.");
+        }
+    }*/
+    /*private void handleShowVideoButtonClick() {
+        if (mediaView != null && videoControls != null) {
+            mediaView.setVisible(true);
+            videoControls.setVisible(true);
+            mediaPlayer.play();
+        } else {
+            System.err.println("Erreur : MediaView ou videoControls n'a pas été injecté par FXMLLoader.");
+        }
+    }*/
 
     // Méthode pour gérer la recherche par prix
+
+    private void naviguerVersAffichageUser(ActionEvent event) {
+        try {
+            // Charger la vue affichageuser.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichageuser.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+            // Changer la scène pour afficher affichageuser
+            stage.setScene(new Scene(root));
+            stage.setTitle("Abonnements avec Promotions");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du chargement de la vue affichageuser.fxml : " + e.getMessage());
+        }
+    }
     @FXML
+    private void handleShowVideoButtonClick() {
+        try {
+            // Charger la nouvelle fenêtre vidéo
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VideoPlayer.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur de la fenêtre vidéo
+            VideoPlayerController videoPlayerController = loader.getController();
+
+            // Charger la vidéo
+            URL videoUrl = getClass().getResource("/guide.mp4");
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+            videoPlayerController.setVideoUrl(videoUrl.toString());
+
+            // Créer une nouvelle scène
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Lecteur Vidéo");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void handleRechercheParPrix() {
         try {
             double prixMax = Double.parseDouble(searchField.getText()); // Récupérer le prix maximum saisi
@@ -234,18 +428,18 @@ public class AfficherAbonnement {
         }
         return abonnementsFiltres;
     }
-   /* private void handleRecherche() {
-        String searchTerm = searchField.getText().toLowerCase(); // Récupérer le terme de recherche
-        double prixMax = 0;
-        try {
-            prixMax = Double.parseDouble(priceFilterField.getText()); // Récupérer le prix maximum saisi
-        } catch (NumberFormatException e) {
-            // Si le champ de prix est vide ou invalide, ignorer le filtre de prix
-        }
+    /* private void handleRecherche() {
+         String searchTerm = searchField.getText().toLowerCase(); // Récupérer le terme de recherche
+         double prixMax = 0;
+         try {
+             prixMax = Double.parseDouble(priceFilterField.getText()); // Récupérer le prix maximum saisi
+         } catch (NumberFormatException e) {
+             // Si le champ de prix est vide ou invalide, ignorer le filtre de prix
+         }
 
-        List<Abonnement> abonnementsFiltres = filtrerAbonnements(searchTerm, prixMax); // Filtrer les abonnements
-        afficherAbonnements(abonnementsFiltres); // Afficher les abonnements filtrés
-    }*/
+         List<Abonnement> abonnementsFiltres = filtrerAbonnements(searchTerm, prixMax); // Filtrer les abonnements
+         afficherAbonnements(abonnementsFiltres); // Afficher les abonnements filtrés
+     }*/
     @FXML
     /*private void handleRecherche() {
         String searchTerm = searchField.getText().toLowerCase(); // Récupérer le terme de recherche
@@ -630,6 +824,66 @@ public class AfficherAbonnement {
         } catch (IOException e) {
             showAlert("Erreur", "Erreur lors de l'ouverture du formulaire de modification de promotion.", Alert.AlertType.ERROR);
             e.printStackTrace();
+        }
+    }
+
+    /*private void handleShowVideoButtonClick() {
+        // Vérifiez que videoControls n'est pas null avant de l'utiliser
+        if (videoControls != null) {
+            videoControls.setVisible(true); // Afficher les boutons de contrôle vidéo
+        } else {
+            System.err.println("Erreur : videoControls n'a pas été injecté par FXMLLoader.");
+        }
+
+        // Vérifiez que mediaView n'est pas null avant de l'utiliser
+        if (mediaView != null) {
+            // Chargez la vidéo
+            URL videoUrl = getClass().getResource("/guide.mp4"); // Chemin de la vidéo dans resources
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+
+            Media media = new Media(videoUrl.toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+
+            // Configurer la boucle de lecture (optionnel)
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Répéter la vidéo en boucle
+        } else {
+            System.err.println("Erreur : MediaView n'a pas été injecté par FXMLLoader.");
+        }
+    }*/
+    @FXML
+    private void naviguerVersAfficherUser(ActionEvent event) {
+        try {
+            // Chemin du fichier FXML
+            String fxmlPath = "/affichageuser.fxml";
+            System.out.println("Tentative de chargement du fichier FXML : " + fxmlPath);
+
+            // Charger la vue afficheruser.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+            // Vérifier si le fichier FXML existe
+            if (loader.getLocation() == null) {
+                throw new IllegalStateException("Le fichier FXML '" + fxmlPath + "' n'a pas été trouvé. Vérifiez le chemin.");
+            }
+
+            Parent root = loader.load();
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+            // Changer la scène pour afficher afficheruser
+            stage.setScene(new Scene(root));
+            stage.setTitle("Abonnements avec Promotions");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du chargement de la vue afficheruser.fxml : " + e.getMessage());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 

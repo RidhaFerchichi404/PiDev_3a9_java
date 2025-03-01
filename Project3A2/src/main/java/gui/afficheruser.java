@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,26 +20,73 @@ import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.exception.StripeException;
-
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class afficheruser {
 
     @FXML
     private FlowPane abonnementsContainer;
 
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Slider priceSlider; // Slider pour le filtre de prix
+    @FXML
+    private TextField minPriceField; // Champ pour le prix minimum
+    @FXML
+    private TextField maxPriceField; // Champ pour le prix maximum
+
+    @FXML
+    private MediaView mediaView;
+
+    private MediaPlayer mediaPlayer;
+    @FXML
+    private HBox videoControls;
+
     private AbonnementService abonnementService = new AbonnementService();
     private Abonnement selectedAbonnement; // Variable pour stocker l'abonnement sélectionné
 
     @FXML
-    public void initialize() {
+    /*public void initialize(URL location, ResourceBundle resources) {
+        try {
+            // Charger tous les abonnements (sans filtre)
+            List<Abonnement> abonnements = abonnementService.readAll();
+
+            // Afficher tous les abonnements
+            afficherAbonnements(abonnements);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (mediaView != null && videoControls != null) {
+            URL videoUrl = getClass().getResource("/guide.mp4");
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+
+            Media media = new Media(videoUrl.toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Répéter la vidéo en boucle
+        } else {
+            System.err.println("Erreur : MediaView ou videoControls n'a pas été injecté par FXMLLoader.");
+        }
+    }*/
+    public void initialize(URL location, ResourceBundle resources) {
         try {
             // Charger tous les abonnements (sans filtre)
             List<Abonnement> abonnements = abonnementService.readAll();
@@ -48,7 +97,33 @@ public class afficheruser {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void handleShowVideoButtonClick() {
+        try {
+            // Charger la nouvelle fenêtre vidéo
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/VideoPlayer2.fxml"));
+            Parent root = loader.load();
 
+            // Récupérer le contrôleur de la fenêtre vidéo
+            VideoPlayer2 videoPlayerController = loader.getController();
+
+            // Charger la vidéo
+            URL videoUrl = getClass().getResource("/paiement.mp4");
+            if (videoUrl == null) {
+                System.out.println("La vidéo 'guide.mp4' n'a pas été trouvée. Vérifiez le chemin.");
+                return;
+            }
+            videoPlayerController.setVideoUrl(videoUrl.toString());
+
+            // Créer une nouvelle scène
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Lecteur Vidéo");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void setSelectedAbonnement(Abonnement abonnement) {
         this.selectedAbonnement = abonnement;
     }
@@ -160,6 +235,32 @@ public class afficheruser {
     }
 
     @FXML
+    private void handleFilterButtonClick(ActionEvent event) {
+        String searchText = searchField.getText().toLowerCase();
+        double minPrice = parseDouble(minPriceField.getText(), 0); // Valeur par défaut : 0
+        double maxPrice = parseDouble(maxPriceField.getText(), Double.MAX_VALUE); // Valeur par défaut : MAX_VALUE
+
+        try {
+            List<Abonnement> abonnements = abonnementService.readAll();
+            List<Abonnement> filteredAbonnements = abonnements.stream()
+                    .filter(abonnement -> abonnement.getNom().toLowerCase().contains(searchText))
+                    .filter(abonnement -> abonnement.getPrix() >= minPrice && abonnement.getPrix() <= maxPrice)
+                    .toList();
+            afficherAbonnements(filteredAbonnements);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private double parseDouble(String text, double defaultValue) {
+        try {
+            return Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    @FXML
     private void handlePayerButtonClick(ActionEvent event) {
         if (selectedAbonnement != null) {
             System.out.println("Paiement en cours pour l'abonnement : " + selectedAbonnement.getNom());
@@ -202,7 +303,83 @@ public class afficheruser {
             System.out.println("Aucun abonnement sélectionné.");
         }
     }
+    @FXML
+    private void handleRecherche() {
+        String searchTerm = searchField.getText().toLowerCase(); // Récupérer le terme de recherche
+        double minPrice = 0;
+        double maxPrice = priceSlider.getMax();
 
+        try {
+            minPrice = Double.parseDouble(minPriceField.getText()); // Récupérer le prix minimum
+        } catch (NumberFormatException e) {
+            // Si le champ est vide ou invalide, utiliser 0 comme prix minimum
+        }
+
+        try {
+            maxPrice = Double.parseDouble(maxPriceField.getText()); // Récupérer le prix maximum
+        } catch (NumberFormatException e) {
+            // Si le champ est vide ou invalide, utiliser la valeur maximale du slider
+        }
+
+        // Appeler la méthode de filtrage combinée
+        List<Abonnement> abonnementsFiltres = filtrerAbonnements(searchTerm, minPrice, maxPrice);
+        afficherAbonnements(abonnementsFiltres);
+    }
+    private List<Abonnement> filtrerAbonnements(String searchTerm, double minPrice, double maxPrice) {
+        List<Abonnement> abonnementsFiltres = new ArrayList<>();
+        try {
+            List<Abonnement> abonnements = abonnementService.readAll(); // Récupérer tous les abonnements
+            for (Abonnement abonnement : abonnements) {
+                boolean matchesSearchTerm = abonnement.getNom().toLowerCase().contains(searchTerm) ||
+                        abonnement.getDescriptiona().toLowerCase().contains(searchTerm) ||
+                        abonnement.getSalleNom().toLowerCase().contains(searchTerm);
+
+                boolean matchesPriceFilter = abonnement.getPrix() >= minPrice && abonnement.getPrix() <= maxPrice;
+
+                if (matchesSearchTerm && matchesPriceFilter) {
+                    abonnementsFiltres.add(abonnement);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return abonnementsFiltres;
+    }
+    @FXML
+    private void handleFiltrePrix() {
+        double minPrice = 0;
+        double maxPrice = priceSlider.getMax();
+
+        try {
+            minPrice = Double.parseDouble(minPriceField.getText()); // Récupérer le prix minimum
+        } catch (NumberFormatException e) {
+            // Si le champ est vide ou invalide, utiliser 0 comme prix minimum
+        }
+
+        try {
+            maxPrice = Double.parseDouble(maxPriceField.getText()); // Récupérer le prix maximum
+        } catch (NumberFormatException e) {
+            // Si le champ est vide ou invalide, utiliser la valeur maximale du slider
+        }
+
+        // Appeler la méthode de filtrage
+        List<Abonnement> abonnementsFiltres = filtrerAbonnementsParPrix(minPrice, maxPrice);
+        afficherAbonnements(abonnementsFiltres);
+    }
+    private List<Abonnement> filtrerAbonnementsParPrix(double minPrice, double maxPrice) {
+        List<Abonnement> abonnementsFiltres = new ArrayList<>();
+        try {
+            List<Abonnement> abonnements = abonnementService.readAll(); // Récupérer tous les abonnements
+            for (Abonnement abonnement : abonnements) {
+                if (abonnement.getPrix() >= minPrice && abonnement.getPrix() <= maxPrice) {
+                    abonnementsFiltres.add(abonnement);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return abonnementsFiltres;
+    }
     @FXML
     private void handleRetourButtonClick() {
         try {

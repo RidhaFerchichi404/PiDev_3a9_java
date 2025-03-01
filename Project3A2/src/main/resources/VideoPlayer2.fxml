@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.MediaView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.VideoPlayer2">
+    <MediaView fx:id="mediaView" fitWidth="800" fitHeight="450" />
+    <HBox fx:id="videoControls" spacing="10" alignment="CENTER" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10">
+        <Button text="Lire" onAction="#handlePlayButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+        <Button text="Pause" onAction="#handlePauseButtonClick" style="-fx-background-color: #f65905; -fx-text-fill: white;" />
+        <Button text="Arrêter" onAction="#handleStopButtonClick" style="-fx-background-color: #f65905; -fx-text-fill: white;" />
+    </HBox>
+</AnchorPane>
