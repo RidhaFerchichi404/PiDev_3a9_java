@@ -15,20 +15,30 @@ public class PaiementController {
 
     @FXML
     private WebView webView;
+
     @FXML
-    private Label abonnementLabel;
+    private Label abonnementLabel; // Assurez-vous que cette variable est annotée avec @FXML
 
     private Abonnement abonnement;
 
     @FXML
     public void initialize() {
-        // Charger le formulaire de paiement Stripe
-        String htmlContent = getStripePaymentForm("CLIENT_SECRET"); // Remplacez par le clientSecret
-        webView.getEngine().loadContent(htmlContent);
+        // Initialisation du WebView (optionnel)
     }
+
     public void setAbonnement(Abonnement abonnement) {
         this.abonnement = abonnement;
-        abonnementLabel.setText("Paiement pour : " + abonnement.getNom());
+        if (abonnementLabel != null) {
+            abonnementLabel.setText("Paiement pour : " + abonnement.getNom());
+        } else {
+            System.err.println("Erreur : abonnementLabel est null");
+        }
+    }
+
+    public void setClientSecret(String clientSecret) {
+        // Charger le formulaire de paiement Stripe avec le clientSecret
+        String htmlContent = getStripePaymentForm(clientSecret);
+        webView.getEngine().loadContent(htmlContent);
     }
 
     @FXML

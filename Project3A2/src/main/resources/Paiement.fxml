@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.web.WebView?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1a1a1a;"
             xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gui.PaiementController">
@@ -15,21 +16,15 @@
             <Label text="Paiement"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
-            <!-- Formulaire de paiement -->
-            <VBox spacing="10">
-                <Label text="Numéro de carte :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                <TextField fx:id="cardNumberField" promptText="4242 4242 4242 4242" style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+            <!-- Label pour afficher l'abonnement -->
+            <Label fx:id="abonnementLabel" style="-fx-text-fill: white; -fx-font-size: 18px;"/>
 
-                <Label text="Date d'expiration :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                <TextField fx:id="expiryField" promptText="MM/YY" style="-fx-background-color: #333333; -fx-text-fill: white;"/>
+            <!-- WebView pour le formulaire de paiement -->
+            <WebView fx:id="webView" prefWidth="500" prefHeight="300"/>
 
-                <Label text="CVC :" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                <TextField fx:id="cvcField" promptText="123" style="-fx-background-color: #333333; -fx-text-fill: white;"/>
-            </VBox>
-
-            <!-- Bouton de confirmation -->
-            <Button text="Confirmer le paiement" onAction="#handleConfirmPayment"
-                    style="-fx-background-color: #4CAF50; -fx-text-fill: white;
+            <!-- Bouton de retour -->
+            <Button text="Retour" onAction="#handleRetourButtonClick"
+                    style="-fx-background-color: #ff8c00; -fx-text-fill: white;
                            -fx-font-weight: bold; -fx-background-radius: 5;"/>
         </VBox>
     </children>
