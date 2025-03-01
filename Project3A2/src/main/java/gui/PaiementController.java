@@ -17,13 +17,18 @@ public class PaiementController {
     private WebView webView;
 
     @FXML
-    private Label abonnementLabel; // Assurez-vous que cette variable est annotée avec @FXML
+    private Label abonnementLabel;
 
     private Abonnement abonnement;
 
     @FXML
     public void initialize() {
-        // Initialisation du WebView (optionnel)
+        // Activer JavaScript dans le WebView
+        webView.getEngine().setJavaScriptEnabled(true);
+
+        // Charger le formulaire de paiement Stripe
+        String htmlContent = getStripePaymentForm("CLIENT_SECRET"); // Remplacez par le clientSecret
+        webView.getEngine().loadContent(htmlContent);
     }
 
     public void setAbonnement(Abonnement abonnement) {
@@ -68,6 +73,33 @@ public class PaiementController {
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
                 "    <title>Paiement avec Stripe</title>\n" +
                 "    <script src=\"https://js.stripe.com/v3/\"></script>\n" +
+                "    <style>\n" +
+                "        #card-element {\n" +
+                "            padding: 10px;\n" +
+                "            border: 1px solid #ccc;\n" +
+                "            border-radius: 4px;\n" +
+                "            background-color: white;\n" +
+                "        }\n" +
+                "\n" +
+                "        #submit {\n" +
+                "            margin-top: 10px;\n" +
+                "            padding: 10px 20px;\n" +
+                "            background-color: #4CAF50;\n" +
+                "            color: white;\n" +
+                "            border: none;\n" +
+                "            border-radius: 4px;\n" +
+                "            cursor: pointer;\n" +
+                "        }\n" +
+                "\n" +
+                "        #submit:hover {\n" +
+                "            background-color: #45a049;\n" +
+                "        }\n" +
+                "\n" +
+                "        #error-message {\n" +
+                "            color: red;\n" +
+                "            margin-top: 10px;\n" +
+                "        }\n" +
+                "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <form id=\"payment-form\">\n" +
