@@ -12,16 +12,33 @@
         <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
               AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
 
+            <!-- Titre -->
             <Label text="Liste des Abonnements"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
 
+            <!-- Barre de recherche globale -->
+            <TextField fx:id="searchField" promptText="Rechercher un abonnement..." style="-fx-background-color: white; -fx-text-fill: black;"/>
+
+            <!-- Filtre de prix avec Slider et champs manuels -->
+            <HBox spacing="10" alignment="CENTER">
+                <TextField fx:id="minPriceField" promptText="Prix min" style="-fx-background-color: white; -fx-text-fill: black;"/>
+                <Slider fx:id="priceSlider" min="0" max="10000" blockIncrement="100" showTickLabels="true" showTickMarks="true" majorTickUnit="1000" minorTickCount="5" style="-fx-background-color: transparent;"/>
+                <TextField fx:id="maxPriceField" promptText="Prix max" style="-fx-background-color: white; -fx-text-fill: black;"/>
+                <Button text="Filtrer" onAction="#handleFiltrePrix" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- Bouton de recherche globale -->
+            <Button text="Rechercher" onAction="#handleRecherche" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+
+            <!-- Liste des abonnements -->
             <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-border-color: #ff8c00;">
                 <content>
                     <FlowPane fx:id="abonnementsContainer" hgap="20" vgap="20" style="-fx-background-color: black;">
                     </FlowPane>
                 </content>
             </ScrollPane>
-            <Button text="Voir les abonnements avec promotions" onAction="#handleVoirPromotionsButtonClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" />
+
+            <!-- Boutons pour ajouter un abonnement ou une promotion -->
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Ajouter un abonnement" onAction="#ouvrirAjout"
                         style="-fx-background-color: #ff8c00; -fx-text-fill: white;
@@ -31,7 +48,7 @@
                                -fx-font-weight: bold; -fx-background-radius: 5;"/>
             </HBox>
 
-            <!-- Ajouter des boutons pour les guides -->
+            <!-- Boutons pour les guides -->
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Guide : Ajouter un abonnement" onAction="#ouvrirGuideAjoutAbonnement"
                         style="-fx-background-color: #ff8c00; -fx-text-fill: white;

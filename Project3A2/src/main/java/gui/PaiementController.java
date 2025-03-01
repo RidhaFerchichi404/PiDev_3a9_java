@@ -5,9 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.scene.web.WebEngine;
+import javafx.concurrent.Worker;
+import netscape.javascript.JSObject;
 
 import java.io.IOException;
 
@@ -24,11 +28,21 @@ public class PaiementController {
     @FXML
     public void initialize() {
         // Activer JavaScript dans le WebView
-        webView.getEngine().setJavaScriptEnabled(true);
+        WebEngine webEngine = webView.getEngine();
+        webEngine.setJavaScriptEnabled(true);
+
+        // Intercepter les messages JavaScript
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.SUCCEEDED) {
+                // Injecter un objet Java dans le JavaScript pour la communication
+                JSObject window = (JSObject) webEngine.executeScript("window");
+                window.setMember("javaController", this);
+            }
+        });
 
         // Charger le formulaire de paiement Stripe
         String htmlContent = getStripePaymentForm("CLIENT_SECRET"); // Remplacez par le clientSecret
-        webView.getEngine().loadContent(htmlContent);
+        webEngine.loadContent(htmlContent);
     }
 
     public void setAbonnement(Abonnement abonnement) {
@@ -63,6 +77,32 @@ public class PaiementController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Méthode appelée depuis JavaScript pour afficher un message de succès
+    public void showSuccessMessage(String message) {
+        javafx.application.Platform.runLater(() -> {
+            System.out.println("Paiement réussi : " + message);
+            // Afficher un message de succès dans l'interface JavaFX
+            showAlert("Succès", message, Alert.AlertType.INFORMATION);
+        });
+    }
+
+    // Méthode appelée depuis JavaScript pour afficher un message d'erreur
+    public void showErrorMessage(String message) {
+        javafx.application.Platform.runLater(() -> {
+            System.out.println("Erreur de paiement : " + message);
+            // Afficher un message d'erreur dans l'interface JavaFX
+            showAlert("Erreur", message, Alert.AlertType.ERROR);
+        });
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private String getStripePaymentForm(String clientSecret) {
@@ -129,8 +169,9 @@ public class PaiementController {
                 "\n" +
                 "            if (error) {\n" +
                 "                document.getElementById('error-message').textContent = error.message;\n" +
+                "                javaController.showErrorMessage(error.message); // Appeler la méthode JavaFX\n" +
                 "            } else {\n" +
-                "                alert('Paiement réussi !');\n" +
+                "                javaController.showSuccessMessage('Paiement réussi !'); // Appeler la méthode JavaFX\n" +
                 "            }\n" +
                 "        });\n" +
                 "    </script>\n" +
