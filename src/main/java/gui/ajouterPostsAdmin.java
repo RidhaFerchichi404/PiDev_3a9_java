@@ -4,6 +4,7 @@ import entities.Post;
 import services.ServicePost;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import utils.TelegramBot;
 
 import java.sql.SQLException;
 
@@ -30,6 +31,15 @@ public class ajouterPostsAdmin {
     @FXML
     private ToggleGroup type;
 
+    private TelegramBot telegramBot;
+
+    public void initialize() {
+        //zidou token here
+
+        String botUsername = "GymPostsBot";
+        String chatId = "-1002394011842";
+        telegramBot = new TelegramBot(botToken, botUsername, chatId);
+    }
     @FXML
     void ajouterPost() {
         String description = TFdescriptionPost.getText();
@@ -65,6 +75,11 @@ public class ajouterPostsAdmin {
             alert.setHeaderText("INFORMATION");
             alert.setContentText("Post added successfully!");
             alert.showAndWait();
+
+            // Send post details to Telegram
+            String messageText = "New Post has been Added go check it out in our app:\nDescription: " + description + "\nType: " + type;
+            telegramBot.sendMessage(messageText);
+            telegramBot.sendImage();
         } catch (SQLException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -72,6 +87,7 @@ public class ajouterPostsAdmin {
             alert.setContentText("Failed to add post: " + e.getMessage());
             alert.showAndWait();
             e.printStackTrace();
+        }
     }
 }
-}
+
