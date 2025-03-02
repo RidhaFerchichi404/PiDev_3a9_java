@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="gui.AjouterAbonnement" style="-fx-background-color: #1e1e1e; -fx-padding: 20;">
+
+   <!-- Titre -->
+   <Label text="Ajouter un Abonnement" style="-fx-text-fill: #ff8c00; -fx-font-size: 20px; -fx-font-weight: bold;" />
+
+   <!-- Champ Nom -->
+   <TextField fx:id="TFNom" promptText="Nom" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+   <!-- Champ Description -->
+   <TextField fx:id="TfDescriptiona" promptText="Description" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+   <!-- Champ Durée -->
+   <TextField fx:id="TFDuree" promptText="Durée (jours)" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+   <!-- Champ Prix -->
+   <TextField fx:id="TFPrix" promptText="Prix" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+   <!-- Champ Nom de la salle -->
+   <TextField fx:id="TFSalleNom" promptText="Nom de la salle" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;" />
+
+   <!-- Bouton Ajouter -->
+   <Button text="Ajouter" onAction="#AjouterAbonnement" style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20;" />
+</VBox>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="gui.SupprimerAbonnement">
+    <children>
+        <TableView fx:id="tableAbonnements" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="colNom" text="Nom" prefWidth="150.0" />
+                <TableColumn fx:id="colDescription" text="Description" prefWidth="200.0" />
+                <TableColumn fx:id="colDuree" text="Durée (jours)" prefWidth="100.0" />
+                <TableColumn fx:id="colPrix" text="Prix (€)" prefWidth="100.0" />
+                <TableColumn fx:id="colActions" text="Actions" prefWidth="50.0" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
+

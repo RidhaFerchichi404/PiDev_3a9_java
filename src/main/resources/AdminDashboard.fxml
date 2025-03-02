@@ -26,6 +26,9 @@
         <Button text="Posts" onAction="#handlePosts"
                 style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
                 fx:id="postsButton" />
+        <Button text="abonnement" onAction="#handleabonnement"
+                style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"
+                fx:id="abonnementButton" />
 
         <Button text="Salles" onAction="#handleSalles"
                 style="-fx-background-color: #FF6600; -fx-text-fill: black; -fx-font-size: 16px; -fx-font-weight: bold; -fx-background-radius: 15; -fx-pref-width: 200px; -fx-pref-height: 50px; -fx-cursor: hand;"

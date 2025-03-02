@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.web.WebView?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1a1a1a;"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.PaiementController">
+    <children>
+        <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+            <!-- Titre -->
+            <Label text="Paiement"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ff8c00;"/>
+
+            <!-- Label pour afficher l'abonnement -->
+            <Label fx:id="abonnementLabel" style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+            <!-- WebView pour le formulaire de paiement -->
+            <WebView fx:id="webView" prefWidth="500" prefHeight="300"/>
+
+            <!-- Bouton de retour -->
+            <Button text="Retour" onAction="#handleRetourButtonClick"
+                    style="-fx-background-color: #ff8c00; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 5;"/>
+        </VBox>
+    </children>
+</AnchorPane>

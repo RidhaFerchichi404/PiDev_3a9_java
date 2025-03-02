@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModifierPromotion" style="-fx-background-color: #1e1e1e; -fx-padding: 20;">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Titre -->
+    <Label text="Modifier la promotion" style="-fx-text-fill: #ff8c00; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Champ Code promo -->
+    <TextField fx:id="codePromoField" promptText="Code promo" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;"/>
+
+    <!-- Champ Valeur de réduction -->
+    <TextField fx:id="valeurReductionField" promptText="Valeur de réduction" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px; -fx-prompt-text-fill: #666666;"/>
+
+    <!-- Champ Date de début -->
+    <DatePicker fx:id="dateDebutPicker" promptText="Date de début" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px;"/>
+
+    <!-- Champ Date de fin -->
+    <DatePicker fx:id="dateFinPicker" promptText="Date de fin" style="-fx-background-color: #333333; -fx-text-fill: white; -fx-font-size: 14px;"/>
+
+    <!-- Bouton Enregistrer -->
+    <Button fx:id="enregistrerButton" text="Enregistrer" onAction="#enregistrerModifications" style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 5 10;"/>
+</VBox>

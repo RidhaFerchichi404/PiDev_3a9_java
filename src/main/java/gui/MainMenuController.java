@@ -18,6 +18,8 @@ public class MainMenuController {
 
     @FXML
     private Button btnPosts;
+    private Button btnabonnement;
+
 
     @FXML
     private Button btnSalles;
@@ -59,6 +61,16 @@ public class MainMenuController {
     public void handlePosts() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfaceUser.fxml"));
+            Parent postsView = loader.load();
+            mainContent.getChildren().setAll(postsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load interfaceUserPosts");
+        }
+    }
+    public void handleabonnement() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/affichageuser.fxml"));
             Parent postsView = loader.load();
             mainContent.getChildren().setAll(postsView);
         } catch (IOException e) {

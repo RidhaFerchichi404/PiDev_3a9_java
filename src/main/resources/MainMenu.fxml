@@ -16,6 +16,7 @@
         <Button text="Produits" styleClass="menu-button" onAction="#handleProduits" />
         <Button text="Commandes" styleClass="menu-button" onAction="#handleCommandes" />
         <Button text="Posts" styleClass="menu-button" onAction="#handlePosts" />
+        <Button text="abonnement" styleClass="menu-button" onAction="#handleabonnement" />
         <Button text="Salles" styleClass="menu-button" onAction="#handleSalles" />
         <Button text="Profile" styleClass="menu-button" onAction="#handleProfile" />
         <Button text="Logout"

@@ -57,6 +57,16 @@ public class AdminDashboardController {
             System.err.println("Failed to load interfaceAdminPosts");
         }
     }
+    public void handleabonnement() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherAbonnement.fxml"));
+            Parent postsView = loader.load();
+            mainContent.getChildren().setAll(postsView);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load interfaceAdminPosts");
+        }
+    }
 
     @FXML
     public void handleSalles() {
