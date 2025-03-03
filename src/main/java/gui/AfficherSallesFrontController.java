@@ -44,7 +44,8 @@ public class AfficherSallesFrontController {
     @FXML private Button statistiqueButton;
     @FXML private Button triEquipementsButton;
 
-
+    private double selectedLat = 36.8065; // Default to Tunisia center
+    private double selectedLng = 10.1815;
     private final SalleDeSportService salleService = new SalleDeSportService();
     private static final String OPENAI_API_KEY = ""; // Remplacez par votre clé API OpenAI
     private static final String MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYXJpamNoYWFvdXJpIiwiYSI6ImNtN2FxaXQyejAxdTUycHNmeDQ0b2dvMzgifQ.KShSjG7KoUBYB6ikABiceA";

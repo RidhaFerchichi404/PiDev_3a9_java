@@ -289,4 +289,66 @@ public class UserService implements IService<User> {
         }
         return null;
     }
+    public User getUserByPhone(String phoneNumber) {
+        String query = "SELECT * FROM user WHERE phone = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setString(1, phoneNumber);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role"),
+                        resultSet.getString("phone")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public String getUserPhoneNumberByEmail(String email) {
+        String query = "SELECT phone_number FROM user WHERE email = ?";
+        try (PreparedStatement ps = cnx.prepareStatement(query)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String phoneNumber = rs.getString("phone_number"); // Correction ici
+                System.out.println("✅ Numéro trouvé pour " + email + " : " + phoneNumber);
+                return phoneNumber;
+            } else {
+                System.out.println("❌ Aucun utilisateur trouvé avec cet e-mail : " + email);
+                return null;
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la récupération du numéro de téléphone : " + e.getMessage());
+            return null;
+        }
+    }
+
+
+    // Mettre à jour le mot de passe par téléphone
+    public boolean updatePasswordByPhone(String phoneNumber, String newPassword) {
+        String query = "UPDATE user SET password_hash = ? WHERE phone_number = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setString(1, newPassword); // Pas de hashage
+            statement.setString(2, phoneNumber);
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("✅ Mot de passe mis à jour pour : " + phoneNumber);
+                return true;
+            } else {
+                System.err.println("❌ Aucun utilisateur trouvé avec ce numéro : " + phoneNumber);
+                return false;
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Erreur SQL lors de la mise à jour du mot de passe : " + e.getMessage());
+            return false;
+        }
+    }
+
 }

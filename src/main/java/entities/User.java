@@ -31,7 +31,13 @@ public class User {
         this.passwordHash = passwordHash;
         this.age = age;
     }
-
+    public User(long id, String email, String password, String role, String phone) {
+        this.id = id;
+        this.email = email;
+        this.passwordHash= password;
+        this.role = role;
+        this.phoneNumber = phone;
+    }
     public User(Long id, String firstName, String lastName, String email, String passwordHash, int age) {
         this.id = id;
         this.firstName = firstName;

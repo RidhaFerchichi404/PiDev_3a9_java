@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.UserService;
@@ -16,6 +13,7 @@ import utils.Session;
 import utils.TokenManager;
 
 import java.io.IOException;
+import java.util.Random;
 
 public class LoginController {
 
@@ -31,7 +29,16 @@ public class LoginController {
     @FXML
     private Button submitButton;
 
+    @FXML
+    private Hyperlink forgotPasswordLink;
+
     private final UserService userService = new UserService();
+    private String otpCode;
+    private String phoneNumber;
+    public void initialize() {
+        forgotPasswordLink.setOnAction(event -> handleForgotPassword());
+    }
+
 
     // Navigate to the registration form
     @FXML
@@ -105,6 +112,70 @@ public class LoginController {
             showAlert("Error", "Unable to load the requested view.");
             e.printStackTrace();
         }
+    }
+
+    // Mot de passe oublié - Envoi d'un OTP par SMS
+    private void handleForgotPassword() {
+        TextInputDialog emailDialog = new TextInputDialog();
+        emailDialog.setTitle("Mot de passe oublié");
+        emailDialog.setHeaderText("Entrez votre adresse e-mail");
+        emailDialog.setContentText("E-mail :");
+
+        emailDialog.showAndWait().ifPresent(email -> {
+            phoneNumber = userService.getUserPhoneNumberByEmail(email);
+
+            if (phoneNumber == null || phoneNumber.isEmpty()) {
+                showAlert("Erreur", "Aucun numéro de téléphone trouvé pour cet e-mail.");
+                return;
+            }
+
+            otpCode = generateOtp();
+            System.out.println("Envoi de l'OTP au numéro : " + phoneNumber);
+
+            SmsService.sendSms(phoneNumber, "Votre code de réinitialisation est : " + otpCode);
+            System.out.println("✅ SMS envoyé avec succès.");
+
+            verifyOtp();
+        });
+    }
+
+    // 🔹 Vérification de l'OTP et réinitialisation du mot de passe
+    private void verifyOtp() {
+        TextInputDialog otpDialog = new TextInputDialog();
+        otpDialog.setTitle("Vérification OTP");
+        otpDialog.setHeaderText("Entrez le code OTP reçu par SMS");
+        otpDialog.setContentText("Code OTP :");
+
+        otpDialog.showAndWait().ifPresent(enteredOtp -> {
+            if (enteredOtp.equals(otpCode)) {
+                resetPassword();
+            } else {
+                showAlert("Erreur", "Code OTP incorrect.");
+            }
+        });
+    }
+
+    // 🔹 Réinitialisation du mot de passe
+    private void resetPassword() {
+        TextInputDialog passwordDialog = new TextInputDialog();
+        passwordDialog.setTitle("Réinitialisation du mot de passe");
+        passwordDialog.setHeaderText("Entrez votre nouveau mot de passe");
+        passwordDialog.setContentText("Nouveau mot de passe :");
+
+        passwordDialog.showAndWait().ifPresent(newPassword -> {
+            if (newPassword.length() < 6) {
+                showAlert("Erreur", "Le mot de passe doit contenir au moins 6 caractères.");
+                return;
+            }
+
+            userService.updatePasswordByPhone(phoneNumber, newPassword);
+            showAlert("Succès", "Votre mot de passe a été réinitialisé !");
+        });
+    }
+
+    // 🔹 Génération d'un code OTP à 6 chiffres
+    private String generateOtp() {
+        return String.valueOf(100000 + new Random().nextInt(900000));
     }
 
     // Show an alert dialog

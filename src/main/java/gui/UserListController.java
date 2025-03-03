@@ -126,7 +126,7 @@ public class UserListController {
 
     private void handleDelete(User user) {
         try {
-            userService.deleteUser(user);
+            userService.delete(user);
             System.out.println("User deleted: " + user.getFirstName());
             loadUserList(); // Refresh the user list after deletion
         } catch (Exception e) {

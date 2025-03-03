@@ -35,7 +35,7 @@ public class ajouterPostsAdmin {
 
     public void initialize() {
         //zidou token here
-    
+
         String botUsername = "GymPostsBot";
         String chatId = "-1002394011842";
         telegramBot = new TelegramBot(botToken, botUsername, chatId);
