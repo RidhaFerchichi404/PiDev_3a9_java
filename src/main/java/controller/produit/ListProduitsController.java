@@ -14,18 +14,47 @@ import java.util.List;
 import javafx.scene.Parent;
 import controller.commande.AjouterCommandeController;
 import utils.Session;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ListProduitsController {
     @FXML private FlowPane cardsContainer;
     @FXML private Button addProductButton;
     @FXML private Button refreshButton;
+    @FXML private TextField searchField;
     private final ProduitService produitService = new ProduitService();
+    private ObservableList<Produit> allProducts;
 
     @FXML
     public void initialize() {
         System.out.println("Initializing ListProduitsController...");
         updateButtonVisibility();
         loadProduits();
+        
+        // Add search field listener
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterProducts(newValue);
+        });
+    }
+
+    private void filterProducts(String searchText) {
+        if (allProducts == null) return;
+        
+        cardsContainer.getChildren().clear();
+        
+        if (searchText == null || searchText.isEmpty()) {
+            updateCardView(allProducts);
+            return;
+        }
+        
+        List<Produit> filteredProducts = allProducts.stream()
+            .filter(produit -> 
+                produit.getNom().toLowerCase().contains(searchText.toLowerCase()) ||
+                produit.getCategorie().toLowerCase().contains(searchText.toLowerCase()) ||
+                produit.getDescription().toLowerCase().contains(searchText.toLowerCase()))
+            .toList();
+            
+        updateCardView(filteredProducts);
     }
 
     private void updateButtonVisibility() {
@@ -45,10 +74,10 @@ public class ListProduitsController {
     private void loadProduits() {
         try {
             System.out.println("Loading products from database...");
-            List<Produit> products = produitService.readAll();
-            System.out.println("Found " + products.size() + " products");
+            allProducts = FXCollections.observableArrayList(produitService.readAll());
+            System.out.println("Found " + allProducts.size() + " products");
             System.out.println("Current user role: " + Session.getRole());
-            updateCardView(products);
+            updateCardView(allProducts);
         } catch (Exception e) {
             System.err.println("Error loading products: " + e.getMessage());
             e.printStackTrace();

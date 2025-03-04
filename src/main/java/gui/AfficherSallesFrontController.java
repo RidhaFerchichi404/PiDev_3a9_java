@@ -55,6 +55,7 @@ public class AfficherSallesFrontController {
     private double selectedLng = 10.1815;
     private final SalleDeSportService salleService = new SalleDeSportService();
 
+
     private static final String MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiYXJpamNoYWFvdXJpIiwiYSI6ImNtN2FxaXQyejAxdTUycHNmeDQ0b2dvMzgifQ.KShSjG7KoUBYB6ikABiceA";
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 

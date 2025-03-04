@@ -7,6 +7,7 @@ import com.twilio.type.PhoneNumber;
 public class SmsService {
     // 🔹 Configuration Twilio (Priorité aux variables d'environnement pour la sécurité)
 
+    Numéro Twilio
 
     // 🔹 Initialisation Twilio
     static {

@@ -22,6 +22,10 @@
 
     <!-- Action Buttons -->
     <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="Rechercher un produit..." prefWidth="300"
+                  style="-fx-background-color: #333333; -fx-text-fill: white; -fx-prompt-text-fill: #888888;
+                         -fx-padding: 8 15; -fx-background-radius: 20;"/>
+        <Region HBox.hgrow="ALWAYS"/>
         <Button fx:id="addProductButton" text="+ Nouveau Produit" onAction="#openAddProduit"
                 style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-padding: 8 15;"/>
         <Button fx:id="refreshButton" text="Actualiser" onAction="#refreshProducts"

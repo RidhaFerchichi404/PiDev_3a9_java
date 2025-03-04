@@ -13,6 +13,11 @@ import java.io.File;
 import javafx.scene.control.Button;
 import controller.commande.AjouterCommandeController;
 import utils.Session;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class ProductCardController {
     @FXML private ImageView productImage;
@@ -24,6 +29,7 @@ public class ProductCardController {
     @FXML private Button editButton;
     @FXML private Button deleteButton;
     @FXML private Button commanderButton;
+    @FXML private Button analyzeButton;
 
     private Produit produit;
     private ListProduitsController parentController;
@@ -102,6 +108,25 @@ public class ProductCardController {
         parentController.handleCommander(produit);
     }
 
+    @FXML
+    private void handleAnalyze() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/produit/ProductAnalysisForm.fxml"));
+            Parent analysisView = loader.load();
+            
+            ProductAnalysisController controller = loader.getController();
+            controller.setProduit(produit);
+            
+            Stage stage = new Stage();
+            stage.setTitle("Analyse Personnalisée - " + produit.getNom());
+            stage.setScene(new Scene(analysisView));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Erreur", "Impossible d'ouvrir l'analyse personnalisée");
+        }
+    }
+
     private void updateButtonVisibility() {
         String userRole = Session.getRole();
         System.out.println("Updating button visibility for role: " + userRole);
@@ -111,18 +136,28 @@ public class ProductCardController {
             editButton.setVisible(true);
             deleteButton.setVisible(true);
             commanderButton.setVisible(false);
-            System.out.println("Edit button: visible, Delete button: visible, Commander button: hidden");
+            analyzeButton.setVisible(false);
+            System.out.println("Edit button: visible, Delete button: visible, Commander button: hidden, Analyze button: hidden");
         } else {
             System.out.println("Setting client/coach button visibility:");
             editButton.setVisible(false);
             deleteButton.setVisible(false);
             commanderButton.setVisible(true);
-            System.out.println("Edit button: hidden, Delete button: hidden, Commander button: visible");
+            analyzeButton.setVisible(true);
+            System.out.println("Edit button: hidden, Delete button: hidden, Commander button: visible, Analyze button: visible");
         }
         
         // Verify button states after setting
         System.out.println("Final button states - Edit: " + editButton.isVisible() + 
                          ", Delete: " + deleteButton.isVisible() + 
-                         ", Commander: " + commanderButton.isVisible());
+                         ", Commander: " + commanderButton.isVisible() + 
+                         ", Analyze: " + analyzeButton.isVisible());
+    }
+
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 } 

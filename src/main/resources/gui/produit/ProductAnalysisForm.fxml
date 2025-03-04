@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.produit.ProductAnalysisController"
+      style="-fx-background-color: #2d2d2d;"
+      prefWidth="600" prefHeight="700">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header -->
+    <Label text="Analyse Personnalisée du Produit" 
+           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+    <!-- Product Info -->
+    <VBox spacing="5" style="-fx-padding: 10; -fx-background-color: #3d3d3d; -fx-background-radius: 5;">
+        <Label fx:id="productNameLabel" style="-fx-font-size: 16; -fx-text-fill: #FF8C00;"/>
+        <Label fx:id="productCategoryLabel" style="-fx-font-size: 14; -fx-text-fill: #bbbbbb;"/>
+    </VBox>
+
+    <!-- User Input Form -->
+    <GridPane vgap="10" hgap="10">
+        <Label text="Âge:" style="-fx-text-fill: white;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="ageField" promptText="Entrez votre âge" 
+                  style="-fx-background-color: #3d3d3d; -fx-text-fill: white;"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Poids (kg):" style="-fx-text-fill: white;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="weightField" promptText="Entrez votre poids" 
+                  style="-fx-background-color: #3d3d3d; -fx-text-fill: white;"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Taille (cm):" style="-fx-text-fill: white;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="heightField" promptText="Entrez votre taille" 
+                  style="-fx-background-color: #3d3d3d; -fx-text-fill: white;"
+                  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    </GridPane>
+
+    <!-- Analysis Button -->
+    <Button text="Analyser" fx:id="analyzeButton" onAction="#handleAnalyze"
+            style="-fx-background-color: #FF8C00; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+    <!-- Loading Indicator -->
+    <ProgressIndicator fx:id="loadingIndicator" visible="false"/>
+
+    <!-- Results Section -->
+    <ScrollPane fitToWidth="true" style="-fx-background: transparent;" VBox.vgrow="ALWAYS">
+        <VBox fx:id="analysisResultContainer" spacing="10" 
+              style="-fx-background-color: #3d3d3d; -fx-padding: 15; -fx-background-radius: 5;">
+            <Label text="Résultats de l'Analyse" 
+                   style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <TextFlow fx:id="analysisResult" 
+                     style="-fx-fill: white; -fx-font-size: 14;"/>
+        </VBox>
+    </ScrollPane>
+</VBox> 
