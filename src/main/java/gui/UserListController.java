@@ -1,11 +1,13 @@
 package gui;
 
 import entities.User;
+import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 import services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
@@ -38,6 +40,22 @@ public class UserListController {
 
     private UserService userService;
     private User selectedUser;
+    private VBox selectedCard;
+    private final String defaultCardStyle = "-fx-background-color: #262626; "
+            + "-fx-border-color: #ff8c0055; -fx-border-width: 2; "
+            + "-fx-border-radius: 10; -fx-background-radius: 10; "
+            + "-fx-padding: 20; -fx-pref-width: 250; -fx-pref-height: 320; "
+            + "-fx-effect: dropshadow(three-pass-box, rgba(255,140,0,0.3), 10, 0, 0, 3);";
+
+    private final String hoveredCardStyle = defaultCardStyle
+            + "-fx-background-color: #2d2d2d; "
+            + "-fx-border-color: #ff8c00; "
+            + "-fx-effect: dropshadow(three-pass-box, rgba(255,140,0,0.5), 15, 0.1, 0, 5);";
+
+    private final String selectedCardStyle = defaultCardStyle
+            + "-fx-background-color: #333333; "
+            + "-fx-border-color: #ffcc00; "
+            + "-fx-effect: dropshadow(three-pass-box, rgba(255,204,0,0.8), 20, 0.2, 0, 7);";
 
     public UserListController() {
         this.userService = new UserService();
@@ -69,64 +87,93 @@ public class UserListController {
             cardsContainer.getChildren().add(userCard);
         }
     }
-
     private VBox createUserCard(User user) {
         VBox userCard = new VBox(15);
-        userCard.setStyle("-fx-background-color: #262626; " +
-                "-fx-border-color: #ff8c00; " +
-                "-fx-border-radius: 10; " +
-                "-fx-background-radius: 10; " +
-                "-fx-padding: 20; " +
-                "-fx-effect: dropshadow(three-pass-box, rgba(255, 140, 0, 0.4), 10, 0, 0, 3); " +
-                "-fx-pref-width: 250; -fx-pref-height: 320;");
+        userCard.setStyle(defaultCardStyle);
         userCard.setAlignment(Pos.CENTER);
 
-        // ✅ Image de profil par défaut
+        // Style constant pour les éléments internes
+        String imageStyle = "-fx-background-radius: 50%; -fx-border-radius: 50%;"
+                + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);";
+
+        // Configuration de l'image
         ImageView imageView = new ImageView();
         try {
             imageView.setImage(new Image(getClass().getResourceAsStream("/images/user-placeholder.png")));
         } catch (Exception e) {
-            System.out.println("Erreur lors du chargement de l'image par défaut : " + e.getMessage());
+            System.out.println("Erreur image : " + e.getMessage());
         }
-
         imageView.setFitWidth(80);
         imageView.setFitHeight(80);
-        imageView.setStyle("-fx-background-radius: 50%; -fx-border-radius: 50%;");
+        imageView.setStyle(imageStyle);
 
-        // ✅ Informations de l'utilisateur
+        // Labels avec style constant
         Label userNameLabel = new Label(user.getFirstName());
         Label userEmailLabel = new Label(user.getEmail());
         Label userRoleLabel = new Label(user.getRole());
 
+        // Application des styles
         userNameLabel.setStyle("-fx-text-fill: #ff8c00; -fx-font-size: 18px; -fx-font-weight: bold;");
         userEmailLabel.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 14px;");
         userRoleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        // ✅ Bouton Supprimer (orange vif)
+        // Bouton Supprimer
         Button deleteButton = new Button("Supprimer");
-        deleteButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;");
-        deleteButton.setOnAction(event -> handleDelete(user)); // Action de suppression
+        deleteButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;"
+                + "-fx-background-radius: 5; -fx-cursor: hand;"
+                + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 1);");
+        deleteButton.setOnAction(event -> handleDelete(user));
 
-        // ✅ Conteneur des boutons
         HBox btnContainer = new HBox(deleteButton);
         btnContainer.setAlignment(Pos.CENTER);
         btnContainer.setSpacing(10);
 
-        // ✅ Action de sélection
-        userCard.setOnMouseClicked(event -> {
-            selectedUser = user;
-            System.out.println("Utilisateur sélectionné : " + user.getFirstName());
+        // Gestion améliorée des événements
+        userCard.setOnMouseEntered(event -> {
+            if (userCard != selectedCard) {
+                userCard.setStyle(hoveredCardStyle);
+                animateCard(userCard, 1.02); // Animation légère
+            }
         });
 
-        // ✅ Ajout des éléments dans la carte
-        userCard.getChildren().addAll(imageView, userNameLabel, userEmailLabel, userRoleLabel, btnContainer);
+        userCard.setOnMouseExited(event -> {
+            if (userCard != selectedCard) {
+                userCard.setStyle(defaultCardStyle);
+                animateCard(userCard, 1.0);
+            }
+        });
 
+        userCard.setOnMouseClicked(event -> handleCardSelection(userCard, user));
+
+        userCard.getChildren().addAll(imageView, userNameLabel, userEmailLabel, userRoleLabel, btnContainer);
         return userCard;
+    }
+
+    private void animateCard(VBox card, double scale) {
+        ScaleTransition st = new ScaleTransition(Duration.millis(150), card);
+        st.setFromX(card.getScaleX());
+        st.setFromY(card.getScaleY());
+        st.setToX(scale);
+        st.setToY(scale);
+        st.play();
+    }
+
+    private void handleCardSelection(VBox newCard, User user) {
+        if (selectedCard != null) {
+            selectedCard.setStyle(defaultCardStyle);
+            animateCard(selectedCard, 1.0);
+        }
+
+        selectedCard = newCard;
+        selectedUser = user;
+        newCard.setStyle(selectedCardStyle);
+        animateCard(newCard, 1.02);
+        System.out.println("Sélection : " + user.getFirstName());
     }
 
     private void handleDelete(User user) {
         try {
-            userService.delete(user);
+            userService.deleteUser(user);
             System.out.println("User deleted: " + user.getFirstName());
             loadUserList(); // Refresh the user list after deletion
         } catch (Exception e) {
@@ -221,6 +268,23 @@ public class UserListController {
         alert.setTitle(title);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+    // Add this method to handle the stats button click
+    @FXML
+    private void handleStatsButtonClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Stat.fxml"));
+            Parent statsRoot = loader.load();
+
+            Stage statsStage = new Stage();
+            statsStage.setTitle("Statistiques");
+            statsStage.setScene(new Scene(statsRoot));
+            statsStage.initModality(Modality.APPLICATION_MODAL); // Optional: Makes the window modal
+            statsStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Erreur", "Impossible d'ouvrir la page des statistiques.");
+        }
     }
 
     @FXML

@@ -1,2 +1,12 @@
 Vous: bonjour
 Chatbot: Bonjour! Comment ça va? Que puis-je faire pour vous aider aujourd'hui?
+👤 Vous : je veux un exercice d echaauffement de sport
+🤖 Chatbot : Voici un exercice d'échauffement que vous pouvez intégrer dans votre session de sport :
+
+Marche rapide ou course légère pendant 5 à 10 minutes pour augmenter la température corporelle et préparer les muscles à l'effort.
+
+Enchaînez ensuite avec des rotations des bras et des épaules, des flexions et extensions des jambes, des mouvements de rotation du buste et des étirements doux pour assouplir les muscles.
+
+Terminer l'échauffement par quelques sauts légers sur place ou des montées de genoux pour stimuler la circulation sanguine et augmenter la fréquence cardiaque.
+
+N'ou

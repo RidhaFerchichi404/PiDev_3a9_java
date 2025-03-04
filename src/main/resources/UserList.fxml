@@ -5,31 +5,37 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="gui.UserListController"
       spacing="15"
       style="-fx-padding: 20; -fx-background-color: #1e1e1e;">
 
-    <!-- ✅ Search TextField -->
+    <!-- Search TextField -->
     <TextField fx:id="searchTextField" promptText="Rechercher par nom..."
                onKeyReleased="#handleSearchTextChanged"
                style="-fx-font-size: 16px; -fx-background-color: #333; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
 
-    <!-- ✅ Bouton Modifier -->
-    <Button text="Modifier Utilisateur Sélectionné"
-            onAction="#handleModifyButtonClick"
-            style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
-    <Button text="Ajouter Utilisateur"
-            onAction="#handleajoutButtonClick"
-            style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
+    <!-- Buttons Container (Horizontal) -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Modifier Utilisateur Sélectionné"
+                onAction="#handleModifyButtonClick"
+                style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
+        <Button text="Ajouter Utilisateur"
+                onAction="#handleajoutButtonClick"
+                style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
+        <Button text="Statistiques"
+                onAction="#handleStatsButtonClick"
+                style="-fx-font-size: 16px; -fx-background-color: #ff8c00; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10;"/>
+    </HBox>
 
-    <!-- ✅ ScrollPane pour les cartes utilisateurs -->
+    <!-- ScrollPane for user cards -->
     <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight="true" vbarPolicy="AS_NEEDED" hbarPolicy="NEVER"
                 style="-fx-background: transparent;">
-        <!-- ✅ FlowPane pour afficher les cartes d'utilisateurs -->
         <FlowPane fx:id="cardsContainer"
                   hgap="20" vgap="20"
                   prefWrapLength="800"
                   style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-alignment: center;" />
     </ScrollPane>
 </VBox>
+
