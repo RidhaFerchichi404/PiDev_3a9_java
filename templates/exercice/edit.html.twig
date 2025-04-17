@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Exercise{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-lila">Edit Exercise <span role="img" aria-label="muscle">💪</span></h1>
+
+        {# Flash messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="card shadow-lg border-0 rounded-3 p-4">
+            <div class="card-header bg-lila text-white rounded-3">
+                <h5 class="card-title mb-0">Update Exercise Details <span role="img" aria-label="writing">✍️</span></h5>
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+                <div class="row">
+                    <!-- Exercise Name -->
+                    <div class="col-md-6 mb-4">
+                        <label for="exerciseName" class="form-label">Exercise Name <span role="img" aria-label="name">📝</span></label>
+                        {{ form_widget(form.nom_exercice, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Enter exercise name', 'id': 'exerciseName'}}) }}
+                        {{ form_errors(form.nom_exercice) }}
+                    </div>
+
+                    <!-- Image -->
+                    <div class="col-md-6 mb-4">
+                        <label for="exerciseImage" class="form-label">Image <span role="img" aria-label="image">🖼️</span></label>
+                        {{ form_widget(form.image, {'attr': {'class': 'form-control form-control-lg', 'id': 'exerciseImage'}}) }}
+                        {{ form_errors(form.image) }}
+                        {% if exercice.image %}
+                            <div class="mt-2">
+                                <img src="{{ asset('images/' ~ exercice.image) }}" alt="{{ exercice.nomExercice }}" class="img-thumbnail" style="height: 100px;">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label for="exerciseDescription" class="form-label">Description <span role="img" aria-label="description">📄</span></label>
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-lg', 'rows': 4, 'id': 'exerciseDescription'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="row">
+                    <!-- Equipment -->
+                    {% if form.equipement is defined %}
+                        <div class="col-md-6 mb-4">
+                            <label for="equipment" class="form-label">Equipment <span role="img" aria-label="tools">🔧</span></label>
+                            {{ form_widget(form.equipement, {'attr': {'class': 'form-control form-control-lg select2-control', 'id': 'equipment'}}) }}
+                            {{ form_errors(form.equipement) }}
+                            <small class="text-muted">Select the equipment used for this exercise</small>
+                        </div>
+                    {% endif %}
+
+                    <!-- Owner ID -->
+                    {% if form.id_user is defined %}
+                        <div class="col-md-6 mb-4">
+                            <label for="ownerId" class="form-label">Owner ID <span role="img" aria-label="owner">👤</span></label>
+                            {{ form_widget(form.id_user, {'attr': {'class': 'form-control form-control-lg', 'id': 'ownerId'}}) }}
+                            {{ form_errors(form.id_user) }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Muscle -->
+                <div class="mb-4">
+                    <label for="muscle" class="form-label">Muscle <span role="img" aria-label="muscle">💪</span></label>
+                    {{ form_widget(form.muscle, {'attr': {'class': 'form-control form-control-lg', 'id': 'muscle', 'placeholder': 'Enter the targeted muscle group'}}) }}
+                    {{ form_errors(form.muscle) }}
+                </div>
+
+                <!-- Tips -->
+                <div class="mb-4">
+                    <label for="conseils" class="form-label">Tips <span role="img" aria-label="tips">💡</span></label>
+                    {{ form_widget(form.conseils, {'attr': {'class': 'form-control form-control-lg', 'rows': 4, 'id': 'conseils', 'placeholder': 'Enter tips for this exercise'}}) }}
+                    {{ form_errors(form.conseils) }}
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <span role="img" aria-label="save">💾</span> Update Exercise
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <!-- Back Button -->
+                <a href="{{ path('app_exercice_index') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Back to List
+                </a>
+
+                <!-- Back to Equipment Exercises Button -->
+                <a href="{{ path('app_equipement_exercices', {'id': exercice.equipement.id}) }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Back to Equipment Exercises
+                </a>
+
+                <!-- Delete Button -->
+                <div>
+                    {{ include('exercice/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if form.equipement is defined %}
+    <script>
+        // Initialize select2 for better equipment selection
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof jQuery !== 'undefined' && typeof $.fn.select2 !== 'undefined') {
+                $('.select2-control').select2({
+                    theme: 'bootstrap-5',
+                    placeholder: 'Select equipment',
+                    width: '100%'
+                });
+            }
+        });
+    </script>
+    {% endif %}
+{% endblock %}

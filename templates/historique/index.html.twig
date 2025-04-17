@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Historique des Actions</h1>
+
+        <div class="row">
+            <!-- To-Do Section -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-3 p-4">
+                    <div class="card-header bg-warning text-white text-center">
+                        <h5 class="card-title mb-0">To-Do</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for entry in historique %}
+                                {% if entry.action == 'Ajout' %}
+                                    <li>{{ entry.salle }} - {{ entry.date|date('d/m/Y H:i') }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- In Progress Section -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-3 p-4">
+                    <div class="card-header bg-info text-white text-center">
+                        <h5 class="card-title mb-0">In Progress</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for entry in historique %}
+                                {% if entry.action == 'Modification' %}
+                                    <li>{{ entry.salle }} - {{ entry.date|date('d/m/Y H:i') }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done Section -->
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded-3 p-4">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="card-title mb-0">Done</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            {% for entry in historique %}
+                                {% if entry.action == 'Suppression' %}
+                                    <li>{{ entry.salle }} - {{ entry.date|date('d/m/Y H:i') }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

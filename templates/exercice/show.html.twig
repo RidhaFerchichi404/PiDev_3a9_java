@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercise Details{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-lila">Exercise Details</h1>
+
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-lila text-white">
+                <h5 class="card-title mb-0">Exercise #{{ exercice.id }}</h5>
+            </div>
+
+            <div class="card-body">
+                <!-- Exercise Details Table -->
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ exercice.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ exercice.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>
+                                <img src="{{ asset('images/' ~ exercice.image) }}" alt="{{ exercice.nomExercice }}" class="img-thumbnail" style="width: 150px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Owner ID</th>
+                            <td>{{ exercice.idUser }}</td>
+                        </tr>
+                        <tr>
+                            <th>Exercise Name</th>
+                            <td>{{ exercice.nomExercice }}</td>
+                        </tr>
+                        <tr>
+                            <th>Muscle</th>
+                            <td>{{ exercice.muscle ? exercice.muscle : 'Non spécifié' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Conseils</th>
+                            <td>{{ exercice.conseils ? exercice.conseils : 'Aucun conseil disponible' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+                <!-- Edit Button -->
+                <a href="{{ path('app_exercice_edit', {'id': exercice.id}) }}" class="btn btn-warning btn-sm">
+                    <i class="ri-edit-line"></i> Edit
+                </a>
+
+                <!-- Delete Button -->
+                <div class="btn-group">
+                    {{ include('exercice/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to List Button -->
+        <div class="mt-4">
+            <a href="{{ path('app_exercice_index') }}" class="btn btn-outline-secondary btn-sm">
+                <i class="ri-arrow-left-line"></i> Back to List
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Gym{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {% include 'salle_de_sport/_form.html.twig' with {
+                    'button_label': 'Create Gym',
+                    'title': 'Add New Gym'
+                } %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+    </style>
+{% endblock %}

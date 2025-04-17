@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="profile-section">
+    <div class="container">
+        <h2 class="text-center mb-5">Mon Profil</h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Informations personnelles</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-info">
+                            <p><strong>Nom :</strong> {{ user.lastname }}</p>
+                            <p><strong>Prénom :</strong> {{ user.firstname }}</p>
+                            <p><strong>Email :</strong> {{ user.email }}</p>
+                            <p><strong>Rôle :</strong> {{ user.role }}</p>
+                            <p><strong>Téléphone :</strong> {{ user.phonenumber }}</p>
+                        </div>
+                        <a href="{{ path('app_front_homepage') }}" class="btn btn-primary">Retour à l'accueil</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Mes salles de sport</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user_salles|length > 0 %}
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Zone</th>
+                                            <th>Région</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for salle in user_salles %}
+                                            <tr>
+                                                <td>{{ salle.nom }}</td>
+                                                <td>{{ salle.zone }}</td>
+                                                <td>{{ salle.region }}</td>
+                                                <td>
+                                                    <a href="{{ path('app_salle_de_sport_equipements', {'id': salle.id}) }}" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-dumbbell"></i> Équipements
+                                                    </a>
+                                                    <a href="{{ path('app_salle_de_sport_edit', {'id': salle.id}) }}" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-edit"></i> Modifier
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted">Vous n'avez pas encore ajouté de salle de sport.</p>
+                            <a href="{{ path('app_salle_de_sport_new') }}" class="btn btn-success">
+                                <i class="fa fa-plus"></i> Ajouter une salle
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Mes équipements récents</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if user_equipements|length > 0 %}
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Salle</th>
+                                            <th>État</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for equipement in user_equipements|slice(0, 5) %}
+                                            <tr>
+                                                <td>{{ equipement.nom }}</td>
+                                                <td>{{ equipement.salle.nom }}</td>
+                                                <td>
+                                                    {% if equipement.fonctionnement %}
+                                                        <span class="badge bg-success">Fonctionnel</span>
+                                                    {% else %}
+                                                        <span class="badge bg-danger">Non fonctionnel</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('app_equipement_exercices', {'id': equipement.id}) }}" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-dumbbell"></i> Exercices
+                                                    </a>
+                                                    <a href="{{ path('app_equipement_edit', {'id': equipement.id}) }}" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-edit"></i> Modifier
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted">Vous n'avez pas encore ajouté d'équipement.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

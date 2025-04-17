@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la salle de sport{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-lila">{{ salle_de_sport.nom }}</h1>
+
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-lila text-white">
+                <h5 class="card-title mb-0">Informations de la salle</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Adresse</h4>
+                        <p>{{ salle_de_sport.adresse }}<br>
+                        {{ salle_de_sport.codepostal }} {{ salle_de_sport.ville }}</p>
+                        
+                        <h4>Contact</h4>
+                        <p>Téléphone: {{ salle_de_sport.telephone }}<br>
+                        Email: {{ salle_de_sport.email }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Horaires d'ouverture</h4>
+                        <p>{{ salle_de_sport.horairesouverture }}</p>
+                        
+                        <h4>Équipements disponibles</h4>
+                        <p>{{ salle_de_sport.equipements|length }} équipement(s)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <a href="{{ path('app_salle_de_sport_index1') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Retour à la liste
+                </a>
+                
+                {% if salle_de_sport.equipements|length > 0 %}
+                    <a href="{{ path('app_salle_de_sport_equipementsf', {'id': salle_de_sport.id}) }}" class="btn btn-outline-primary btn-sm">
+                        <i class="ri-list-check"></i> Voir les équipements
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %} 

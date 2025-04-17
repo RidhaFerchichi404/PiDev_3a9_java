@@ -1,0 +1,290 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Exercise{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {% if equipement_nom is defined %}
+            <h1 class="text-center mb-4 text-lila">Ajouter un exercice à l'équipement {{ equipement_nom }} <span role="img" aria-label="muscle">💪</span></h1>
+        {% else %}
+            <h1 class="text-center mb-4 text-lila">Create New Exercise <span role="img" aria-label="muscle">💪</span></h1>
+        {% endif %}
+
+        <div class="card shadow-lg border-0 rounded-3 p-4">
+            <div class="card-header bg-lila text-white rounded-3">
+                {% if equipement_nom is defined %}
+                    <h5 class="card-title mb-0">Informations sur l'exercice <span role="img" aria-label="writing">✍️</span></h5>
+                {% else %}
+                    <h5 class="card-title mb-0">Enter Exercise Details <span role="img" aria-label="writing">✍️</span></h5>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+                <!-- Exercise Name -->
+                <div class="mb-4">
+                    <label for="exerciseName" class="form-label">Exercise Name <span role="img" aria-label="name">🏋️‍♂️</span></label>
+                    {{ form_widget(form.nom_exercice, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Enter exercise name', 'id': 'exerciseName'}}) }}
+                    {{ form_errors(form.nom_exercice) }}
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label for="description" class="form-label">Description <span role="img" aria-label="memo">📝</span></label>
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Enter exercise description', 'id': 'description'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <!-- Image Upload -->
+                {% if form.image is defined %}
+                    <div class="mb-4">
+                        <label for="exerciseImage" class="form-label">Image <span role="img" aria-label="camera">📸</span></label>
+                        {{ form_widget(form.image, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Entrez le nom du fichier image (ex: exercice.gif)', 'id': 'exerciseImage', 'pattern': '.+\\.(gif|jpe?g|png|webp)$'}}) }}
+                        {{ form_errors(form.image) }}
+                        <small class="text-muted d-block mt-1">Formats supportés: GIF, JPEG, PNG, WEBP</small>
+                        <small class="text-muted d-block">Pour les GIF animés, assurez-vous que le fichier est optimisé pour le web</small>
+                    </div>
+                {% endif %}
+
+                <!-- Equipment -->
+                {% if form.equipement is defined %}
+                    <div class="mb-4">
+                        <label for="equipment" class="form-label">Equipement <span role="img" aria-label="tools">🔧</span></label>
+                        {{ form_widget(form.equipement, {'attr': {'class': 'form-control form-control-lg', 'id': 'equipment'}}) }}
+                        {{ form_errors(form.equipement) }}
+                    </div>
+                {% elseif equipement_nom is defined %}
+                    <div class="mb-4">
+                        <label class="form-label">Equipement <span role="img" aria-label="tools">🔧</span></label>
+                        <div class="form-control form-control-lg disabled">{{ equipement_nom }}</div>
+                        <small class="text-muted">Cet exercice sera associé à l'équipement "{{ equipement_nom }}"</small>
+                    </div>
+                {% endif %}
+
+                <!-- Owner ID -->
+                
+
+                <!-- Muscle -->
+                <div class="mb-4">
+                    <label for="muscle" class="form-label">Muscle <span role="img" aria-label="muscle">💪</span></label>
+                    {{ form_widget(form.muscle, {'attr': {'class': 'form-control form-control-lg', 'id': 'muscle', 'placeholder': 'Entrez le groupe musculaire ciblé'}}) }}
+                    {{ form_errors(form.muscle) }}
+                </div>
+
+                <!-- Conseils -->
+                <div class="mb-4">
+                    <label for="conseils" class="form-label">Conseils <span role="img" aria-label="advice">💡</span></label>
+                    {{ form_widget(form.conseils, {'attr': {'class': 'form-control form-control-lg', 'id': 'conseils', 'placeholder': 'Ajoutez des conseils pour cet exercice', 'rows': '3'}}) }}
+                    {{ form_errors(form.conseils) }}
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <span role="img" aria-label="muscle">🏋️‍♂️</span> 
+                        {% if equipement_nom is defined %}
+                            Créer l'exercice
+                        {% else %}
+                            Create Exercise
+                        {% endif %}
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <!-- Back Button -->
+                {% if equipement_id is defined %}
+                    <a href="{{ path('app_equipement_exercices', {'id': equipement_id}) }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="ri-arrow-left-line"></i> Retour aux exercices de l'équipement <span role="img" aria-label="back">↩️</span>
+                    </a>
+                {% else %}
+                    <a href="{{ path('app_exercice_index') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="ri-arrow-left-line"></i> Back to List <span role="img" aria-label="back">↩️</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <style>
+        .text-lila {
+            color: #6f42c1; /* Purple color for headings */
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #6f42c1;
+            border-radius: 15px 15px 0 0;
+            padding: 15px 25px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .form-control-lg {
+            font-size: 1.1rem;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-lg:focus {
+            box-shadow: 0 0 8px rgba(111, 66, 193, 0.4);
+            border-color: #6f42c1;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .btn-outline-secondary {
+            color: #6f42c1;
+            border-color: #6f42c1;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6f42c1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .card-footer {
+            background-color: #f9f9f9;
+            border-radius: 0 0 15px 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .d-grid {
+            display: grid;
+            gap: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prévisualisation de l'image
+        const imageInput = document.getElementById('exerciseImage');
+        if (imageInput) {
+            // Créer une div pour la prévisualisation si elle n'existe pas déjà
+            if (!document.getElementById('image-preview')) {
+                const previewDiv = document.createElement('div');
+                previewDiv.id = 'image-preview';
+                previewDiv.className = 'mt-2 rounded border p-2 text-center';
+                previewDiv.style.display = 'none';
+                previewDiv.style.maxWidth = '300px';
+                previewDiv.style.margin = '0 auto';
+                
+                const previewImg = document.createElement('img');
+                previewImg.style.maxWidth = '100%';
+                previewImg.style.maxHeight = '200px';
+                previewImg.alt = 'Prévisualisation';
+                previewImg.className = 'rounded';
+                
+                previewDiv.appendChild(previewImg);
+                imageInput.parentNode.appendChild(previewDiv);
+            }
+            
+            // Fonction pour mettre à jour la prévisualisation
+            function updatePreview() {
+                const fileName = imageInput.value.trim();
+                const previewDiv = document.getElementById('image-preview');
+                const previewImg = previewDiv.querySelector('img');
+                
+                if (fileName && /\.(gif|jpe?g|png|webp)$/i.test(fileName)) {
+                    // Construire le chemin d'accès à l'image
+                    let imagePath = fileName;
+                    if (!imagePath.startsWith('/') && !imagePath.startsWith('http')) {
+                        imagePath = '/images/' + imagePath;
+                    }
+                    
+                    previewImg.src = imagePath;
+                    previewDiv.style.display = 'block';
+                    
+                    // Vérifier si l'image peut être chargée
+                    previewImg.onerror = function() {
+                        previewDiv.innerHTML = '<div class="alert alert-warning">Cette image n\'est pas accessible. Vérifiez le nom ou le chemin du fichier.</div>';
+                    };
+                } else {
+                    previewDiv.style.display = 'none';
+                }
+            }
+            
+            // Écouter les changements dans l'input image
+            imageInput.addEventListener('input', updatePreview);
+            imageInput.addEventListener('change', updatePreview);
+            
+            // Vérifier s'il y a déjà une valeur dans l'input
+            if (imageInput.value) {
+                updatePreview();
+            }
+        }
+        
+        // Style avancé pour la sélection du groupe musculaire
+        const muscleSelect = document.getElementById('muscle');
+        if (muscleSelect) {
+            // Ajouter des styles spécifiques aux options
+            Array.from(muscleSelect.options).forEach(option => {
+                if (!option.value) return; // Ignorer l'option vide
+                
+                // Définir une couleur de fond pour chaque groupe musculaire
+                let backgroundColor = '';
+                let textColor = '#fff';
+                
+                if (option.value === 'biceps' || option.value === 'triceps' || 
+                    option.value === 'épaules' || option.value === 'avant-bras') {
+                    backgroundColor = '#4a6ea9'; // Bleu pour les membres supérieurs
+                } else if (option.value === 'pectoraux' || option.value === 'dos' || 
+                           option.value === 'abdominaux') {
+                    backgroundColor = '#c75e4e'; // Rouge pour le tronc
+                } else if (option.value === 'jambes' || option.value === 'fessiers' || 
+                           option.value === 'mollets') {
+                    backgroundColor = '#5e9158'; // Vert pour les membres inférieurs
+                } else {
+                    backgroundColor = '#8e5bb5'; // Violet pour autres
+                }
+                
+                option.style.backgroundColor = backgroundColor;
+                option.style.color = textColor;
+                option.style.paddingLeft = '10px';
+            });
+            
+            // Style pour les options sélectionnées
+            muscleSelect.addEventListener('change', function() {
+                if (this.selectedIndex > 0) {
+                    const selectedOption = this.options[this.selectedIndex];
+                    this.style.backgroundColor = selectedOption.style.backgroundColor;
+                    this.style.color = selectedOption.style.color;
+                } else {
+                    this.style.backgroundColor = '';
+                    this.style.color = '';
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+/* Global styles */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Muli', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #1db954; /* Spotify green for links */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1ed760;
+}
+
+/* Header */
+.header-section {
+    background-color: #1c1c1c;
+    border-bottom: 1px solid #333;
+}
+
+.header-section .logo img {
+    max-width: 150px;
+}
+
+.nav-menu ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu ul li a {
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 15px;
+}
+
+.nav-menu ul li a:hover {
+    background-color: #333;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.primary-btn {
+    background-color: #1db954;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: #1ed760;
+}
+
+/* Forms */
+form {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2c2c2c;
+    color: #ffffff;
+}
+
+form input::placeholder {
+    color: #888;
+}
+
+form button {
+    background-color: #1db954;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background-color: #1ed760;
+}
+
+/* Footer */
+.footer-section {
+    background-color: #1c1c1c;
+    padding: 20px 0;
+    color: #888;
+}
+
+.footer-section a {
+    color: #1db954;
+}
+
+.footer-section a:hover {
+    color: #1ed760;
+}

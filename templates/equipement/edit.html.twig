@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Equipment{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-lila">Edit Equipment</h1>
+
+        <div class="card shadow-lg border-0 rounded-3 p-4">
+            <div class="card-header bg-lila text-white">
+                <h5 class="card-title mb-0">Update Equipment Details <span role="img" aria-label="tools">🛠️</span></h5>
+            </div>
+
+            <div class="card-body">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+                <div class="row">
+                    <!-- Equipment Name -->
+                    <div class="col-md-6 mb-4">
+                        <label for="equipementName" class="form-label">Equipment Name <span role="img" aria-label="name">📝</span></label>
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Enter equipment name', 'id': 'equipementName'}}) }}
+                        {{ form_errors(form.nom) }}
+                    </div>
+
+                    <!-- Functionality -->
+                    <div class="col-md-6 mb-4">
+                        <label for="fonctionnement" class="form-label">Functionality <span role="img" aria-label="check">✔️</span></label>
+                        {{ form_widget(form.fonctionnement, {'attr': {'class': 'form-check-input', 'id': 'fonctionnement'}, 'type': 'checkbox'}) }}
+                        {{ form_errors(form.fonctionnement) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Next Verification -->
+                    <div class="col-md-6 mb-4">
+                        <label for="prochaineVerification" class="form-label">Next Verification <span role="img" aria-label="calendar">📅</span></label>
+                        {{ form_widget(form.prochaine_verification, {'attr': {'class': 'form-control form-control-lg', 'id': 'prochaineVerification'}}) }}
+                        {{ form_errors(form.prochaine_verification) }}
+                    </div>
+
+                    <!-- Last Verification -->
+                    <div class="col-md-6 mb-4">
+                        <label for="derniereVerification" class="form-label">Last Verification <span role="img" aria-label="checklist">✅</span></label>
+                        {{ form_widget(form.derniere_verification, {'attr': {'class': 'form-control form-control-lg', 'id': 'derniereVerification'}}) }}
+                        {{ form_errors(form.derniere_verification) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Gym -->
+                    <div class="col-md-12 mb-4">
+                        <label for="salle" class="form-label">Gym <span role="img" aria-label="building">🏢</span></label>
+                        {{ form_widget(form.salle, {'attr': {'class': 'form-control form-control-lg', 'id': 'salle'}}) }}
+                        {{ form_errors(form.salle) }}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <span role="img" aria-label="save">💾</span> Update Equipment
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <!-- Back Button -->
+                <a href="{{ path('app_equipement_index') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Back to List
+                </a>
+
+                <!-- Delete Button -->
+                <div>
+                    {{ include('equipement/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <style>
+        .text-lila {
+            color: #6f42c1; /* Purple color for headings */
+        }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .card-header {
+            background-color: #6f42c1;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .form-control-lg {
+            font-size: 1.1rem;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-lg:focus {
+            box-shadow: 0 0 8px rgba(111, 66, 193, 0.4);
+            border-color: #6f42c1;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            cursor: pointer;
+        }
+
+        .btn-outline-secondary {
+            color: #6f42c1;
+            border-color: #6f42c1;
+            border-radius: 8px;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6f42c1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .card-footer {
+            background-color: #f9f9f9;
+            border-radius: 0 0 12px 12px;
+            border-top: 1px solid #ddd;
+        }
+
+        .d-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .btn-sm {
+            font-size: 1rem;
+            padding: 8px;
+        }
+
+        .btn-lg {
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 767px) {
+            .row .col-md-6 {
+                width: 100%;
+            }
+
+            .d-grid {
+                gap: 10px;
+            }
+
+            .btn-lg {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Equipment{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {% if salle_nom is defined %}
+            <h1 class="text-center mb-4 text-lila">Add Equipment to {{ salle_nom }}</h1>
+        {% else %}
+            <h1 class="text-center mb-4 text-lila">Create New Equipment</h1>
+        {% endif %}
+
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-lila text-white">
+                {% if salle_nom is defined %}
+                    <h5 class="card-title mb-0">Equipment Information</h5>
+                {% else %}
+                    <h5 class="card-title mb-0">Enter Equipment Details</h5>
+                {% endif %}
+            </div>
+
+            <div class="card-body">
+                <!-- Start of the form -->
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+                <!-- Equipment Name -->
+                <div class="mb-4">
+                    <label for="equipementName" class="form-label">Equipment Name</label>
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control form-control-lg input-color', 'placeholder': 'Enter equipment name', 'id': 'equipementName'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <!-- Functionality -->
+                <div class="mb-4">
+                    <label for="fonctionnement" class="form-label">Functionality</label>
+                    <div class="form-check">
+                        {{ form_widget(form.fonctionnement, {'attr': {'class': 'form-check-input', 'id': 'fonctionnement'}}) }}
+                        <label class="form-check-label" for="fonctionnement">
+                            Is the equipment working?
+                        </label>
+                    </div>
+                    {{ form_errors(form.fonctionnement) }}
+                </div>
+
+                <!-- Next Verification -->
+                <div class="mb-4">
+                    <label for="prochaineVerification" class="form-label">Next Verification</label>
+                    {{ form_widget(form.prochaine_verification, {'attr': {'class': 'form-control form-control-lg input-color', 'id': 'prochaineVerification', 'type': 'date'}}) }}
+                    {{ form_errors(form.prochaine_verification) }}
+                </div>
+
+                <!-- Last Verification -->
+                <div class="mb-4">
+                    <label for="derniereVerification" class="form-label">Last Verification</label>
+                    {{ form_widget(form.derniere_verification, {'attr': {'class': 'form-control form-control-lg input-color', 'id': 'derniereVerification', 'type': 'date'}}) }}
+                    {{ form_errors(form.derniere_verification) }}
+                </div>
+
+                <!-- Gym - display only if the field exists in the form -->
+                {% if form.salle is defined %}
+                <div class="mb-4">
+                    <label for="salle" class="form-label">Gym</label>
+                    {{ form_widget(form.salle, {'attr': {'class': 'form-control form-control-lg input-color', 'id': 'salle'}}) }}
+                    {{ form_errors(form.salle) }}
+                </div>
+                {% elseif salle_nom is defined %}
+                <div class="mb-4">
+                    <label class="form-label">Gym</label>
+                    <div class="form-control form-control-lg input-color disabled">{{ salle_nom }}</div>
+                    <small class="text-muted">This equipment will be associated with the gym "{{ salle_nom }}"</small>
+                </div>
+                {% endif %}
+
+                <!-- User ID - display only if the field exists in the form -->
+            
+
+                <!-- Submit Button -->
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <span role="img" aria-label="save">💾</span> Create Equipment
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+                <!-- End of the form -->
+            </div>
+
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <!-- Back Button -->
+                {% if salle_id is defined %}
+                <a href="{{ path('app_salle_de_sport_equipements', {'id': salle_id}) }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Back to Gym Equipment
+                </a>
+                {% else %}
+                <a href="{{ path('app_equipement_index') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ri-arrow-left-line"></i> Back to List
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <style>
+        .text-lila {
+            color: #6f42c1; /* Purple color for headings */
+        }
+
+        .card {
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #6f42c1;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .form-control-lg {
+            font-size: 1.1rem;
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .input-color {
+            background-color: #f5f0ff;
+            border: 1px solid #e1d8fc;
+        }
+
+        .form-control-lg:focus {
+            box-shadow: 0 0 8px rgba(111, 66, 193, 0.4);
+            border-color: #6f42c1;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            cursor: pointer;
+        }
+
+        .btn-outline-secondary {
+            color: #6f42c1;
+            border-color: #6f42c1;
+            border-radius: 8px;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6f42c1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .card-footer {
+            background-color: #f9f9f9;
+            border-radius: 0 0 12px 12px;
+            border-top: 1px solid #ddd;
+        }
+
+        .d-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .btn-sm {
+            font-size: 1rem;
+            padding: 8px;
+        }
+
+        .btn-lg {
+            font-size: 1.2rem;
+            padding: 15px;
+        }
+    </style>
+{% endblock %}

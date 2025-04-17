@@ -1,0 +1,151 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Fitness Exercises{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    body {
+        background-color: #0f0f0f;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+    }
+
+    .section-heading {
+        text-align: center;
+        margin: 50px 0;
+    }
+
+    .section-badge {
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(255, 94, 19, 0.3);
+    }
+
+    .section-title {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: white;
+        letter-spacing: 1px;
+    }
+
+    .exercises-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+        padding: 0 15px;
+    }
+
+    .exercise-card {
+        background: linear-gradient(145deg, #181818, #0f0f0f);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        height: auto; /* Allows the card to adapt to the content */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 30px; /* Adds space at the bottom */
+        width: 100%; /* Ensures the card occupies the full width of the column */
+    }
+
+    .exercise-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(255, 94, 19, 0.3);
+        border-color: rgba(255, 94, 19, 0.3);
+    }
+
+    .exercise-card img {
+        width: 100%;
+        height: 300px; /* Increases the height of the image */
+        object-fit: cover;
+        transition: all 0.5s ease;
+    }
+
+    .exercise-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .exercise-content {
+        padding: 40px; /* Increases the space around the content */
+        position: relative;
+        text-align: center;
+    }
+
+    .equipment-badge {
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(255, 94, 19, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .exercise-name {
+        font-size: 28px; /* Increases the title size */
+        font-weight: 800;
+        margin: 25px 0;
+        color: white;
+    }
+
+    .exercise-description {
+        font-size: 18px; /* Increases the description size */
+        color: #ccc;
+        margin-bottom: 25px;
+        line-height: 1.8; /* Improves line spacing */
+    }
+</style>
+
+<div class="container">
+    <div class="section-heading">
+        <span class="section-badge">Training Program</span>
+        <h2 class="section-title">Our Fitness Exercises</h2>
+        <p class="section-subtitle">Discover our selection of exercises designed by professionals to maximize your training results</p>
+    </div>
+
+    <div class="exercises-grid">
+        {% for exercice in exercices %}
+            <div class="exercise-card">
+                <img src="{{ asset('images/' ~ exercice.image) }}" alt="{{ exercice.nomExercice }}" onerror="this.onerror=null;this.src='{{ asset('images/default-exercise.jpg') }}';">
+                <div class="exercise-content">
+                    <div class="equipment-badge">
+                        <i class="fas fa-dumbbell"></i> {{ exercice.equipement.nom }}
+                    </div>
+                    <h3 class="exercise-name">{{ exercice.nomExercice|title }}</h3>
+                    <p class="exercise-description">
+                        {% if exercice.description|length > 150 %}
+                            {{ exercice.description|slice(0, 150)|raw }}...
+                        {% else %}
+                            {{ exercice.description|raw }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="no-exercises">
+                <i class="fas fa-dumbbell"></i>
+                <h3>No exercises available</h3>
+                <p>There are currently no exercises recorded in our system.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

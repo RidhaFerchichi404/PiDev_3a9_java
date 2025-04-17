@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Gym{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {% include 'salle_de_sport/_form.html.twig' with {
+                    'button_label': 'Update',
+                    'title': 'Edit Gym'
+                } %}
+                
+                <!-- Delete button -->
+                <div class="text-center mt-3">
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ salle_de_sport.id }}">
+                        <i class="ri-delete-bin-6-line me-2"></i>Delete this gym
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div class="modal fade" id="deleteModal{{ salle_de_sport.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ salle_de_sport.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel{{ salle_de_sport.id }}">Confirm Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure you want to delete the gym <strong>"{{ salle_de_sport.nom }}"</strong>?</p>
+                    <p class="text-danger mt-3 mb-0"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form action="{{ path('app_salle_de_sport_delete', {'id': salle_de_sport.id}) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Delete permanently</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Edit gym form loaded');
+            
+            const regionSelect = document.querySelector('.region-select');
+            if (regionSelect) {
+                regionSelect.addEventListener('change', function() {
+                    // Soumettre automatiquement le formulaire quand la région change
+                    const form = this.closest('form');
+                    if (form) {
+                        form.submit();
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        
+        .modal-content {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+    </style>
+{% endblock %}

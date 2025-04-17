@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin - Sportify{% endblock %}
+
+{% block body %}
+<script>
+    // Redirection automatique vers la liste des utilisateurs
+    window.location.href = "{{ path('app_user_index') }}";
+</script>
+
+<div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <h4 class="mt-3">Redirection vers la liste des utilisateurs...</h4>
+</div>
+{% endblock %} 

@@ -1,0 +1,32 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Bienvenue - Sportify{% endblock %}
+
+{% block body %}
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="bg-light p-4 rounded shadow-sm">
+            <h2 class="mb-3">Bienvenue sur Sportify</h2>
+            {% if app.session.get('user_id') %}
+                <p class="lead">Bonjour {{ app.session.get('user_name') }}, heureux de vous revoir!</p>
+            {% else %}
+                <p class="lead">Connectez-vous pour accéder à votre espace membre ou créez un compte pour rejoindre notre communauté.</p>
+                <div class="mt-3">
+                    <a href="{{ path('app_login') }}" class="btn btn-danger me-2">Connexion</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-outline-danger">Créer un compte</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if app.session.get('user_id') %}
+    <!-- Statistiques utilisateur -->
+
+{% endif %}
+
+<!-- Programmes -->
+
+  
+</div>
+{% endblock %} 

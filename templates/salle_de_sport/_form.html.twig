@@ -1,0 +1,78 @@
+<div class="form-card">
+    <div class="form-card-header">
+        <h2>{{ title|default('Gym Details') }}</h2>
+    </div>
+    <div class="form-card-body">
+        {{ form_start(form, {'attr': {'class': 'salle-form needs-validation', 'novalidate': 'novalidate'}}) }}
+
+        {% if form_errors(form) %}
+            <div class="alert alert-danger">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group input-icon">
+                    <i class="ri-building-line"></i>
+                    {{ form_label(form.nom, 'Name') }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'required': true, 'minlength': 3, 'maxlength': 100, 'placeholder': 'Enter gym name', 'pattern': '[a-zA-Z0-9\\s\\-\\\']+'}}) }}
+                    <small class="form-text text-muted">Gym name (3 to 100 characters)</small>
+                    <div class="error-message" id="nom-error"></div>
+                    {{ form_errors(form.nom, {'attr': {'class': 'text-danger'}}) }}
+                </div>
+                
+                <div class="form-group input-icon">
+                    <i class="ri-map-pin-line"></i>
+                    {{ form_label(form.region, 'Region') }}
+                    {{ form_widget(form.region, {'attr': {'class': 'form-control region-select', 'required': true}}) }}
+                    <small class="form-text text-muted">Select a region</small>
+                    <div class="error-message" id="region-error"></div>
+                    {{ form_errors(form.region) }}
+                </div>
+                
+                <div class="form-group input-icon">
+                    <i class="ri-community-line"></i>
+                    {{ form_label(form.zone, 'City') }}
+                    {{ form_widget(form.zone, {'attr': {'class': 'form-control zone-select', 'required': true}}) }}
+                    <small class="form-text text-muted">Cities load automatically based on selected region</small>
+                    <div class="error-message" id="zone-error"></div>
+                    {{ form_errors(form.zone) }}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-group input-icon">
+                    <i class="ri-image-line"></i>
+                    {{ form_label(form.image, 'Image') }}
+                    {{ form_widget(form.image, {'attr': {'class': 'form-control', 'required': true, 'accept': 'image/jpeg,image/png,image/gif,image/webp', 'placeholder': 'Image filename', 'pattern': '.*\\.(jpg|jpeg|png|gif|webp)$'}}) }}
+                    <small class="form-text text-muted">Gym image (jpg, jpeg, png, gif, webp only)</small>
+                    <div class="error-message" id="image-error"></div>
+                    {{ form_errors(form.image) }}
+                </div>
+                
+                {% if form.user is defined %}
+                <div class="form-group input-icon">
+                    <i class="ri-user-line"></i>
+                    {{ form_label(form.user, 'User') }}
+                    {{ form_widget(form.user, {'attr': {'class': 'form-control', 'required': true}}) }}
+                    <small class="form-text text-muted">Owner</small>
+                    <div class="error-message" id="user-error"></div>
+                    {{ form_errors(form.user) }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            <button class="btn btn-primary" type="submit">
+                <i class="ri-save-line me-2"></i>{{ button_label|default('Save') }}
+            </button>
+            <a href="{{ path('app_salle_de_sport_index') }}" class="btn btn-secondary ms-2">
+                <i class="ri-arrow-left-line me-2"></i>Back to list
+            </a>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>

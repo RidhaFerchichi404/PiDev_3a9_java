@@ -1,0 +1,192 @@
+{{ form_start(form, {'attr': {'id': 'user-form', 'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">User Information</h5>
+            <small class="text-muted">Enter the user's basic information</small>
+        </div>
+        
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.role, 'User Role', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.role) }}
+                        {% if form_errors(form.role) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.role) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.first_name, 'First Name', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.first_name) }}
+                        {% if form_errors(form.first_name) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.first_name) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.last_name, 'Last Name', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.last_name) }}
+                        {% if form_errors(form.last_name) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.last_name) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.email, 'Email Address', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.email) }}
+                        {% if form_errors(form.email) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.email) }}</div>
+                        {% endif %}
+                        <small class="text-muted">Will be used for login and notifications</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.password_hash, 'Password', {'label_attr': {'class': 'form-label'}}) }}
+                        <div class="input-group">
+                            {{ form_widget(form.password_hash) }}
+                            <button type="button" class="btn btn-outline-secondary password-toggle">
+                                <i class="ri-eye-line"></i>
+                            </button>
+                        </div>
+                        {% if form_errors(form.password_hash) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.password_hash) }}</div>
+                        {% endif %}
+                        {% if app.request.attributes.get('_route') == 'app_user_edit' %}
+                            <small class="text-muted">Leave empty to keep the current password</small>
+                        {% else %}
+                            <small class="text-muted">Must be at least 6 characters long</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.age, 'Age', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.age) }}
+                        {% if form_errors(form.age) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.age) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.phone_number, 'Phone Number', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.phone_number) }}
+                        {% if form_errors(form.phone_number) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.phone_number) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.cin, 'CIN', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.cin) }}
+                        {% if form_errors(form.cin) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.cin) }}</div>
+                        {% endif %}
+                        <small class="text-muted">8-digit identity card number</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.location, 'Location', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.location) }}
+                        {% if form_errors(form.location) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.location) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5 class="mb-0">Subscription & Status</h5>
+            <small class="text-muted">Manage user's subscription and account status</small>
+        </div>
+        
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.subscription_end_date, 'Subscription End Date', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.subscription_end_date) }}
+                        {% if form_errors(form.subscription_end_date) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.subscription_end_date) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        {{ form_label(form.violation_count, 'Violation Count', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.violation_count) }}
+                        {% if form_errors(form.violation_count) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.violation_count) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        {{ form_widget(form.is_active) }}
+                        {{ form_label(form.is_active, 'Active Account', {'label_attr': {'class': 'form-check-label'}}) }}
+                        {% if form_errors(form.is_active) %}
+                            <div class="invalid-feedback d-block">{{ form_errors(form.is_active) }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-footer text-end">
+            <button type="submit" class="btn btn-primary">
+                <i class="ri-save-line me-1"></i> {{ button_label|default('Save User') }}
+            </button>
+        </div>
+    </div>
+    
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+
+<script>
+    // Toggle password visibility
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.password-toggle');
+        
+        toggleButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('input');
+                const icon = this.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('ri-eye-line');
+                    icon.classList.add('ri-eye-off-line');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('ri-eye-off-line');
+                    icon.classList.add('ri-eye-line');
+                }
+            });
+        });
+    });
+</script>

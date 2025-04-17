@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Management{% endblock %}
+
+{% block body %}
+<!-- User Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="mb-0">{{ users|length }}</h4>
+                        <p class="mb-0 text-muted">Total Users</p>
+                    </div>
+                    <div class="avatar bg-label-primary p-2 rounded">
+                        <i class="ri-user-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="mb-0">{{ users|filter(user => user.role == 'ROLE_ADMIN')|length }}</h4>
+                        <p class="mb-0 text-muted">Administrators</p>
+                    </div>
+                    <div class="avatar bg-label-danger p-2 rounded">
+                        <i class="ri-admin-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="mb-0">{{ users|filter(user => user.role == 'ROLE_COACH')|length }}</h4>
+                        <p class="mb-0 text-muted">Coaches</p>
+                    </div>
+                    <div class="avatar bg-label-success p-2 rounded">
+                        <i class="ri-user-star-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h4 class="mb-0">{{ users|filter(user => user.isActive)|length }}</h4>
+                        <p class="mb-0 text-muted">Active Users</p>
+                    </div>
+                    <div class="avatar bg-label-warning p-2 rounded">
+                        <i class="ri-shield-user-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">User Management</h5>
+        <a href="{{ path('app_user_new') }}" class="btn btn-primary">
+            <i class="ri-user-add-line me-1"></i> Add New User
+        </a>
+    </div>
+    
+    <div class="card-body">
+        <!-- Search and Filters -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="user-search" placeholder="Search users...">
+                    <button class="btn btn-outline-primary" type="button" id="user-search-button">
+                        <i class="ri-search-line"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-end">
+                    <select class="form-select w-auto me-2" id="role-filter">
+                        <option value="all">All Roles</option>
+                        <option value="ROLE_ADMIN">Admin</option>
+                        <option value="ROLE_COACH">Coach</option>
+                        <option value="ROLE_USER">User</option>
+                    </select>
+                    <select class="form-select w-auto" id="status-filter">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                {% for user in users %}
+                    <tr>
+                        <td><strong>{{ user.id }}</strong></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar me-2">
+                                    <div class="avatar-initial rounded-circle bg-label-{{ user.role == 'ROLE_ADMIN' ? 'danger' : (user.role == 'ROLE_COACH' ? 'success' : 'primary') }}">
+                                        {{ user.firstName|first|upper }}{{ user.lastName|first|upper }}
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <span class="fw-semibold">{{ user.firstName }} {{ user.lastName }}</span>
+                                    <small class="text-muted">{{ user.age }} years old</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phoneNumber }}</td>
+                        <td>
+                            <span class="badge bg-label-{{ user.role == 'ROLE_ADMIN' ? 'danger' : (user.role == 'ROLE_COACH' ? 'success' : 'primary') }}">
+                                {{ user.role|replace({'ROLE_': ''})|capitalize }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-label-{{ user.isActive ? 'success' : 'warning' }}">
+                                {{ user.isActive ? 'Active' : 'Inactive' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="ri-more-fill"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ path('app_user_show', {'id': user.id}) }}">
+                                        <i class="ri-eye-line me-2"></i> View
+                                    </a>
+                                    <a class="dropdown-item" href="{{ path('app_user_edit', {'id': user.id}) }}">
+                                        <i class="ri-pencil-line me-2"></i> Edit
+                                    </a>
+                                    <a class="dropdown-item text-danger" href="#" 
+                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ user.id }}').submit();">
+                                        <i class="ri-delete-bin-line me-2"></i> Delete
+                                    </a>
+                                    <form id="delete-form-{{ user.id }}" action="{{ path('app_user_delete', {'id': user.id}) }}" method="post" style="display: none;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            <div class="py-4">
+                                <i class="ri-user-search-line ri-2x mb-2 text-muted"></i>
+                                <p>No users found. Create your first user.</p>
+                                <a href="{{ path('app_user_new') }}" class="btn btn-primary btn-sm">
+                                    <i class="ri-user-add-line me-1"></i> Add User
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

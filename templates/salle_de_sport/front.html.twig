@@ -1,0 +1,818 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Fitness Clubs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #0f0f0f;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+    }
+
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('{{ asset('images/gym-hero.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 0;
+        position: relative;
+        margin-bottom: 80px;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .hero-title {
+        font-size: 52px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: linear-gradient(to right, #ff5e13, #ff8c00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeInDown 1s both;
+    }
+
+    .hero-subtitle {
+        color: #e0e0e0;
+        font-size: 18px;
+        margin-bottom: 40px;
+        font-weight: 300;
+        line-height: 1.6;
+        animation: fadeIn 1.5s both;
+    }
+
+    .search-box {
+        background: rgba(15, 15, 15, 0.8);
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 30px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        animation: fadeInUp 1s both;
+        animation-delay: 0.5s;
+    }
+
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .search-input {
+        flex: 1;
+        min-width: 250px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 50px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #ff5e13;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 94, 19, 0.2);
+    }
+
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .search-btn {
+        background: linear-gradient(to right, #ff5e13, #ff8c00);
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(255, 94, 19, 0.3);
+    }
+
+    .search-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(255, 94, 19, 0.4);
+    }
+
+    /* Filter Tags */
+    .filter-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .filter-tag {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .filter-tag:hover, .filter-tag.active {
+        background: rgba(255, 94, 19, 0.2);
+        border-color: #ff5e13;
+        color: #ff5e13;
+    }
+
+    /* Section Titles */
+    .section-heading {
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+    }
+
+    .section-badge {
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: inline-block;
+        box-shadow: 0 4px 15px rgba(255, 94, 19, 0.3);
+    }
+
+    .section-title {
+        font-size: 42px;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: white;
+        letter-spacing: 1px;
+    }
+
+    .section-subtitle {
+        font-size: 16px;
+        color: #aaa;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Gym Cards */
+    .gyms-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+        padding: 0 15px;
+    }
+
+    .gym-card {
+        background: linear-gradient(145deg, #181818, #0f0f0f);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        height: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        transform: translateY(0);
+        opacity: 0;
+        animation: fadeInUp 0.6s forwards;
+        animation-delay: calc(var(--i) * 0.1s);
+    }
+
+    .gym-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 50px rgba(255, 94, 19, 0.3);
+        border-color: rgba(255, 94, 19, 0.3);
+    }
+
+    .gym-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: all 0.5s ease;
+        filter: brightness(0.9);
+    }
+
+    .gym-card:hover img {
+        transform: scale(1.05);
+        filter: brightness(1.1);
+    }
+
+    .gym-card .content {
+        padding: 30px;
+        position: relative;
+    }
+
+    .gym-location {
+        position: absolute;
+        top: -20px;
+        left: 30px;
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(255, 94, 19, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .gym-name {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 15px 0;
+        color: white;
+    }
+
+    .gym-description {
+        font-size: 14px;
+        color: #aaa;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .equipment-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+
+    .equipment-tag {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ccc;
+        font-size: 12px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(255, 94, 19, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 94, 19, 0.5);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    /* Map Container */
+    .map-container {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.5s ease;
+        margin-top: 20px;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .map-container.active {
+        height: 300px;
+    }
+
+    /* Results Info */
+    .results-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 0 15px;
+    }
+
+    .results-count {
+        font-size: 16px;
+        color: #aaa;
+    }
+
+    .results-count span {
+        color: #ff5e13;
+        font-weight: 600;
+    }
+
+    .sort-options {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .sort-label {
+        color: #aaa;
+        font-size: 14px;
+    }
+
+    .sort-select {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .sort-select:focus {
+        outline: none;
+        border-color: #ff5e13;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* No Results Message */
+    .no-results {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 50px 30px;
+        text-align: center;
+        margin: 0 15px;
+    }
+
+    .no-results i {
+        font-size: 50px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .no-results h3 {
+        font-size: 24px;
+        color: white;
+        margin-bottom: 15px;
+    }
+
+    .no-results p {
+        color: #aaa;
+        margin-bottom: 25px;
+    }
+
+    .btn-reset {
+        background: linear-gradient(135deg, #ff5e13, #ff8c00);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-reset:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 94, 19, 0.3);
+    }
+
+    /* Loader */
+    .loader {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #ff5e13;
+        animation: spin 1s linear infinite;
+        margin-right: 10px;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 36px;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-size: 32px;
+        }
+
+        .gyms-container {
+            grid-template-columns: 1fr;
+        }
+
+        .search-form {
+            flex-direction: column;
+        }
+    }
+
+    .add-gym-btn {
+        display: block;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        color: white;
+        text-align: center;
+        padding: 15px 20px;
+        border-radius: 12px;
+        margin: 40px auto;
+        max-width: 350px;
+        font-weight: 700;
+        font-size: 18px;
+        text-decoration: none;
+        box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .add-gym-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(46, 125, 50, 0.5);
+    }
+
+    .add-gym-btn i {
+        margin-right: 10px;
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Fitness Clubs</h1>
+        <p class="hero-subtitle">Découvrez les meilleures salles de sport près de chez vous avec des équipements modernes et des coachs professionnels.</p>
+        
+        <div class="search-box">
+            <form class="search-form">
+                <input type="text" class="search-input" id="search-gym" placeholder="Search by gym name, region or zone...">
+                <button type="button" class="search-btn" id="search-btn">
+                    <i class="fas fa-search me-2"></i> Find Gym
+                </button>
+            </form>
+            
+            <div class="filter-tags">
+                {% set regions = [] %}
+                {% for gym in salle_de_sports %}
+                    {% if gym.region not in regions %}
+                        {% set regions = regions|merge([gym.region]) %}
+                    {% endif %}
+                {% endfor %}
+                
+                <div class="filter-tag active" data-filter="all">
+                    <i class="fas fa-th-large"></i> All
+                </div>
+                
+                {% for region in regions %}
+                    <div class="filter-tag" data-filter="{{ region }}">
+                        <i class="fas fa-map-marker-alt"></i> {{ region }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gyms Section -->
+<section class="gyms-section">
+    <div class="container">
+        <div class="section-heading">
+            <span class="section-badge">World-Class Facilities</span>
+            <h2 class="section-title">Explore Our Premium Gyms</h2>
+            <p class="section-subtitle">Each location offers state-of-the-art equipment, expert trainers, and personalized amenities to help you achieve your fitness goals</p>
+        </div>
+        
+        <div class="results-info">
+            <div class="results-count" id="results-counter">
+                Showing <span id="shown-count">{{ salle_de_sports|length }}</span> of <span id="total-count">{{ salle_de_sports|length }}</span> gyms
+            </div>
+            
+            <div class="sort-options">
+                <span class="sort-label">Sort by:</span>
+                <select class="sort-select" id="sort-select">
+                    <option value="az">Name (A-Z)</option>
+                    <option value="za">Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="gyms-container" id="gyms-container">
+            {% for salle_de_sport in salle_de_sports %}
+                {% include 'salle_de_sport/card.html.twig' with {
+                    'salle': salle_de_sport
+                } %}
+            {% else %}
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>No gyms found</h3>
+                    <p>We couldn't find any gyms matching your criteria. Please try different search terms.</p>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- No Results Message (hidden by default) -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <i class="fas fa-search"></i>
+            <h3>No gyms found</h3>
+            <p>We couldn't find any gyms matching your search criteria. Please try different search terms or reset your filters.</p>
+            <button class="btn-reset" id="reset-search">
+                <i class="fas fa-undo"></i> Reset Search
+            </button>
+        </div>
+
+        <!-- Add New Gym Button -->
+        <a href="{{ path('app_salle_de_sport_new') }}" class="add-gym-btn">
+            <i class="fas fa-plus-circle"></i> Add New Gym
+        </a>
+    </div>
+</section>
+
+<script>
+    // Initialize Mapbox
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXJpamNoYWFvdXJpIiwiYSI6ImNtN3FyZTN2cDEyeGcya3MzYjJzYWw3dGgifQ.PDmXhuINWST2Uer-SzPTVw';
+
+    // Function to show location on map
+    function showPlace(zone, mapId) {
+        const mapContainer = document.getElementById(mapId);
+        
+        // Toggle map visibility
+        if (mapContainer.classList.contains('active')) {
+            mapContainer.classList.remove('active');
+            return;
+        }
+        
+        mapContainer.classList.add('active');
+        
+        // Bounding box for Tunisia
+        const bbox = '7.5248,30.2304,11.5802,37.5438';
+
+        // Fetch coordinates
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(zone)}.json?bbox=${bbox}&access_token=${mapboxgl.accessToken}`)
+            .then(response => response.json())
+            .then(data => {
+                let coordinates;
+
+                if (data.features && data.features.length > 0) {
+                    coordinates = data.features[0].center;
+                } else {
+                    console.warn('No location found for: ' + zone + '. Using default coordinates.');
+                    coordinates = [10.1647, 36.8665]; // Default: Ariana, Tunisia
+                }
+
+                // Initialize map
+                const map = new mapboxgl.Map({
+                    container: mapId,
+                    style: 'mapbox://styles/mapbox/streets-v11',
+                    center: coordinates,
+                    zoom: 14
+                });
+
+                // Add marker
+                new mapboxgl.Marker({
+                    color: '#ff5e13'
+                })
+                .setLngLat(coordinates)
+                .addTo(map);
+
+                // Resize after a small delay to ensure proper rendering
+                setTimeout(() => {
+                    map.resize();
+                }, 200);
+            })
+            .catch(error => {
+                console.error('Error fetching coordinates:', error);
+                mapContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #fff;">Unable to load map. Please try again later.</div>';
+            });
+    }
+
+    // Document ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const gymCards = document.querySelectorAll('.gym-card');
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const searchInput = document.getElementById('search-gym');
+        const searchBtn = document.getElementById('search-btn');
+        const sortSelect = document.getElementById('sort-select');
+        const resetSearchBtn = document.getElementById('reset-search');
+        const noResultsDiv = document.getElementById('no-results');
+        const gymsContainer = document.getElementById('gyms-container');
+        const resultsCounter = document.getElementById('results-counter');
+        const shownCountElement = document.getElementById('shown-count');
+        const totalCountElement = document.getElementById('total-count');
+        
+        // Total number of gyms
+        const totalGyms = gymCards.length;
+        totalCountElement.textContent = totalGyms;
+        
+        // Search functionality
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const activeFilter = document.querySelector('.filter-tag.active').getAttribute('data-filter');
+            
+            let visibleCount = 0;
+            
+            gymCards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                const region = card.getAttribute('data-region').toLowerCase();
+                const zone = card.getAttribute('data-zone').toLowerCase();
+                
+                // Check if matches search term
+                const matchesSearch = !searchTerm || 
+                    name.includes(searchTerm) || 
+                    region.includes(searchTerm) || 
+                    zone.includes(searchTerm);
+                
+                // Check if matches active filter
+                const matchesFilter = activeFilter === 'all' || region === activeFilter.toLowerCase();
+                
+                // Show/hide based on both conditions
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update results counter
+            shownCountElement.textContent = visibleCount;
+            
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                gymsContainer.style.display = 'none';
+                noResultsDiv.style.display = 'block';
+            } else {
+                gymsContainer.style.display = 'grid';
+                noResultsDiv.style.display = 'none';
+            }
+        }
+        
+        // Filter tags click
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                // Remove active class from all tags
+                filterTags.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tag
+                this.classList.add('active');
+                
+                // Perform search with new filter
+                performSearch();
+            });
+        });
+        
+        // Search input event
+        searchInput.addEventListener('input', performSearch);
+        
+        // Search button click
+        searchBtn.addEventListener('click', performSearch);
+        
+        // Reset search
+        resetSearchBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            
+            // Reset filters
+            filterTags.forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.getAttribute('data-filter') === 'all') {
+                    tag.classList.add('active');
+                }
+            });
+            
+            // Show all gyms
+            gymCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // Update UI
+            shownCountElement.textContent = totalGyms;
+            gymsContainer.style.display = 'grid';
+            noResultsDiv.style.display = 'none';
+        });
+        
+        // Sorting functionality
+        sortSelect.addEventListener('change', function() {
+            const sortValue = this.value;
+            const cardsArray = Array.from(gymCards);
+            
+            // Sort the array of cards
+            cardsArray.sort((a, b) => {
+                const nameA = a.getAttribute('data-name').toLowerCase();
+                const nameB = b.getAttribute('data-name').toLowerCase();
+                
+                if (sortValue === 'az') {
+                    return nameA.localeCompare(nameB);
+                } else {
+                    return nameB.localeCompare(nameA);
+                }
+            });
+            
+            // Reorder in the DOM
+            cardsArray.forEach(card => {
+                gymsContainer.appendChild(card);
+            });
+        });
+        
+        // Add Enter key support for search
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    });
+</script>
+{% endblock %}

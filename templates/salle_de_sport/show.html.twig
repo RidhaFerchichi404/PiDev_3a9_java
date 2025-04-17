@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gym Details{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header bg-dark-blue text-white">
+                    <h2 class="card-title mb-0">{{ salle_de_sport.nom }}</h2>
+                </div>
+                
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th><i class="ri-information-line me-2"></i>ID</th>
+                                        <td>{{ salle_de_sport.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="ri-building-line me-2"></i>Name</th>
+                                        <td>{{ salle_de_sport.nom }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="ri-map-pin-line me-2"></i>Region</th>
+                                        <td>{{ salle_de_sport.region }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="ri-community-line me-2"></i>City</th>
+                                        <td>{{ salle_de_sport.zone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="ri-image-line me-2"></i>Image</th>
+                                        <td>{{ salle_de_sport.image }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="ri-user-line me-2"></i>Owner ID</th>
+                                        <td>{{ salle_de_sport.idUser }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            {% if salle_de_sport.image %}
+                                {% set imagePath = salle_de_sport.image starts with '/' ? salle_de_sport.image : 'images/' ~ salle_de_sport.image %}
+                                <img src="{{ asset(imagePath) }}" class="img-fluid rounded shadow" alt="{{ salle_de_sport.nom }}" style="max-height: 300px; width: 100%; object-fit: cover;">
+                            {% else %}
+                                <img src="{{ asset('images/default.jpg') }}" class="img-fluid rounded shadow" alt="No image" style="max-height: 300px; width: 100%; object-fit: cover;">
+                            {% endif %}
+                            
+                            <div class="location-map mt-3">
+                                <h5>Location</h5>
+                                <p class="text-muted"><i class="ri-map-pin-line me-1"></i>{{ salle_de_sport.region }} - {{ salle_de_sport.zone }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ path('app_salle_de_sport_index') }}" class="btn btn-secondary">
+                        <i class="ri-arrow-left-line me-2"></i>Back to list
+                    </a>
+                    
+                    <div>
+                        <a href="{{ path('app_salle_de_sport_edit', {'id': salle_de_sport.id}) }}" class="btn btn-warning me-2">
+                            <i class="ri-edit-line me-2"></i>Edit
+                        </a>
+                        {{ include('salle_de_sport/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .bg-dark-blue {
+        background-color: #1E90FF !important;
+    }
+    
+    .card {
+        overflow: hidden;
+    }
+    
+    .card-header {
+        border-bottom: none;
+    }
+    
+    .table th {
+        font-weight: 600;
+        width: 40%;
+    }
+    
+    .btn {
+        border-radius: 5px;
+    }
+</style>
+{% endblock %}

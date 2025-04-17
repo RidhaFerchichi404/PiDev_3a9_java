@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gym Statistics{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 text-lila">Gym Equipment Statistics</h1>
+
+        <div class="card shadow-lg border-0 rounded-3 p-4">
+            <div class="card-header bg-success text-white text-center">
+                <h5 class="card-title mb-0">Equipment Distribution</h5>
+            </div>
+
+            <div class="card-body">
+                <canvas id="equipmentChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('equipmentChart').getContext('2d');
+        var equipmentData = {
+            labels: {{ data|json_encode()|raw }},
+            datasets: [{
+                data: {{ data_values|json_encode()|raw }},
+                backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FFC300', '#FF5733'],
+                borderColor: '#fff',
+                borderWidth: 1
+            }]
+        };
+
+        var options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + ' equipment';
+                        }
+                    }
+                }
+            }
+        };
+
+        new Chart(ctx, {
+            type: 'pie',  
+            data: equipmentData,
+            options: options
+        });
+    </script>
+{% endblock %}
